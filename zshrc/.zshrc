@@ -25,6 +25,8 @@ alias rootdir='~/';
 alias delDir='rm -rf';
 
 ## git aliases
+alias gh-create="gh repo create $1 --source=. --remote=upstream";
+
 ## git add/commit/push
 function gpush() {
     git add .
