@@ -193,30 +193,6 @@ createRepoDir() {
   return 0
 }
 
-copyConfigFiles() {
-  echo "-----------------"
-  echo "Coping files from ~/.dotfiles to ~/.config"
-  echo "-----------------"
-
-  cp -R ~/.dotfiles/github-copilot ~/.dotfiles/iterm2 ~/.dotfiles/lvim ~/.dotfiles/raycast ~/.dotfiles/skhd ~/.dotfiles/starship.toml ~/.dotfiles/tmux ~/.dotfiles/yabai ~/.config/
-
-  echo "-----------------"
-  echo "Coping zsrc from ~/.dotfiles to ~/.zshrc"
-  echo "-----------------"
-
-  cp -R ~/.dotfiles/.zshrc ~/.zshrc
-
-  echo "-----------------"
-  echo "Sourcing tmux & zshrc"
-  echo "-----------------"
-
-  source ~/.config/tmux/tmux.conf
-  source ~/.zshrc
-
-  return 0
-
-}
-
 if which brew>/dev/null; then
   # Installing Homebrew Apps
   echo "------------------------------------"
@@ -230,7 +206,6 @@ if which brew>/dev/null; then
   wait
   createRepoDir "$@"
   wait
-  copyConfigFiles "$@"
   echo "------------------------------------"
   echo "Setup is complete 🎉..."
   echo "------------------------------------"
