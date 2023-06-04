@@ -16,6 +16,7 @@ alias update-lvim='source ~/.config/lvim';
 alias l='exa --icons --group-directories-first -a'
 alias ll='exa -l --icons --no-user --group-directories-first  --time-style long-iso'
 alias la='exa -la --icons --no-user --group-directories-first  --time-style long-iso'
+alias tree='exa --tree -a --level=5'
 alias lg='lazygit';
 alias lnpm='lazynpm';
 alias localserver='lite-server';
