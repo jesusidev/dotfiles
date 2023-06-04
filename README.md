@@ -5,7 +5,7 @@ Dotfiles for macos & New Mac Setup
 ## Usage for syncing .config
 
 ```shell
-$ git clone https://github.com/gdevtech/dotfiles.git ~/.dotfiles
+$ git clone git@github.com:gdevtech/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
 $ ./setupConfig.sh
 $ update
