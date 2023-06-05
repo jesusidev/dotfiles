@@ -7,6 +7,8 @@ plug "zap-zsh/zap-prompt"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "zap-zsh/exa"
 
+export EDITOR=lvim
+export VISUAL="$EDITOR"
 
 ## utils aliases
 alias home='~/'
@@ -75,6 +77,10 @@ alias npm-clean="rm -rf node_modules package-lock.json && npm cache clean --forc
 alias nicache="npm install --prefer-offline";
 alias nioff="npm install --offline";
 alias db-push="npm run db-push";
+
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
 
 # ~/.tmux/plugins
 export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
