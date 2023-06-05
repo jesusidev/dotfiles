@@ -4,6 +4,8 @@ Dotfiles for macos & New Mac Setup
 
 ## Usage for syncing .config
 
+Fist install [Zap-Zsh](https://www.zapzsh.org/)
+
 ```shell
 $ git clone git@github.com:gdevtech/dotfiles.git ~/.dotfiles
 $ cd ~/.dotfiles
