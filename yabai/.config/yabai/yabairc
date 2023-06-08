@@ -14,11 +14,11 @@ yabai -m config normal_window_opacity        0.90
 yabai -m config split_ratio                  0.50
 yabai -m config auto_balance                 off
 
-# padding set to 20px
-yabai -m config top_padding                  20
-yabai -m config bottom_padding               20
-yabai -m config left_padding                 20
-yabai -m config right_padding                20
+# padding set to 40px
+yabai -m config top_padding                  40
+yabai -m config bottom_padding               40
+yabai -m config left_padding                 40
+yabai -m config right_padding                40
 yabai -m config window_gap                   10
 
 # -- mouse settings --
