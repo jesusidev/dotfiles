@@ -78,6 +78,31 @@ alias nicache="npm install --prefer-offline";
 alias nioff="npm install --offline";
 alias db-push="npm run db-push";
 
+## Kub aliases
+alias k="kubectl";
+alias kx="kubectx";
+alias kn="kubens";
+alias klogs="kubectl logs -f";
+alias kpods="kubectl get pods";
+alias kcontext="kubectl config view";
+alias kcurrentcontext="kubectl config current-context";
+alias kusecontext="kubectl config use-context";
+alias kresource="k describe pod";
+alias kportforward-staging="k port-forward -n staging";
+alias kportforward-prod="k port-forward -n production";
+alias kportforward-sandbox="k port-forward -n sandbox";
+
+## Tasks Shortcut
+## https://github.com/kakengloh/tsk
+alias t="tsk new";
+alias thp="tsk new -s doing -p high -d 1h"
+alias trm="tsk rm";
+alias tls="tsk ls";
+alias tboard="tsk board";
+alias tdo="tsk todo";
+alias twip="tsk doing";
+alias tdone="tsk done";
+
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
