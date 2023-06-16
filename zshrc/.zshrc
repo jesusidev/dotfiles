@@ -94,7 +94,7 @@ alias kportforward-sandbox="k port-forward -n sandbox";
 
 ## Tasks Shortcut
 ## https://github.com/kakengloh/tsk
-alias t="tsk new";
+alias tsk="tsk new";
 alias thp="tsk new -s doing -p high -d 1h"
 alias trm="tsk rm";
 alias tls="tsk ls";
@@ -107,8 +107,6 @@ alias tdone="tsk done";
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# ~/.tmux/plugins
-export PATH=$HOME/.tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
 # ~/.config/tmux/plugins
 export PATH=$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH
 
