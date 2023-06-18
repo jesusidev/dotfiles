@@ -1,31 +1,32 @@
 if vim.g.neovide then
-  vim.opt.guifont = "MonoLisa:h24"
+    vim.opt.guifont = "MonoLisa:h24"
 
-  vim.g.neovide_transparency = 1
-  vim.g.transparency = 0.8
-  vim.g.neovide_scroll_animation_length = 0.3
-  vim.g.neovide_refresh_rate = 60
-  vim.g.neovide_confirm_quit = true
-  vim.g.neovide_input_macos_alt_is_meta = false
+    vim.g.neovide_transparency = 1
+    vim.g.transparency = 0.8
+    vim.g.neovide_scroll_animation_length = 0.3
+    vim.g.neovide_refresh_rate = 60
+    vim.g.neovide_confirm_quit = true
+    vim.g.neovide_input_macos_alt_is_meta = false
 end
-
+local options = { noremap = true }
+vim.keymap.set("i", "jj", "<Esc>", options)
 
 lvim.log.level = "warn"
 lvim.format_on_save = true
 
 lvim.builtin.treesitter.ensure_installed = {
-  "bash",
-  "c",
-  "javascript",
-  "json",
-  "lua",
-  "python",
-  "typescript",
-  "tsx",
-  "css",
-  "rust",
-  "java",
-  "yaml",
+    "bash",
+    "c",
+    "javascript",
+    "json",
+    "lua",
+    "python",
+    "typescript",
+    "tsx",
+    "css",
+    "rust",
+    "java",
+    "yaml",
 }
 
 lvim.builtin.terminal.active = true
@@ -38,11 +39,11 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 lvim.builtin.project.detection_methods = { "lsp", "pattern" }
 lvim.builtin.project.patterns = {
-  ".git",
-  "package-lock.json",
-  "yarn.lock",
-  "package.json",
-  "requirements.txt",
+    ".git",
+    "package-lock.json",
+    "yarn.lock",
+    "package.json",
+    "requirements.txt",
 }
 
 vim.opt.shell = "/bin/zsh"
@@ -66,5 +67,5 @@ vim.opt.foldenable = true
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 lvim.builtin.telescope.defaults.path_display = {
-  shorten = 4,
+    shorten = 4,
 }
