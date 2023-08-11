@@ -10,6 +10,9 @@ plug "zap-zsh/exa"
 export EDITOR=lvim
 export VISUAL="$EDITOR"
 
+source ~/private.zsh
+
+
 ## utils aliases
 alias home='~/'
 alias update='source ~/.zshrc';
@@ -102,6 +105,13 @@ alias tboard="tsk board";
 alias tdo="tsk todo";
 alias twip="tsk doing";
 alias tdone="tsk done";
+
+
+# get zsh complete kubectl
+source <(kubectl completion zsh)
+alias kubectl=kubecolor
+# make completion work with kubecolor
+compdef kubecolor=kubectl
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line

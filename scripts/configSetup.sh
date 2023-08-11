@@ -13,6 +13,7 @@ function check_file_exists() {
   else
       echo "File $file does not exist or is not a regular file."
       echo "Using stow for symlinking .zshrc..."
+      touch ~/.dotfiles/zshrc/private.zsh
       stow zshrc
   fi
 }
