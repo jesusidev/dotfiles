@@ -133,9 +133,9 @@ configureGit() {
   echo "------------------------------------"
   echo "Configuring git..."
   echo "------------------------------------"
-  # git config --global user.name "JG"
-  # git config --global user.email "jesus@guzman1.com"
   git config --global push.autoSetupRemote true
+  git config --global pull.rebase true
+
 
       echo "WARNING: not checking for existing SSH keys\!"
 
