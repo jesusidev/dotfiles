@@ -194,6 +194,18 @@ createRepoDir() {
   return 0
 }
 
+npmGlobalInstalls() {
+  echo "-----------------"
+  echo "Installing global npm packages"
+  echo "-----------------"
+
+  npm i -g eslint_d eslint javascript typescript prettier prettier_d_slim @fsouza/prettierd
+
+  echo "********** DONE **********"
+ 
+  return 0
+}
+
 if which brew>/dev/null; then
   # Installing Homebrew Apps
   echo "------------------------------------"
@@ -206,6 +218,8 @@ if which brew>/dev/null; then
   openAppsFromSite "$@"
   wait
   createRepoDir "$@"
+  wait
+  npmGlobalInstalls "$@"
   wait
   echo "------------------------------------"
   echo "Setup is complete 🎉..."
