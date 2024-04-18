@@ -1,6 +1,6 @@
 local kind     = require('user.kind')
 local Terminal = require('toggleterm.terminal').Terminal
-local lazynpm  = Terminal:new({ cmd = "lazynpm", hidden = true, direction = "float", float_opts = { border = "double" } })
+local lazynpm  = Terminal:new({ cmd = "lazynpm", hidden = false, direction = "float", float_opts = { border = "double" } })
 local lazygit  = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float", float_opts = { border = "double" } })
 local k9s      = Terminal:new({ cmd = "k9s", hidden = true, direction = "float", float_opts = { border = "double" } })
 

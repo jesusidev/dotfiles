@@ -13,7 +13,7 @@ lvim.plugins = {
 
   { 'wakatime/vim-wakatime' },
 
-  { 'jose-elias-alvarez/typescript.nvim' },
+  { 'nvim-lua/plenary.nvim' },
 
   { 'lunarvim/lunar.nvim' },
   { "morhetz/gruvbox" },
