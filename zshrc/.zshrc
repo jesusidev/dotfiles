@@ -7,7 +7,7 @@ plug "zap-zsh/zap-prompt"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "zap-zsh/exa"
 
-export EDITOR=lvim
+export EDITOR=nvim
 export VISUAL="$EDITOR"
 
 source ~/private.zsh
@@ -19,7 +19,7 @@ alias psql-local="psql postgres://$1:$2@localhost:5432/$3"
 alias home='~/'
 alias update='source ~/.zshrc';
 alias update-tmux='tmux source ~/.config/tmux/tmux.conf';
-alias update-lvim='source ~/.config/lvim';
+alias update-nvim='source ~/.config/nvim';
 alias l='exa --icons --group-directories-first -a'
 alias ll='exa -l --icons --no-user --group-directories-first  --time-style long-iso'
 alias la='exa -la --icons --no-user --group-directories-first  --time-style long-iso'
@@ -67,7 +67,7 @@ function gdiff() { git diff --color --no-index "$1" "$2" | diff-so-fancy; };
 function cdiff() { code --diff "$1" "$2"; };
 
 ## LunarVIM
-alias lvim="~/.local/bin/lvim"
+alias nvim="~/.local/bin/nvim"
 
 ## npm aliases
 alias ni="npm install";
