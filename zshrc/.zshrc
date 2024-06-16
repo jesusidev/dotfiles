@@ -12,6 +12,8 @@ export VISUAL="$EDITOR"
 
 source ~/private.zsh
 
+## PSQL
+alias psql-local="psql postgres://$1:$2@localhost:5432/$3"
 
 ## utils aliases
 alias home='~/'
