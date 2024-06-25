@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Apple command linetools installation
+xcode-select --install
+
 # Homebrew Script for OSX
 # To execute: save and `chmod +x ./*.sh` then `./*.sh`
 #
