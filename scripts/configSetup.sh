@@ -68,6 +68,7 @@ wait
 echo "-----------------"
 echo "Sourcing tmux & zshrc"
 echo "-----------------"
-
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+wait
 source tmux ~/.config/tmux/tmux.conf
 source ~/.zshrc
