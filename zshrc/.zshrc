@@ -20,10 +20,10 @@ alias home='~/'
 alias update='source ~/.zshrc';
 alias update-tmux='tmux source ~/.config/tmux/tmux.conf';
 alias update-nvim='source ~/.config/nvim';
-alias l='exa --icons --group-directories-first -a'
-alias ll='exa -l --icons --no-user --group-directories-first  --time-style long-iso'
-alias la='exa -la --icons --no-user --group-directories-first  --time-style long-iso'
-alias tree='exa --tree -a --level=5'
+alias l='eza --icons --group-directories-first -a'
+alias ll='eza -l --icons --no-user --group-directories-first  --time-style long-iso'
+alias la='eza -la --icons --no-user --group-directories-first  --time-style long-iso'
+alias tree='eza --tree -a --level=5'
 alias lg='lazygit';
 alias lnpm='lazynpm';
 alias localserver='lite-server';
