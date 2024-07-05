@@ -25,7 +25,7 @@ local function is_tmux()
 end
 
 -- Default color scheme
-local default_color_scheme = "kanagawa"
+local default_color_scheme = "catppuccin-macchiato"
 
 -- Select color scheme based on the time, and load it with LazyVim
 local function selectColorSchemeByTime()

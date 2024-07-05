@@ -66,9 +66,6 @@ alias gfindbydeveloper='git log --author';
 function gdiff() { git diff --color --no-index "$1" "$2" | diff-so-fancy; };
 function cdiff() { code --diff "$1" "$2"; };
 
-## LunarVIM
-alias nvim="~/.local/bin/nvim"
-
 ## npm aliases
 alias ni="npm install";
 alias nrs="npm run start -s --";
