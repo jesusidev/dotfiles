@@ -6,6 +6,7 @@ plug "zap-zsh/supercharge"
 plug "zap-zsh/zap-prompt"
 plug "zsh-users/zsh-syntax-highlighting"
 plug "zap-zsh/exa"
+plug "wintermi/zsh-mise"
 
 export EDITOR=nvim
 export VISUAL="$EDITOR"
@@ -31,6 +32,8 @@ alias cls='clear';
 alias repos='~/repos';
 alias rootdir='~/';
 alias delDir='rm -rf';
+alias history="history 1 | cut -c 8- | sed -e 's/^ [0-9]\{1,5\}  /    /gi' | fzf | pbcopy";
+
 
 ## git aliases
 alias gh-create="gh repo create $1 --source=. --remote=upstream";
@@ -106,6 +109,10 @@ alias twip="tsk doing";
 alias tdone="tsk done";
 
 
+# get nx auto complete
+source ./plugins/nx-completion/nx-completion.plugin.zsh
+
+
 # get zsh complete kubectl
 source <(kubectl completion zsh)
 alias kubectl=kubecolor
@@ -125,6 +132,13 @@ eval "$(starship init zsh)"
 ## Fire UP FNM
 eval "$(fnm env --use-on-cd)"
 
+# Add pyenv to PATH
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+
 # pnpm
 export PNPM_HOME="~/Library/pnpm"
 case ":$PATH:" in
@@ -132,3 +146,8 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/jesusguzman/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+eval "$(gh copilot alias -- zsh)"
