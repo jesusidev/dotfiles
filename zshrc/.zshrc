@@ -97,10 +97,19 @@ alias kportforward-staging="k port-forward -n staging";
 alias kportforward-prod="k port-forward -n production";
 alias kportforward-sandbox="k port-forward -n sandbox";
 
+## Docker aliases
+alias d="docker";
+alias dls='d ps --filter "status=running" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"';
+alias dstart="docker ps -a --filter 'status=exited' --format '{{.Names}}' | fzf --multi | xargs -r -I {} sh -c 'docker start {}; echo Started container: {}'"
+alias dls-stopped='d ps --filter "status=exited" --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"';
+alias dstop-all='d stop $(docker ps -q)';
+alias dstop="docker ps --format '{{.Names}}' | fzf --multi | xargs -r -I {} sh -c 'docker stop {}; echo Stopped container: {}'"
+alias drmvol="docker ps -a --format '{{.Names}}' | fzf --multi | xargs -r -I {} sh -c 'docker rm -v {}; echo Removed container: {}'"
+
 ## Tasks Shortcut
 ## https://github.com/kakengloh/tsk
-alias tsk="tsk new";
-alias thp="tsk new -s doing -p high -d 1h"
+alias tsk-new="tsk new";
+alias thp="tsk new -s todo -p high -d 1h"
 alias trm="tsk rm";
 alias tls="tsk ls";
 alias tboard="tsk board";
@@ -110,7 +119,7 @@ alias tdone="tsk done";
 
 
 # get nx auto complete
-source ./plugins/nx-completion/nx-completion.plugin.zsh
+source ~/.dotfiles/zshrc/plugins/nx-completion/nx-completion.plugin.zsh
 
 
 # get zsh complete kubectl
@@ -151,3 +160,4 @@ esac
 export PATH="/Users/jesusguzman/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 eval "$(gh copilot alias -- zsh)"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
