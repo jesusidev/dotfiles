@@ -56,6 +56,7 @@ installHomeBrewApps() {
   brew install --cask visual-studio-code
   brew install neovim
   brew install bat
+  brew install yazi ffmpegthumbnailer ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide imagemagick font-symbols-only-nerd-font
 
   # Web Tools
   echo "------------------------------------"
@@ -167,6 +168,11 @@ configureGit() {
   git config --global diff.algorithm patience
 
   git config --global diff.colorMoved default
+
+  # Configure Git to Use Your SSH Key for Signing Commits
+  git config --global gpg.format ssh
+  git config --global user.signingkey ~/.ssh/id_rsa.pub
+  git config --global commit.gpgSign true
 
   echo "********** DONE **********"
 
