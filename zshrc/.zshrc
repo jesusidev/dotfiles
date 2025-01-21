@@ -26,6 +26,7 @@ alias ll='eza -l --icons --no-user --group-directories-first  --time-style long-
 alias la='eza -la --icons --no-user --group-directories-first  --time-style long-iso'
 alias tree='eza --tree -a --level=5'
 alias lg='lazygit';
+alias dlz='lazydocker';
 alias lnpm='lazynpm';
 alias localserver='lite-server';
 alias cls='clear';

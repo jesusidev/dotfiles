@@ -18,7 +18,7 @@ adjust-cell-height = 35%
 background-opacity = 0.9
 
 mouse-hide-while-typing = true
-mouse-scroll-multiplier = 2
+mouse-scroll-multiplier = 0.5
 
 window-padding-balance = true 
 window-save-state = always
