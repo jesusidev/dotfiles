@@ -3,3 +3,4 @@ zshrc/.zshrc.old
 .DS_Store
 tmux/.config/tmux/plugins
 zshrc/private.zsh
+.idea

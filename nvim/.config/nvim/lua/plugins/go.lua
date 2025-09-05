@@ -1,24 +1,27 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    opts = function(_, opts)
-      if not opts.servers then
-        opts.servers = {}
-      end
-      opts.servers.gopls = {
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
+    opts = {
+      servers = {
+        gopls = {
+          settings = {
+            gopls = {
+              analyses = {
+                unusedparams = true,
+              },
+              staticcheck = true,
+              gofumpt = true,
             },
-            staticcheck = true,
-            usePlaceholders = true,
-            completeUnimported = true, -- This enables auto-import
-            gofumpt = true,
           },
         },
-      }
-      return opts
+      },
+    },
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "gofumpt", "goimports", "gopls", "delve" })
     end,
   },
 }

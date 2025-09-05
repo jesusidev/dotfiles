@@ -20,6 +20,13 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import/override with your plugins
     { import = "plugins" },
+    -- ensure catppuccin loads first
+    {
+      "catppuccin/nvim",
+      name = "catppuccin",
+      priority = 1000,
+      config = true,
+    },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -30,11 +37,11 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "catppuccin", "habamax" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
-  }, -- automatically check for plugin updates
+  },
   performance = {
     rtp = {
       -- disable some rtp plugins
@@ -50,4 +57,21 @@ require("lazy").setup({
       },
     },
   },
+})
+
+-- System theme sync setup
+vim.api.nvim_create_autocmd("Signal", {
+  pattern = "SIGUSR1",
+  callback = function()
+    local handle = io.popen('defaults read -g AppleInterfaceStyle 2>/dev/null')
+    if handle then
+      local result = handle:read("*a")
+      handle:close()
+      if result:match("Dark") then
+        vim.cmd("colorscheme catppuccin-mocha")
+      else
+        vim.cmd("colorscheme catppuccin-latte")
+      end
+    end
+  end,
 })
