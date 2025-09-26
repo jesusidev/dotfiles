@@ -1,4 +1,36 @@
 return {
+  -- Disable nvim-lspconfig's jdtls and stop any bare jdtls client on attach
+  {
+    "neovim/nvim-lspconfig",
+    priority = 1000,
+    opts = {
+      servers = {
+        jdtls = false, -- still signal “don’t configure it”
+      },
+    },
+    init = function()
+      -- keep a guard that kills any "bare" jdtls client that may attach
+      local aug = vim.api.nvim_create_augroup("KillBareJDTLS", { clear = true })
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = aug,
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data and args.data.client_id or 0)
+          if
+            client
+            and client.name == "jdtls"
+            and client.config
+            and client.config.cmd
+            and client.config.cmd[1] == "jdtls"
+          then
+            vim.schedule(function()
+              client.stop(true)
+            end)
+          end
+        end,
+      })
+    end,
+  },
+
   {
     "mfussenegger/nvim-jdtls",
     ft = { "java" },
@@ -39,6 +71,51 @@ return {
           end
         end
         return nil
+      end
+
+      -- ── Auto-detect installed JDKs on macOS to populate java.configuration.runtimes
+      local function detect_jdks()
+        local runtimes = {}
+        if vim.fn.has("mac") ~= 1 then
+          return runtimes
+        end
+        local lines = vim.fn.systemlist('/usr/libexec/java_home -V 2>&1')
+        local seen = {}
+        for _, line in ipairs(lines) do
+          -- find a path that ends with /Contents/Home
+          local path = line:match("(%S+/Contents/Home)")
+          if path and vim.fn.isdirectory(path) == 1 and not seen[path] then
+            seen[path] = true
+            -- probe java -version
+            local vout = vim.fn.systemlist(path .. '/bin/java -version 2>&1')
+            local ver_line = vout[1] or ''
+            local name
+            -- Java 1.8 reports like: "1.8.0_xxx"
+            local minor = ver_line:match('version%s+"1%.(%d+)')
+            if minor then
+              name = 'JavaSE-1.' .. minor
+            else
+              local major = ver_line:match('version%s+"(%d+)') or ver_line:match('(%d+)')
+              if major then
+                name = 'JavaSE-' .. major
+              else
+                -- fallback to folder name
+                name = 'JavaSE-' .. vim.fn.fnamemodify(path, ':t')
+              end
+            end
+            table.insert(runtimes, { name = name, path = path })
+          end
+        end
+        -- mark the highest numeric version as default when possible
+        if #runtimes > 0 then
+          table.sort(runtimes, function(a, b)
+            local na = tonumber(a.name:match('%d+')) or 0
+            local nb = tonumber(b.name:match('%d+')) or 0
+            return na > nb
+          end)
+          runtimes[1].default = true
+        end
+        return runtimes
       end
 
       -- ── Build full jdtls config for a root ───────────────────────────────────
@@ -91,7 +168,6 @@ return {
         }
         if lombok_jar then
           table.insert(cmd, "-javaagent:" .. lombok_jar)
-          table.insert(cmd, "-Xbootclasspath/a:" .. lombok_jar)
         end
         vim.list_extend(cmd, {
           "-jar",
@@ -130,7 +206,14 @@ return {
           settings = {
             java = {
               eclipse = { downloadSources = true },
-              configuration = { updateBuildConfiguration = "interactive", runtimes = {} },
+              -- Provide explicit JVM runtimes for the language server so it can
+              -- resolve project execution environments. Update these paths to
+              -- match the JDKs installed on your machine. Example macOS paths
+              -- are provided; change names/paths as needed.
+              configuration = {
+                updateBuildConfiguration = "interactive",
+                runtimes = detect_jdks(),
+              },
               maven = { downloadSources = true },
               implementationsCodeLens = { enabled = true },
               referencesCodeLens = { enabled = true },
@@ -212,18 +295,6 @@ return {
           end)
         end,
       })
-    end,
-  },
-
-  -- Optional: quiet Copilot for Java while stabilizing
-  {
-    "zbirenbaum/copilot.lua",
-    optional = true,
-    opts = function(_, opts)
-      opts = opts or {}
-      opts.filetypes = opts.filetypes or {}
-      opts.filetypes.java = false
-      return opts
     end,
   },
 }

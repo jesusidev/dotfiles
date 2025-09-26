@@ -3,5 +3,4 @@
 -- Add any additional options here
 --
 vim.opt.wrap = true
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
