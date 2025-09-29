@@ -12,7 +12,7 @@ keybind = cmd+s>e=equalize_splits
 # other
 font-family = "JetBrains Mono"
 font-size = 18
-theme = dark:catppuccin-mocha,light:catppuccin-latte
+theme = dark:catppuccin-mocha.conf,light:catppuccin-latte.conf
 shell-integration-features = no-cursor,sudo,no-title
 adjust-cell-height = 35%
 background-opacity = 1
