@@ -1,6 +1,6 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     cmd = "Mason",
     build = ":MasonUpdate",
     opts = {
@@ -26,10 +26,10 @@ return {
   },
 
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
     opts = {
@@ -45,17 +45,35 @@ return {
         return
       end
       mlsp.setup(opts or {})
-      mlsp.setup_handlers({
-        function(server)
-          if server == "jdtls" then
-            return
-          end -- nvim-jdtls handles Java
-          local ok_lsp, lsp = pcall(require, "lspconfig")
-          if ok_lsp and lsp[server] then
-            lsp[server].setup({})
+
+      -- Newer versions of mason-lspconfig may not expose setup_handlers.
+      -- If it's available use it; otherwise fallback to setting up
+      -- lspconfig servers for the ensured servers list.
+      if type(mlsp.setup_handlers) == "function" then
+        mlsp.setup_handlers({
+          function(server)
+            if server == "jdtls" then
+              return
+            end -- nvim-jdtls handles Java
+            local ok_lsp, lsp = pcall(require, "lspconfig")
+            if ok_lsp and lsp[server] then
+              lsp[server].setup({})
+            end
+          end,
+        })
+      else
+        local ok_lsp, lsp = pcall(require, "lspconfig")
+        if ok_lsp then
+          local servers = (opts and opts.ensure_installed) or {}
+          for _, server in ipairs(servers) do
+            if server ~= "jdtls" and lsp[server] then
+              pcall(function()
+                lsp[server].setup({})
+              end)
+            end
           end
-        end,
-      })
+        end
+      end
     end,
   },
 }
