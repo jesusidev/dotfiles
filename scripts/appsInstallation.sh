@@ -55,6 +55,7 @@ installHomeBrewApps() {
   brew install --cask iterm2
   brew install --cask visual-studio-code
   brew install neovim
+  brew install tree-sitter
   brew install bat
   brew install yazi ffmpegthumbnailer ffmpeg sevenzip jq poppler fd ripgrep fzf zoxide imagemagick font-symbols-only-nerd-font
 
