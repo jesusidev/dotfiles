@@ -125,11 +125,12 @@ return {
         end
 
         local reg_ok, registry = pcall(require, "mason-registry")
-        if not reg_ok or not registry.has_package("jdtls") then
+        if not reg_ok or not registry.is_installed("jdtls") then
           vim.notify("JDTLS is not installed (via Mason).", vim.log.levels.WARN)
           return nil
         end
-        local jdt_path = registry.get_package("jdtls"):get_install_path()
+        local jdt_pkg = registry.get_package("jdtls")
+        local jdt_path = vim.fn.stdpath("data") .. "/mason/packages/" .. jdt_pkg.name
         local launcher = vim.fn.glob(jdt_path .. "/plugins/org.eclipse.equinox.launcher_*.jar")
         if launcher == "" then
           vim.notify("JDTLS launcher jar not found", vim.log.levels.ERROR)
@@ -180,15 +181,17 @@ return {
 
         -- Only OSGi plugin jars (skip runner-with-deps & jacocoagent)
         local bundles = {}
-        if registry.has_package("java-debug-adapter") then
-          local p = registry.get_package("java-debug-adapter"):get_install_path()
+        if registry.is_installed("java-debug-adapter") then
+          local pkg = registry.get_package("java-debug-adapter")
+          local p = vim.fn.stdpath("data") .. "/mason/packages/" .. pkg.name
           local jar = vim.fn.glob(p .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
           if jar ~= "" then
             table.insert(bundles, jar)
           end
         end
-        if registry.has_package("java-test") then
-          local p = registry.get_package("java-test"):get_install_path()
+        if registry.is_installed("java-test") then
+          local pkg = registry.get_package("java-test")
+          local p = vim.fn.stdpath("data") .. "/mason/packages/" .. pkg.name
           local all = vim.fn.glob(p .. "/extension/server/*.jar", 0, 1)
           if type(all) == "table" then
             for _, j in ipairs(all) do

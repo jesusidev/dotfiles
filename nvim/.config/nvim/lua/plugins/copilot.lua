@@ -1,32 +1,21 @@
 return {
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
+    "supermaven-inc/supermaven-nvim",
     event = "InsertEnter",
-    build = ":Copilot auth",
-    cond = function()
-      local nvim_version = vim.version()
-      return nvim_version.major >= 0 and nvim_version.minor >= 11
-    end,
     opts = {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        debounce = 75,
-        keymap = {
-          accept = "<Tab>",
-          next = "<M-]>",
-          prev = "<M-[>",
-          dismiss = "<C-]>",
-        },
+      keymaps = {
+        accept_suggestion = "<Tab>",
+        clear_suggestion = "<C-]>",
+        accept_word = "<C-j>",
       },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
-        gitcommit = true,
-        ["*"] = true,
+      ignore_filetypes = {}, -- or { cpp = true }
+      color = {
+        suggestion_color = "#ffffff",
+        cterm = 244,
       },
+      log_level = "info", -- set to "off" to disable logging completely
+      disable_inline_completion = false, -- disables inline completion for use with cmp
+      disable_keymaps = false, -- disables built in keymaps for more manual control
     },
   },
 }

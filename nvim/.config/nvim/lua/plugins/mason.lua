@@ -30,51 +30,24 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "mason-org/mason.nvim",
-      "neovim/nvim-lspconfig",
     },
     opts = {
-      automatic_installation = true,
-      ensure_installed = {
-        -- Go only; DO NOT add "jdtls" here
-        "gopls",
+      -- In v2.x, handlers are defined in opts
+      handlers = {
+        -- Default handler for all servers
+        function(server_name)
+          -- Skip jdtls as it's handled by nvim-jdtls
+          if server_name == "jdtls" then
+            return
+          end
+          
+          -- Use vim.lsp.config for Neovim 0.11.2+
+          if vim.lsp.config and vim.lsp.config[server_name] then
+            vim.lsp.enable(server_name)
+          end
+        end,
       },
     },
-    config = function(_, opts)
-      local ok, mlsp = pcall(require, "mason-lspconfig")
-      if not ok then
-        return
-      end
-      mlsp.setup(opts or {})
-
-      -- Newer versions of mason-lspconfig may not expose setup_handlers.
-      -- If it's available use it; otherwise fallback to setting up
-      -- lspconfig servers for the ensured servers list.
-      if type(mlsp.setup_handlers) == "function" then
-        mlsp.setup_handlers({
-          function(server)
-            if server == "jdtls" then
-              return
-            end -- nvim-jdtls handles Java
-            local ok_lsp, lsp = pcall(require, "lspconfig")
-            if ok_lsp and lsp[server] then
-              lsp[server].setup({})
-            end
-          end,
-        })
-      else
-        local ok_lsp, lsp = pcall(require, "lspconfig")
-        if ok_lsp then
-          local servers = (opts and opts.ensure_installed) or {}
-          for _, server in ipairs(servers) do
-            if server ~= "jdtls" and lsp[server] then
-              pcall(function()
-                lsp[server].setup({})
-              end)
-            end
-          end
-        end
-      end
-    end,
   },
 }
 
