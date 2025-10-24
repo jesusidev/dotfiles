@@ -1,12 +1,17 @@
 return {
   {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "catppuccin",
+    },
+  },
+  {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     lazy = false,
-    config = function()
-      require("catppuccin").setup({
-      flavour = "mocha",
+    opts = {
+      flavour = "auto",
       background = {
         light = "latte",
         dark = "mocha",
@@ -37,8 +42,6 @@ return {
         shade = "dark",
         percentage = 0.15,
       },
-      })
-      vim.cmd.colorscheme("catppuccin")
-    end,
+    },
   },
 }

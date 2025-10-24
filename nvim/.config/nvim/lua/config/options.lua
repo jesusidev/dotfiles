@@ -5,6 +5,14 @@
 vim.opt.wrap = true
 vim.opt.relativenumber = false
 
+-- Detect system theme
+local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
+if handle then
+  local result = handle:read("*a")
+  handle:close()
+  vim.o.background = result:match("Dark") and "dark" or "light"
+end
+
 -- Enable inline diagnostics (virtual text)
 vim.diagnostic.config({
   virtual_text = {
