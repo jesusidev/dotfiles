@@ -47,8 +47,9 @@ flowchart TD
     Phase5 --> BuildAgent[Build Agent Subagent<br/>Build Check]
     BuildAgent --> Phase6[Phase 6: Documentation]
     
-    Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs]
-    DocsAgent --> Complete([Feature Complete])
+    Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs & Patterns]
+    DocsAgent --> UpdatePatterns[Update Pattern Doc<br/>docs/patterns/feature-patterns.md]
+    UpdatePatterns --> Complete([Feature Complete])
     
     Review --> SimpleComplete([Task Complete])
     Build --> SimpleComplete
@@ -67,6 +68,7 @@ flowchart TD
     style DocsAgent fill:#f0f0f0
     style PatternDoc fill:#e8f5e9
     style TaskPlan fill:#e8f5e9
+    style UpdatePatterns fill:#e8f5e9
 ```
 
 ## Agent Hierarchy
@@ -117,6 +119,7 @@ flowchart LR
     P4 --> A7[Review Feedback]
     P4 --> A8[Build Validation]
     P4 --> A9[Updated Documentation]
+    P4 --> A10[Updated Pattern Doc]
     
     style A1 fill:#e8f5e9
     style A2 fill:#e8f5e9
@@ -127,6 +130,7 @@ flowchart LR
     style A7 fill:#ffe0b2
     style A8 fill:#ffe0b2
     style A9 fill:#e8f5e9
+    style A10 fill:#e8f5e9
 ```
 
 ## Phase Details
@@ -161,5 +165,6 @@ flowchart LR
 
 ### Phase 6: Documentation
 - **Subagent:** @documentation
-- **Output:** Updated documentation
-- **Purpose:** Keep docs current with changes
+- **Output:** Updated documentation (README, API docs, pattern docs)
+- **Purpose:** Keep docs current with changes and update pattern documentation with new patterns discovered during implementation
+- **Pattern Update:** Reviews implementation and updates `docs/patterns/{feature}-patterns.md` to prevent drift

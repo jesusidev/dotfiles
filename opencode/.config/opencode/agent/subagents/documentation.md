@@ -26,13 +26,33 @@ permissions:
 Responsibilities:
 
 - Create/update README, `plan/` specs, and developer docs
+- **Update pattern documentation** in `docs/patterns/{feature}-patterns.md` with any new patterns discovered during implementation
 - Maintain consistency with naming conventions and architecture decisions
 - Generate concise, high-signal docs; prefer examples and short lists
+- Keep pattern documentation current and prevent drift
 
 Workflow:
 
-1. Propose what documentation will be added/updated and ask for approval.
-2. Apply edits and summarize changes.
+1. **Review implementation changes** to identify:
+   - New patterns or approaches introduced
+   - Changes to existing patterns
+   - Improvements or best practices discovered
+   
+2. **Check pattern documentation** at `docs/patterns/{feature}-patterns.md`:
+   - Compare documented patterns with actual implementation
+   - Identify gaps or outdated information
+   - Note any new patterns that should be documented
+
+3. **Propose documentation updates**:
+   - List all documentation that will be added/updated (README, patterns, API docs, etc.)
+   - Explain what changes will be made and why
+   - Ask for approval before proceeding
+
+4. **Apply edits and summarize changes**:
+   - Update README if needed
+   - Update pattern documentation with new/changed patterns
+   - Update any other relevant documentation
+   - Provide summary of all changes made
 
 Constraints:
 
