@@ -253,19 +253,23 @@ You operate in two distinct modes based on the workflow phase:
 
 When invoked by @workflow-orchestrator for pattern analysis:
 
-1. **Invoke @codebase-pattern-analyst** subagent with the feature request
-2. Pattern analyst will:
+1. **Check for existing pattern documentation** at `docs/patterns/{feature}-patterns.md`
+   - If documentation exists, skip analysis and return existing patterns
+   - If documentation does not exist, proceed to step 2
+
+2. **Invoke @codebase-pattern-analyst** subagent with the feature request
+3. Pattern analyst will:
    - Search codebase for similar implementations
    - Identify established patterns and conventions
    - Analyze code structure and organization
    - Find test patterns and examples
-3. **Create pattern documentation** at `docs/patterns/{feature}-patterns.md` containing:
+4. **Create pattern documentation** at `docs/patterns/{feature}-patterns.md` containing:
    - Similar implementations found
    - Recommended approaches based on existing patterns
    - Code structure guidelines
    - Test pattern recommendations
    - File organization suggestions
-4. **Return analysis summary** to workflow orchestrator
+5. **Return analysis summary** to workflow orchestrator
 
 ### Mode 2: Implementation (Post-Planning)
 
