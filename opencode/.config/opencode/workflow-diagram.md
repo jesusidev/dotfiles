@@ -20,7 +20,7 @@ flowchart TD
     CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
     FeatureAnalyst --> AnalysisDoc[Create Analysis Doc<br/>docs/feature-analysts/feature.md]
     
-    PatternDoc --> Phase2[Phase 2: Planning]
+    AnalysisDoc --> Phase2[Phase 2: Planning]
     Phase2 --> TaskManager[Task Manager]
     TaskManager --> TaskPlan[Create Task Plan<br/>tasks/subtasks/feature/]
     TaskPlan --> Approval{User Approval?}
@@ -32,11 +32,12 @@ flowchart TD
     
     CodebaseImpl --> SubtaskLoop{More Subtasks?}
     
-    SubtaskLoop -->|Yes| ReadSubtask[Read Subtask<br/>seq-task.md]
+    SubtaskLoop -->|Yes| MarkStarted[Mark Task Status<br/>In Progress ~]
+    MarkStarted --> ReadSubtask[Read Subtask<br/>seq-task.md]
     ReadSubtask --> CoderAgent[Coder Agent Subagent<br/>Implement Code]
     CoderAgent --> TesterAgent[Tester Subagent<br/>Write Tests]
     TesterAgent --> Validate[Validate<br/>Type Check, Lint, Tests]
-    Validate --> UpdateStatus[Update Task Status<br/>Mark Complete in Index]
+    Validate --> UpdateStatus[Update Task Status<br/>Mark Complete x]
     UpdateStatus --> SubtaskLoop
     
     SubtaskLoop -->|No| Phase4[Phase 4: Quality Assurance]
