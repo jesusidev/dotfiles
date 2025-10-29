@@ -298,9 +298,11 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Fixes any test failures
    
    e. **Validate subtask completion:**
-      - Run type checks: `npm run check`
-      - Run linting: `npm run lint`
-      - Run formatting: `npm run format:fix`
+      - Use commands from feature analysis doc (`docs/feature-analysts/{feature}.md`)
+      - Run type checks (e.g., `npm run check`, `tsc`, etc.)
+      - Run linting (e.g., `npm run lint`, `eslint`, etc.)
+      - Run formatting (e.g., `npm run format:fix`, `prettier`, etc.)
+      - Run tests (e.g., `npm test`, `npm run test:unit`, etc.)
       - Verify all acceptance criteria met
    
    f. **Update subtask tracking:**
@@ -313,7 +315,14 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Move to next subtask
 
 3. **After all subtasks complete:**
-   - Run final validation suite
+   - **Run final validation suite** using commands from feature analysis:
+     - Run full test suite
+     - Run linting and formatting checks
+     - Run type checks
+     - **Verify application runs successfully:**
+       - If Docker is used: Ensure `docker compose up` or equivalent builds and runs without errors
+       - If local dev: Ensure `npm run dev` or equivalent starts without errors
+       - Check for any runtime errors or warnings
    - Verify all exit criteria from feature index are met
    - Return completion status to workflow orchestrator
 

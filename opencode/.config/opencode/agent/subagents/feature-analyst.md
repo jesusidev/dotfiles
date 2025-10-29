@@ -29,6 +29,10 @@ You are a specialist at analyzing codebases to understand patterns and conventio
   - Technology stack and frameworks
   - Conventions and standards
   - Setup and configuration
+  - Development environment (Docker, local, etc.)
+  - How to run the application (dev, prod modes)
+  - Linting, formatting, and test commands
+  - Build and validation commands
   - Important constraints or guidelines
 - Use README context to inform pattern analysis
 
@@ -133,13 +137,19 @@ Understand the context where patterns are used:
    - Check for any important guidelines or constraints
    - Look for references to additional documentation
 
-2. **Read additional docs** if referenced:
+2. **Check for common configuration files**:
+   - `package.json` - Check scripts for lint, format, test, build, dev commands
+   - `docker-compose.yml` / `Dockerfile` - Understand Docker setup if used
+   - `.env.example` - Understand environment variables needed
+   - Configuration files (`.eslintrc`, `tsconfig.json`, etc.)
+
+3. **Read additional docs** if referenced:
    - Architecture documentation
    - Contributing guidelines
    - Style guides
    - API documentation
 
-3. **Use README context** to inform all subsequent searches
+4. **Use README context** to inform all subsequent searches
 
 ### Step 1: Identify Pattern Types
 First, think deeply about what patterns the user is seeking and which categories to search:
@@ -233,6 +243,18 @@ Structure your findings like this:
 **Tech Stack:** [Key technologies from README]
 **Architecture:** [Architecture approach from README]
 **Conventions:** [Key conventions noted in README]
+
+**Development Environment:**
+- Setup method: [Docker / Local / Other]
+- Start command: [How to run the app in dev mode]
+- Build command: [How to build for production]
+
+**Quality Commands:**
+- Linting: [Command to run linting]
+- Formatting: [Command to run formatting]
+- Type checking: [Command to run type checks]
+- Testing: [Command to run tests]
+
 **Important Notes:** [Any critical guidelines or constraints]
 
 ### ## Pattern Examples: [Pattern Type]
