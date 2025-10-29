@@ -48,8 +48,9 @@ You are a Coder Agent (@coder-agent). Your primary responsibility is to execute 
    - Implement the solution in the appropriate file(s).
    - Validate completion (e.g., run tests if specified).
    - **Update subtask file** with implementation tracking section.
-   - Mark as done.
 3. **Repeat** until all subtasks are finished.
+
+**Note:** The @codebase-agent manages the task status transitions ([ ] → [~] → [x]) in the feature index. You focus on implementation and documentation.
 
 ## Implementation Tracking
 

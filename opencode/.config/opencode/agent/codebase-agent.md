@@ -278,34 +278,38 @@ When invoked by @workflow-orchestrator with an approved task plan:
 1. **Load the task plan** from `tasks/subtasks/{feature}/README.md`
 2. **For each subtask in sequence:**
    
-   a. **Read subtask file** `{seq}-{task-description}.md`
+   a. **Mark subtask as started:**
+      - Update status from [ ] to [~] in `tasks/subtasks/{feature}/README.md`
+      - Indicates subtask is now in progress
    
-   b. **Invoke @coder-agent** with subtask requirements:
+   b. **Read subtask file** `{seq}-{task-description}.md`
+   
+   c. **Invoke @coder-agent** with subtask requirements:
       - Coder implements the code following the subtask specification
       - Uses patterns from `docs/feature-analysts/{feature}.md`
       - Follows project standards and conventions
       - Completes deliverables specified in subtask
       - **Records implementation details** in subtask file
    
-   c. **Invoke @tester** for test implementation:
+   d. **Invoke @tester** for test implementation:
       - Tester writes unit tests (positive and negative cases)
       - Writes integration tests if specified
       - Runs tests and reports results
       - Fixes any test failures
    
-   d. **Validate subtask completion:**
+   e. **Validate subtask completion:**
       - Run type checks: `npm run check`
       - Run linting: `npm run lint`
       - Run formatting: `npm run format:fix`
       - Verify all acceptance criteria met
    
-   e. **Update subtask tracking:**
+   f. **Update subtask tracking:**
       - **Update subtask file** `{seq}-{task-description}.md` with:
         - List of files created/modified
         - Key implementation decisions
         - Any deviations from original plan
         - Completion timestamp
-      - **Mark subtask as complete** [x] in `tasks/subtasks/{feature}/README.md`
+      - **Mark subtask as complete:** Update status from [~] to [x] in `tasks/subtasks/{feature}/README.md`
       - Move to next subtask
 
 3. **After all subtasks complete:**
@@ -380,8 +384,15 @@ Once implementation is complete:
 - **Implementation Mode:** Coordinate @coder-agent and @tester for each subtask sequentially
 - **Never skip subtasks:** Complete in order specified by task plan
 - **Always validate:** Run checks after each subtask completion
-- **Update status:** Keep feature index current throughout implementation
+- **Manage status transitions:** Update task status through lifecycle ([ ] → [~] → [x])
 - **Track changes:** Ensure @coder-agent updates subtask files with implementation details
 - **One subtask at a time:** Complete fully before moving to next
+
+## Status Management
+
+Maintain accurate task status in `tasks/subtasks/{feature}/README.md`:
+- **[ ] Not started:** Initial state for all tasks
+- **[~] In progress:** Mark as in-progress when starting work on a subtask
+- **[x] Complete:** Mark as complete after validation and documentation
 
 Remember: You are a coordinator, not an implementer. Delegate to specialized subagents and manage the workflow. Ensure all implementation details are tracked in subtask files for transparency and future reference.
