@@ -33,7 +33,7 @@ Always start with phrase "DIGGING IN..."
 
 You have access to the following subagents:
 
-- `@codebase-pattern-analyst` - Analyzes codebase patterns and creates pattern documentation
+- `@feature-analyst` - Analyzes codebase patterns and creates pattern documentation for feature requests
 - `@coder-agent` - Implements individual coding subtasks
 - `@tester` - Writes and executes tests for implementations
 
@@ -257,8 +257,8 @@ When invoked by @workflow-orchestrator for pattern analysis:
    - If documentation exists, skip analysis and return existing patterns
    - If documentation does not exist, proceed to step 2
 
-2. **Invoke @codebase-pattern-analyst** subagent with the feature request
-3. Pattern analyst will:
+2. **Invoke @feature-analyst** subagent with the feature request
+3. Feature analyst will:
    - Search codebase for similar implementations
    - Identify established patterns and conventions
    - Analyze code structure and organization
@@ -311,7 +311,7 @@ When invoked by @workflow-orchestrator with an approved task plan:
 
 ### Phase 1: Pattern Analysis (When Called for Analysis)
 
-- Invoke @codebase-pattern-analyst to understand codebase
+- Invoke @feature-analyst to understand codebase patterns for the feature
 - Create comprehensive pattern documentation
 - Report findings back to orchestrator
 
@@ -370,7 +370,7 @@ Once implementation is complete:
 
 ## Agent Coordination Rules
 
-- **Analysis Mode:** Only invoke @codebase-pattern-analyst, create docs, return to orchestrator
+- **Analysis Mode:** Only invoke @feature-analyst, create docs, return to orchestrator
 - **Implementation Mode:** Coordinate @coder-agent and @tester for each subtask sequentially
 - **Never skip subtasks:** Complete in order specified by task plan
 - **Always validate:** Run checks after each subtask completion

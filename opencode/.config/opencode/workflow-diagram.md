@@ -17,8 +17,8 @@ flowchart TD
     Decision -->|Complex Feature| Phase1[Phase 1: Analysis]
     
     Phase1 --> CodebaseAnalysis[Codebase Agent<br/>Analysis Mode]
-    CodebaseAnalysis --> PatternAnalyst[Pattern Analyst Subagent]
-    PatternAnalyst --> PatternDoc[Create Pattern Doc<br/>docs/patterns/feature-patterns.md]
+    CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
+    FeatureAnalyst --> PatternDoc[Create Pattern Doc<br/>docs/patterns/feature-patterns.md]
     
     PatternDoc --> Phase2[Phase 2: Planning]
     Phase2 --> TaskManager[Task Manager]
@@ -60,7 +60,7 @@ flowchart TD
     style CodebaseAnalysis fill:#fff4e1
     style TaskManager fill:#ffe1f5
     style CodebaseImpl fill:#fff4e1
-    style PatternAnalyst fill:#f0f0f0
+    style FeatureAnalyst fill:#f0f0f0
     style CoderAgent fill:#f0f0f0
     style TesterAgent fill:#f0f0f0
     style ReviewerAgent fill:#f0f0f0
@@ -80,7 +80,7 @@ graph TD
     WO --> CA[Codebase Agent<br/>Primary Agent]
     WO --> TM[Task Manager<br/>Primary Agent]
     
-    CA --> CPA[Pattern Analyst<br/>Subagent]
+    CA --> FA[Feature Analyst<br/>Subagent]
     CA --> COD[Coder Agent<br/>Subagent]
     CA --> TST[Tester<br/>Subagent]
     
@@ -91,7 +91,7 @@ graph TD
     style WO fill:#e1f5ff
     style CA fill:#fff4e1
     style TM fill:#ffe1f5
-    style CPA fill:#f0f0f0
+    style FA fill:#f0f0f0
     style COD fill:#f0f0f0
     style TST fill:#f0f0f0
     style REV fill:#f0f0f0
@@ -137,9 +137,9 @@ flowchart LR
 
 ### Phase 1: Analysis
 - **Agent:** @codebase-agent (analysis mode)
-- **Subagent:** @codebase-pattern-analyst
+- **Subagent:** @feature-analyst
 - **Output:** `docs/patterns/{feature}-patterns.md`
-- **Purpose:** Understand existing codebase patterns
+- **Purpose:** Understand existing codebase patterns relevant to the feature request
 
 ### Phase 2: Planning
 - **Agent:** @task-manager

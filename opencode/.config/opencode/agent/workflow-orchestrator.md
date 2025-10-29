@@ -54,8 +54,8 @@ For all requests (after user confirmation if simple):
 
 #### Phase 1: Analysis & Understanding
 1. **Invoke @codebase-agent** with analysis request
-   - @codebase-agent will delegate to @codebase-pattern-analyst subagent
-   - Pattern analyst searches codebase for similar implementations
+   - @codebase-agent will delegate to @feature-analyst subagent
+   - Feature analyst searches codebase for similar implementations
    - Creates pattern documentation in `docs/patterns/{feature}-patterns.md`
    - Returns insights about existing patterns, conventions, and approaches
 
@@ -106,7 +106,7 @@ Request received
     └─> Proceed with Complete Workflow:
             │
             ├─> Phase 1: @codebase-agent (analysis)
-            │       └─> Calls @codebase-pattern-analyst
+            │       └─> Calls @feature-analyst
             │           └─> Creates docs/patterns/{feature}-patterns.md (if not exists)
             │
             ├─> Phase 2: @task-manager (planning)
