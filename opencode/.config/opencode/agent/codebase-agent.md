@@ -253,7 +253,7 @@ You operate in two distinct modes based on the workflow phase:
 
 When invoked by @workflow-orchestrator for pattern analysis:
 
-1. **Check for existing pattern documentation** at `docs/patterns/{feature}-patterns.md`
+1. **Check for existing pattern documentation** at `docs/feature-analysts/{feature}.md`
    - If documentation exists, skip analysis and return existing patterns
    - If documentation does not exist, proceed to step 2
 
@@ -263,7 +263,7 @@ When invoked by @workflow-orchestrator for pattern analysis:
    - Identify established patterns and conventions
    - Analyze code structure and organization
    - Find test patterns and examples
-4. **Create pattern documentation** at `docs/patterns/{feature}-patterns.md` containing:
+4. **Create pattern documentation** at `docs/feature-analysts/{feature}.md` containing:
    - Similar implementations found
    - Recommended approaches based on existing patterns
    - Code structure guidelines
@@ -282,7 +282,7 @@ When invoked by @workflow-orchestrator with an approved task plan:
    
    b. **Invoke @coder-agent** with subtask requirements:
       - Coder implements the code following the subtask specification
-      - Uses patterns from `docs/patterns/{feature}-patterns.md`
+      - Uses patterns from `docs/feature-analysts/{feature}.md`
       - Follows project standards and conventions
       - Completes deliverables specified in subtask
    

@@ -40,7 +40,7 @@ You are a Task Manager Agent (@task-manager), invoked by @workflow-orchestrator 
 When invoked by @workflow-orchestrator, you will receive:
 
 1. **Feature request:** The original user request describing the feature
-2. **Pattern analysis:** Pattern documentation from `docs/patterns/{feature}-patterns.md` created by @feature-analyst
+2. **Pattern analysis:** Pattern documentation from `docs/feature-analysts/{feature}.md` created by @feature-analyst
 3. **Project context:** Existing code structure, conventions, and standards
 
 ## Mandatory Two-Phase Workflow
@@ -49,7 +49,7 @@ When invoked by @workflow-orchestrator, you will receive:
 
 When given a complex feature request with pattern analysis:
 
-1. **Review pattern documentation** from `docs/patterns/{feature}-patterns.md`:
+1. **Review pattern documentation** from `docs/feature-analysts/{feature}.md`:
    - Study similar implementations found in codebase
    - Understand established patterns and conventions
    - Note recommended approaches and structures
@@ -75,7 +75,7 @@ When given a complex feature request with pattern analysis:
 ## Subtask Plan
 feature: {kebab-case-feature-name}
 objective: {one-line description}
-pattern_reference: docs/patterns/{feature}-patterns.md
+pattern_reference: docs/feature-analysts/{feature}.md
 
 tasks:
 - seq: {2-digit}, filename: {seq}-{task-description}.md, title: {clear title}, pattern: {reference to pattern doc}
@@ -133,7 +133,7 @@ meta:
   priority: P2
   depends_on: [{dependency-ids}]
   tags: [implementation, tests-required]
-  pattern_reference: docs/patterns/{feature}-patterns.md#{section}
+  pattern_reference: docs/feature-analysts/{feature}.md#{section}
 
 objective:
 - Clear, single outcome for this task
@@ -176,7 +176,7 @@ notes:
 - tasks/subtasks/{feature}/README.md
 - tasks/subtasks/{feature}/{seq}-{task-description}.md
 
-Pattern reference: docs/patterns/{feature}-patterns.md
+Pattern reference: docs/feature-analysts/{feature}.md
 
 Task plan ready for implementation by @codebase-agent
 Next suggested task: {seq} — {title}

@@ -18,7 +18,7 @@ flowchart TD
     
     Phase1 --> CodebaseAnalysis[Codebase Agent<br/>Analysis Mode]
     CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
-    FeatureAnalyst --> PatternDoc[Create Pattern Doc<br/>docs/patterns/feature-patterns.md]
+    FeatureAnalyst --> AnalysisDoc[Create Analysis Doc<br/>docs/feature-analysts/feature.md]
     
     PatternDoc --> Phase2[Phase 2: Planning]
     Phase2 --> TaskManager[Task Manager]
@@ -47,8 +47,8 @@ flowchart TD
     Phase5 --> BuildAgent[Build Agent Subagent<br/>Build Check]
     BuildAgent --> Phase6[Phase 6: Documentation]
     
-    Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs & Patterns]
-    DocsAgent --> UpdatePatterns[Update Pattern Doc<br/>docs/patterns/feature-patterns.md]
+    Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
+    DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>docs/feature-analysts/feature.md]
     UpdatePatterns --> Complete([Feature Complete])
     
     Review --> SimpleComplete([Task Complete])
@@ -66,7 +66,7 @@ flowchart TD
     style ReviewerAgent fill:#f0f0f0
     style BuildAgent fill:#f0f0f0
     style DocsAgent fill:#f0f0f0
-    style PatternDoc fill:#e8f5e9
+    style AnalysisDoc fill:#e8f5e9
     style TaskPlan fill:#e8f5e9
     style UpdatePatterns fill:#e8f5e9
 ```
@@ -104,7 +104,7 @@ graph TD
 ```mermaid
 flowchart LR
     Start([Feature Request]) --> P1[Phase 1: Analysis]
-    P1 --> A1[Pattern Documentation]
+    P1 --> A1[Feature Analysis Doc]
     
     A1 --> P2[Phase 2: Planning]
     P2 --> A2[Task Index README]
@@ -119,7 +119,7 @@ flowchart LR
     P4 --> A7[Review Feedback]
     P4 --> A8[Build Validation]
     P4 --> A9[Updated Documentation]
-    P4 --> A10[Updated Pattern Doc]
+    P4 --> A10[Updated Analysis Doc]
     
     style A1 fill:#e8f5e9
     style A2 fill:#e8f5e9
@@ -138,7 +138,7 @@ flowchart LR
 ### Phase 1: Analysis
 - **Agent:** @codebase-agent (analysis mode)
 - **Subagent:** @feature-analyst
-- **Output:** `docs/patterns/{feature}-patterns.md`
+- **Output:** `docs/feature-analysts/{feature}.md`
 - **Purpose:** Understand existing codebase patterns relevant to the feature request
 
 ### Phase 2: Planning
@@ -165,6 +165,6 @@ flowchart LR
 
 ### Phase 6: Documentation
 - **Subagent:** @documentation
-- **Output:** Updated documentation (README, API docs, pattern docs)
-- **Purpose:** Keep docs current with changes and update pattern documentation with new patterns discovered during implementation
-- **Pattern Update:** Reviews implementation and updates `docs/patterns/{feature}-patterns.md` to prevent drift
+- **Output:** Updated documentation (README, API docs, feature analysis docs)
+- **Purpose:** Keep docs current with changes and update feature analysis documentation with new patterns discovered during implementation
+- **Analysis Update:** Reviews implementation and updates `docs/feature-analysts/{feature}.md` to prevent drift
