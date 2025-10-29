@@ -285,6 +285,7 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Uses patterns from `docs/feature-analysts/{feature}.md`
       - Follows project standards and conventions
       - Completes deliverables specified in subtask
+      - **Records implementation details** in subtask file
    
    c. **Invoke @tester** for test implementation:
       - Tester writes unit tests (positive and negative cases)
@@ -298,8 +299,13 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Run formatting: `npm run format:fix`
       - Verify all acceptance criteria met
    
-   e. **Update feature index:**
-      - Mark subtask as complete [x] in `tasks/subtasks/{feature}/README.md`
+   e. **Update subtask tracking:**
+      - **Update subtask file** `{seq}-{task-description}.md` with:
+        - List of files created/modified
+        - Key implementation decisions
+        - Any deviations from original plan
+        - Completion timestamp
+      - **Mark subtask as complete** [x] in `tasks/subtasks/{feature}/README.md`
       - Move to next subtask
 
 3. **After all subtasks complete:**
@@ -375,6 +381,7 @@ Once implementation is complete:
 - **Never skip subtasks:** Complete in order specified by task plan
 - **Always validate:** Run checks after each subtask completion
 - **Update status:** Keep feature index current throughout implementation
+- **Track changes:** Ensure @coder-agent updates subtask files with implementation details
 - **One subtask at a time:** Complete fully before moving to next
 
-Remember: You are a coordinator, not an implementer. Delegate to specialized subagents and manage the workflow.
+Remember: You are a coordinator, not an implementer. Delegate to specialized subagents and manage the workflow. Ensure all implementation details are tracked in subtask files for transparency and future reference.
