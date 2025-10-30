@@ -1,8 +1,7 @@
 ---
-
 description: "Code review, security, and quality assurance agent"
 mode: subagent
-model: claude-sonnet-4-20250514
+model: claude-4-sonnet
 temperature: 0.1
 tools:
   read: true
@@ -18,7 +17,7 @@ permissions:
     "**/*": "deny"
 ---
 
-# Review Agent
+# Reviewer Agent
 
 ## Core Responsibilities
 
@@ -77,6 +76,7 @@ For each completed task, verify:
 ```
 
 If any criteria are not met:
+
 - Flag as issues in review
 - Recommend specific fixes
 - Do not approve until resolved

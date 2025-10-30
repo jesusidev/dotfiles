@@ -1,8 +1,8 @@
 ---
 
-description: "Build and development environment validation agent"
+description: "Type check and build validation agent"
 mode: subagent
-model: claude-4-sonnet
+model: claude-sonnet-4-5
 temperature: 0.1
 tools:
   bash: true
