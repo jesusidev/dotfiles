@@ -28,21 +28,34 @@ This document defines the clear separation of responsibilities for task status m
 #### Workflow:
 1. **Mark task as started:** [ ] → [~] in feature index
 2. **Invoke @coder-agent** for implementation
-3. **Invoke @tester** for tests
-4. **Verify subtask file updates:**
-   - Acceptance criteria marked complete
-   - Implementation section added
-   - Test results section added
-5. **Fallback:** If subagents didn't update, update it yourself
-6. **Mark task as complete:** [~] → [x] in feature index
-7. Move to next task
+3. **🚨 VERIFY @coder-agent updates (MANDATORY - DO NOT SKIP):**
+   - Read subtask file
+   - Check ALL acceptance criteria marked: `- [x] {criterion} - ✅ Completed`
+   - Check "## Implementation Completed" section exists
+   - IF MISSING: Use Edit tool to add (fallback responsibility)
+4. **Invoke @tester** for tests
+5. **🚨 VERIFY @tester updates (MANDATORY - DO NOT SKIP):**
+   - Read subtask file again
+   - Check "## Test Results" section exists
+   - Check Testing Requirements marked: `- [x] {test case}`
+   - IF MISSING: Use Edit tool to add (fallback responsibility)
+6. **Run validation:** Type check, lint, format, tests
+7. **🚨 COMPLETE MANDATORY CHECKLIST (DO NOT SKIP):**
+   - Verify ALL items in checklist pass
+   - Use grep commands to verify sections exist
+   - Read subtask file one final time
+8. **Mark task as complete:** [~] → [x] in feature index (ONLY after checklist complete)
+9. Move to next task
 
 #### Critical Rules:
 - ✅ YOU own feature index status transitions
-- ✅ YOU verify subtask file updates
-- ✅ YOU have fallback responsibility if subagents don't update
-- ❌ NEVER skip verification step
-- ❌ NEVER mark complete without validation passing
+- ✅ YOU MUST verify subtask file updates (steps 3, 5)
+- ✅ YOU MUST use fallback if subagents don't update
+- ✅ YOU MUST complete verification checklist (step 7)
+- ❌ NEVER skip verification steps (3, 5, 7)
+- ❌ NEVER mark complete without checklist passing
+- ❌ NEVER assume subagents updated files
+- ⚠️  **Verification steps are MANDATORY, not optional**
 
 ### @coder-agent (Implementer)
 **Primary Responsibility:** Subtask File Implementation Tracking
@@ -159,19 +172,72 @@ This document defines the clear separation of responsibilities for task status m
 ### Issue: Confusion about who updates what
 **Solution:** Refer to this document's "Agent Responsibilities" section
 
-## Validation Checklist
+## 🚨 MANDATORY VALIDATION CHECKLIST 🚨
 
-Before @codebase-agent marks a task as complete [~] → [x]:
+**@codebase-agent: Complete EVERY item before marking [~] → [x]**
 
-- [ ] @coder-agent implemented the code
-- [ ] @tester wrote and ran tests
-- [ ] Type checks pass
-- [ ] Linting passes
-- [ ] Tests pass
-- [ ] **Acceptance criteria marked in subtask file**
-- [ ] **Implementation section added to subtask file**
-- [ ] **Test results section added to subtask file**
-- [ ] All validation commands successful
+### Step 1: Read Subtask File
+```bash
+cat tasks/subtasks/{feature}/{seq}-{task-description}.md
+```
+- [ ] File read successfully
+
+### Step 2: Verify Implementation Updates
+```bash
+# Check acceptance criteria
+grep "\[x\].*✅ Completed" tasks/subtasks/{feature}/{seq}-{task-description}.md
+
+# Check Implementation Completed section
+grep "## Implementation Completed" tasks/subtasks/{feature}/{seq}-{task-description}.md
+```
+- [ ] ALL acceptance criteria marked: `- [x] {criterion} - ✅ Completed`
+- [ ] "## Implementation Completed" section exists
+- [ ] Date/timestamp present in implementation section
+- [ ] Files Changed list present
+- [ ] Key Decisions documented
+- [ ] **IF ANY MISSING:** Use Edit tool to add (fallback)
+
+### Step 3: Verify Test Updates
+```bash
+# Check Test Results section
+grep "## Test Results" tasks/subtasks/{feature}/{seq}-{task-description}.md
+
+# Check testing requirements
+grep "## Testing Requirements" tasks/subtasks/{feature}/{seq}-{task-description}.md
+```
+- [ ] Testing Requirements checklist items marked: `- [x] {test case}`
+- [ ] "## Test Results" section exists
+- [ ] Date/timestamp present in test results
+- [ ] Command Used documented
+- [ ] Pass/fail results shown
+- [ ] **IF ANY MISSING:** Use Edit tool to add (fallback)
+
+### Step 4: Verify Validation Passed
+- [ ] Type checks passed (npm run check / tsc)
+- [ ] Linting passed (npm run lint)
+- [ ] Formatting passed (npm run format:fix)
+- [ ] Tests passed (npm test)
+- [ ] No errors in any validation output
+
+### Step 5: Final Verification
+- [ ] Re-read subtask file one more time
+- [ ] Confirmed all sections present and complete
+- [ ] All checklist items above are checked
+
+### Step 6: Mark Complete
+**ONLY if ALL items above are checked:**
+```bash
+# Use Edit tool to update feature index
+# Change: [~] {seq} — {task}
+# To:     [x] {seq} — {task}
+```
+- [ ] Feature index updated to [x]
+
+**IF ANY ITEM UNCHECKED:**
+- ❌ DO NOT mark complete
+- ❌ DO NOT proceed to next task
+- ✅ Fix the missing item
+- ✅ Re-run this checklist from Step 1
 
 ## Key Principles
 

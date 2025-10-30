@@ -275,6 +275,28 @@ When invoked by @workflow-orchestrator for pattern analysis:
 
 When invoked by @workflow-orchestrator with an approved task plan:
 
+**🚨 CRITICAL RESPONSIBILITIES - READ BEFORE STARTING 🚨**
+
+You are the ONLY agent responsible for:
+1. ✅ Marking task status in feature index ([ ] → [~] → [x])
+2. ✅ Verifying subagents updated subtask files
+3. ✅ Using fallback to update subtask files if subagents didn't
+4. ✅ Running validation checklist before marking complete
+
+**YOU WILL BE EVALUATED ON:**
+- Did you verify subtask file updates? (steps d & f)
+- Did you use fallback if updates missing?
+- Did you complete mandatory checklist? (step h)
+- Did you mark feature index status correctly?
+
+**NEVER:**
+- ❌ Skip verification steps (d, f, h)
+- ❌ Mark complete without checking subtask file
+- ❌ Assume subagents updated files
+- ❌ Proceed if checklist incomplete
+
+---
+
 1. **Load the task plan** from `tasks/subtasks/{feature}/README.md`
 2. **For each subtask in sequence:**
    
@@ -292,14 +314,54 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - **Records implementation details** in subtask file
       - **IF ERROR:** Stop immediately, report to orchestrator with error details
    
-   d. **Invoke @tester** for test implementation:
+   d. **🚨 CRITICAL: Verify @coder-agent updates (DO NOT SKIP THIS STEP) 🚨**
+      
+      **Read the subtask file and verify:**
+      ```bash
+      # Use this command to read subtask file
+      cat tasks/subtasks/{feature}/{seq}-{task-description}.md
+      ```
+      
+      **Check for these required elements:**
+      - [ ] All acceptance criteria marked: `- [x] {criterion} - ✅ Completed`
+      - [ ] "Implementation Completed" section exists
+      - [ ] "Date:" field present with timestamp
+      - [ ] "Files Changed:" section lists all modified files
+      - [ ] "Key Decisions:" section documents choices made
+      
+      **IF ANY ELEMENT IS MISSING:**
+      - **STOP and use Edit tool to add missing elements**
+      - Use the template from lines 72-100 in coder-agent.md
+      - DO NOT proceed until subtask file is complete
+   
+   e. **Invoke @tester** for test implementation:
       - Tester writes unit tests (positive and negative cases)
       - Writes integration tests if specified
       - Runs tests and reports results
       - Fixes any test failures
       - **IF ERROR:** Stop immediately, report to orchestrator with error details
    
-   e. **Validate subtask completion:**
+   f. **🚨 CRITICAL: Verify @tester updates (DO NOT SKIP THIS STEP) 🚨**
+      
+      **Read the subtask file again and verify:**
+      ```bash
+      # Re-read to check test updates
+      cat tasks/subtasks/{feature}/{seq}-{task-description}.md
+      ```
+      
+      **Check for these required elements:**
+      - [ ] Testing Requirements checklist items marked: `- [x] {test case}`
+      - [ ] "Test Results" section exists
+      - [ ] "Date:" field present with timestamp
+      - [ ] "Command Used:" documents test command
+      - [ ] "Results:" shows pass/fail counts
+      
+      **IF ANY ELEMENT IS MISSING:**
+      - **STOP and use Edit tool to add missing elements**
+      - Use the template from lines 72-108 in tester.md
+      - DO NOT proceed until subtask file is complete
+   
+   g. **Validate subtask completion:**
       - Use commands from feature analysis doc (`docs/feature-analysts/{feature}.md`)
       - Run type checks (e.g., `npm run check`, `tsc`, etc.)
       - Run linting (e.g., `npm run lint`, `eslint`, etc.)
@@ -308,16 +370,24 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Verify all acceptance criteria met
       - **IF ANY VALIDATION FAILS:** Stop immediately, report to orchestrator with details
    
-   f. **Update subtask tracking (YOU are responsible for this):**
-      - **Verify @coder-agent updated subtask file** `{seq}-{task-description}.md` with:
-        - ✅ All acceptance criteria marked as [x] - ✅ Completed
-        - List of files created/modified
-        - Key implementation decisions
-        - Any deviations from original plan
-        - Completion timestamp
-      - **If @coder-agent did not update acceptance criteria:** Update them yourself
+   h. **🚨 MANDATORY VERIFICATION BEFORE MARKING COMPLETE 🚨**
+      
+      **Complete this checklist (DO NOT SKIP):**
+      - [ ] Read subtask file one final time
+      - [ ] Confirmed all acceptance criteria marked [x]
+      - [ ] Confirmed "Implementation Completed" section present
+      - [ ] Confirmed "Test Results" section present
+      - [ ] All validation commands passed (type check, lint, format, tests)
+      - [ ] No errors in validation output
+      
+      **ONLY AFTER ALL ITEMS CHECKED:**
       - **Mark subtask as complete in feature index:** Update status from [~] to [x] in `tasks/subtasks/{feature}/README.md`
       - Move to next subtask
+      
+      **IF ANY ITEM UNCHECKED:**
+      - **DO NOT mark complete**
+      - Go back and fix the missing item
+      - Re-run this checklist
 
 3. **After all subtasks complete:**
    - **Run final validation suite** using commands from feature analysis:
@@ -331,6 +401,117 @@ When invoked by @workflow-orchestrator with an approved task plan:
      - **IF ANY VALIDATION FAILS:** Stop and report to orchestrator
    - Verify all exit criteria from feature index are met
    - Return completion status to workflow orchestrator
+
+## 🚨 MANDATORY VERIFICATION CHECKLIST 🚨
+
+**Before marking ANY task as [x] in the feature index, you MUST complete this checklist:**
+
+### Pre-Completion Verification
+
+Run these commands to verify subtask file completeness:
+
+```bash
+# Read the subtask file
+cat tasks/subtasks/{feature}/{seq}-{task-description}.md
+
+# Search for acceptance criteria completion
+grep "\\[x\\].*✅ Completed" tasks/subtasks/{feature}/{seq}-{task-description}.md
+
+# Search for Implementation Completed section
+grep "## Implementation Completed" tasks/subtasks/{feature}/{seq}-{task-description}.md
+
+# Search for Test Results section
+grep "## Test Results" tasks/subtasks/{feature}/{seq}-{task-description}.md
+```
+
+### Verification Checklist
+
+- [ ] **Step 1:** Read entire subtask file
+- [ ] **Step 2:** Verified ALL acceptance criteria marked: `- [x] {criterion} - ✅ Completed`
+- [ ] **Step 3:** Verified "## Implementation Completed" section exists
+- [ ] **Step 4:** Verified implementation section contains:
+  - [ ] Date/timestamp
+  - [ ] Files Changed list
+  - [ ] Key Decisions documented
+- [ ] **Step 5:** Verified "## Test Results" section exists
+- [ ] **Step 6:** Verified test results section contains:
+  - [ ] Date/timestamp
+  - [ ] Command Used
+  - [ ] Pass/fail results
+- [ ] **Step 7:** All validation commands passed (type check, lint, format, tests)
+- [ ] **Step 8:** No errors in validation output
+
+### Fallback Actions (If Verification Fails)
+
+**If acceptance criteria NOT marked:**
+```bash
+# Use Edit tool to mark each criterion
+# Pattern: - [ ] {criterion} → - [x] {criterion} - ✅ Completed
+```
+
+**If "Implementation Completed" section missing:**
+```markdown
+# Use Edit tool to append this section:
+
+---
+
+## Implementation Completed
+
+**Date:** {current date/time}
+
+**Files Changed:**
+- `{file path}` - {Created/Modified} - {description}
+
+**Key Decisions:**
+- {Decision 1}: {Rationale}
+
+**Deviations from Plan:**
+- None / {Description}
+
+**Validation:**
+- [x] Type checks passed
+- [x] Linting passed
+- [x] Acceptance criteria met
+```
+
+**If "Test Results" section missing:**
+```markdown
+# Use Edit tool to append this section:
+
+---
+
+## Test Results
+
+**Date:** {current date/time}
+
+**Command Used:** `{test command from validation}`
+
+**Results:**
+- Total tests: {N}
+- Passed: {N}
+- Failed: 0
+- Coverage: {X}%
+
+**Output:**
+```
+{paste relevant test output}
+```
+```
+
+### Final Action
+
+**ONLY after ALL checklist items are verified:**
+1. Use Edit tool to update feature index
+2. Change `[~] {seq} — {task-description}` to `[x] {seq} — {task-description}`
+3. Proceed to next subtask
+
+**If ANY checklist item fails:**
+1. DO NOT mark complete
+2. Execute appropriate fallback action
+3. Re-run verification checklist
+4. Only proceed after all items pass
+
+---
 
 ## Error Handling
 
