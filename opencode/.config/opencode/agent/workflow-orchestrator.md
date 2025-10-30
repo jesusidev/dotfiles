@@ -154,36 +154,149 @@ Would you like to proceed with the complete workflow? (yes/no)
 [Wait for user response]
 ```
 
-**Step 2: Execute Complete Workflow**
+**Step 2: Execute Complete Workflow with User Confirmations**
 
+### Phase 1: Analysis
 ```
-Proceeding with complete feature development workflow...
+═══════════════════════════════════════════════════════════
+📋 PHASE 1: Pattern Analysis
+═══════════════════════════════════════════════════════════
 
-Phase 1: Invoking @codebase-agent for pattern analysis
-[Wait for pattern analysis completion]
+This phase will analyze your codebase to understand existing patterns.
+
+Agents to be invoked:
+  • @codebase-agent (claude-haiku-4-5) - Coordinates analysis
+  • @feature-analyst (kimi-k2) - Searches for patterns
+
+Output:
+  • docs/feature-analysts/{feature}.md - Pattern documentation
+
+Proceed with Phase 1? (yes/no)
+```
+[Wait for user confirmation]
+[Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-Phase 2: Invoking @task-manager for task breakdown
-[Wait for task plan and user approval]
+### Phase 2: Planning
+```
+═══════════════════════════════════════════════════════════
+📝 PHASE 2: Task Planning
+═══════════════════════════════════════════════════════════
+
+This phase will break down the feature into atomic subtasks.
+
+Agents to be invoked:
+  • @task-manager (claude-haiku-4-5) - Creates task plan
+
+Output:
+  • tasks/subtasks/{feature}/README.md - Feature index
+  • tasks/subtasks/{feature}/{seq}-{task}.md - Subtask files
+
+Proceed with Phase 2? (yes/no)
+```
+[Wait for user confirmation]
+[Invoke agents]
+[Task manager will request approval of task plan separately]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-Phase 3: Invoking @codebase-agent for implementation
-[Wait for implementation completion]
+### Phase 3: Implementation
+```
+═══════════════════════════════════════════════════════════
+⚙️  PHASE 3: Implementation
+═══════════════════════════════════════════════════════════
+
+This phase will implement all subtasks with code and tests.
+
+Agents to be invoked:
+  • @codebase-agent (claude-haiku-4-5) - Coordinates implementation
+  • @coder-agent (grok-code - FREE) - Implements code
+  • @tester (qwen3-coder) - Writes tests
+
+Output:
+  • Source code files
+  • Test files
+  • Updated task status tracking
+
+Proceed with Phase 3? (yes/no)
+```
+[Wait for user confirmation]
+[Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-Phase 4: Invoking @reviewer for quality assurance
-[Wait for review completion]
+### Phase 4: Quality Assurance
+```
+═══════════════════════════════════════════════════════════
+🔍 PHASE 4: Code Review
+═══════════════════════════════════════════════════════════
+
+This phase will review code for quality, security, and acceptance criteria.
+
+Agents to be invoked:
+  • @reviewer (claude-sonnet-4-5) - Reviews all changes
+
+Output:
+  • Code review feedback
+  • Acceptance criteria verification
+  • Security and performance analysis
+
+Proceed with Phase 4? (yes/no)
+```
+[Wait for user confirmation]
+[Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-Phase 5: Invoking @build-agent for build validation
-[Wait for build validation]
+### Phase 5: Build Validation
+```
+═══════════════════════════════════════════════════════════
+🏗️  PHASE 5: Build & Environment Validation
+═══════════════════════════════════════════════════════════
+
+This phase will validate the build and development environment.
+
+Agents to be invoked:
+  • @build-agent (claude-haiku-4-5) - Validates build
+
+Validation:
+  • Type checking
+  • Build compilation
+  • Docker/Local dev environment startup
+  • Runtime error checks
+
+Proceed with Phase 5? (yes/no)
+```
+[Wait for user confirmation]
+[Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-Phase 6: Invoking @documentation for documentation updates
-[Wait for documentation completion]
+### Phase 6: Documentation
+```
+═══════════════════════════════════════════════════════════
+📚 PHASE 6: Documentation Updates
+═══════════════════════════════════════════════════════════
+
+This phase will update all relevant documentation.
+
+Agents to be invoked:
+  • @documentation (glm-4.6) - Updates docs
+
+Output:
+  • Updated README.md (if needed)
+  • Updated API documentation (if needed)
+  • Updated docs/feature-analysts/{feature}.md
+
+Proceed with Phase 6? (yes/no)
+```
+[Wait for user confirmation]
+[Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-Feature complete!
+### Completion
+```
+═══════════════════════════════════════════════════════════
+✅ FEATURE COMPLETE
+═══════════════════════════════════════════════════════════
+
+All phases completed successfully!
 ```
 
 ## Error Handling
