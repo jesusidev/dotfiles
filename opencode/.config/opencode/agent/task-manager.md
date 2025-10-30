@@ -124,49 +124,116 @@ Exit criteria
 
 **Task File Template** (`{seq}-{task-description}.md`):
 
+```markdown
+# Task {seq}: {Title}
+
+**Status:** ⬜ Not Started  
+**Estimated Time:** {time estimate}  
+**Priority:** {High/Medium/Low} ({Blocking/Non-blocking})
+
+## Description
+
+{Clear, concise description of what this task accomplishes and why it's needed}
+
+## Acceptance Criteria
+
+- ✅ {Criterion 1 - specific, measurable}
+- ✅ {Criterion 2 - specific, measurable}
+- ✅ {Criterion 3 - specific, measurable}
+- ✅ {Uses project conventions from pattern analysis}
+- ✅ {Includes proper error handling}
+- ✅ {Fully typed with TypeScript (if applicable)}
+
+## Dependencies
+
+**Before:**
+- {List of tasks that must complete first, or "None"}
+
+**Blocks:**
+- {List of tasks that depend on this one}
+
+## Files to Create
+
+- `path/to/new/file1.ext`
+- `path/to/new/file2.ext`
+
+## Files to Modify
+
+- `path/to/existing/file1.ext` - {What changes}
+- `path/to/existing/file2.ext` - {What changes}
+
+## Files to Reference
+
+- `path/to/reference/file1.ext` - {Why referencing (pattern, similar implementation)}
+- Pattern Analysis: `docs/feature-analysts/{feature}.md` - {Specific section}
+
+## Implementation Details
+
+### {Component/Module/Feature} Overview
+
+{High-level explanation of the approach}
+
+### Key Features
+
+1. **{Feature 1}:**
+   - {Detail about feature}
+   - {Why this approach}
+
+2. **{Feature 2}:**
+   - {Detail about feature}
+   - {Why this approach}
+
+### Implementation Strategy
+
+**Approach:** {Describe the chosen approach}
+
+**Why This Approach?**
+- {Reason 1}
+- {Reason 2}
+- {Reference to similar pattern in codebase}
+
+## Testing Requirements
+
+- [ ] {Test case 1 - positive}
+- [ ] {Test case 2 - negative/edge case}
+- [ ] {Test case 3 - integration}
+- [ ] Type checking passes
+- [ ] Linting passes
+
+## Code Template
+
+```{language}
+// Optional: Provide starter code structure
+{skeleton code with TODO comments}
 ```
-# {seq}. {Title}
 
-meta:
-  id: {feature}-{seq}
-  feature: {feature}
-  priority: P2
-  depends_on: [{dependency-ids}]
-  tags: [implementation, tests-required]
-  pattern_reference: docs/feature-analysts/{feature}.md#{section}
+## Performance Considerations
 
-objective:
-- Clear, single outcome for this task
+- {Performance concern 1 and mitigation}
+- {Performance concern 2 and mitigation}
 
-pattern_guidance:
-- Reference to specific pattern from pattern documentation
-- Similar implementation example from codebase
-- Key conventions to follow
+## Edge Cases to Handle
 
-deliverables:
-- What gets added/changed (files, modules, endpoints, components)
+1. **{Edge case 1}:** {How to handle}
+2. **{Edge case 2}:** {How to handle}
+3. **{Edge case 3}:** {How to handle}
 
-steps:
-- Step-by-step actions to complete the task
-- Include project-specific considerations based on pattern analysis
-- Reference similar implementations from pattern doc
+## Related Documentation
 
-tests:
-- Unit: which functions/modules to cover (Arrange–Act–Assert)
-- Integration/e2e: how to validate behavior
-- Reference test patterns from pattern documentation
+- [{Doc name}]({URL or path})
+- [{Pattern name}]({Path to pattern in feature analysis})
 
-acceptance_criteria:
-- Observable, binary pass/fail conditions
+## Notes
 
-validation:
-- Commands to run: npm run check, npm run lint, npm test
-- How to verify the implementation works
+- {Important assumption or constraint}
+- {Link to similar implementation in codebase}
+- {Any project-specific considerations}
 
-notes:
-- Assumptions, links to relevant docs or design
-- Project conventions to follow (from pattern analysis)
-- Links to similar implementations in codebase
+---
+
+**Pattern Reference:** `docs/feature-analysts/{feature}.md#{section}`  
+**Created:** {Date}  
+**Updated:** {Date}
 ```
 
 3. **Provide creation summary:**
