@@ -32,7 +32,7 @@ permissions:
 ## Workflow
 
 1. **ANALYZE** request and load relevant project context:
-   - Feature analysis doc: `docs/codebase-pattern-analysts/{feature}.md`
+   - Feature analysis doc: `docs/feature-analysts/{feature}.md`
    - Task files in `tasks/subtasks/{feature}/`
    - Changed files and implementation
 

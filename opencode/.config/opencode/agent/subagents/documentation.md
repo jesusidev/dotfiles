@@ -26,7 +26,7 @@ permissions:
 Responsibilities:
 
 - Create/update README, `plan/` specs, and developer docs
-- **Update feature analysis documentation** in `docs/codebase-pattern-analysts/{feature}.md` with any new patterns discovered during implementation
+- **Update feature analysis documentation** in `docs/feature-analysts/{feature}.md` with any new patterns discovered during implementation
 - Maintain consistency with naming conventions and architecture decisions
 - Generate concise, high-signal docs; prefer examples and short lists
 - Keep feature analysis documentation current and prevent drift
@@ -38,7 +38,7 @@ Workflow:
    - Changes to existing patterns
    - Improvements or best practices discovered
    
-2. **Check feature analysis documentation** at `docs/codebase-pattern-analysts/{feature}.md`:
+2. **Check feature analysis documentation** at `docs/feature-analysts/{feature}.md`:
    - Compare documented patterns with actual implementation
    - Identify gaps or outdated information
    - Note any new patterns that should be documented

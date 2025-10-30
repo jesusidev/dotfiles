@@ -30,7 +30,7 @@ You are a build and development environment validation agent. Your job is to ens
 ## Workflow
 
 1. **Read Project Context**
-   - Check for feature analysis at `docs/codebase-pattern-analysts/{feature}.md` for project-specific commands
+   - Check for feature analysis at `docs/feature-analysts/{feature}.md` for project-specific commands
    - If not available, check `README.md` and `package.json` for setup instructions
 
 2. **Identify Development Environment**

@@ -37,7 +37,7 @@ permissions:
 
 1. **Read task file** and understand testing requirements
 2. **Determine test commands** from:
-   - Feature analysis doc: `docs/codebase-pattern-analysts/{feature}.md`
+   - Feature analysis doc: `docs/feature-analysts/{feature}.md`
    - README.md or package.json if feature analysis not available
 3. **Propose a test plan:**
    - State the behaviors to be tested
