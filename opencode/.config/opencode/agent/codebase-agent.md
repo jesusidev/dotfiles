@@ -1,7 +1,7 @@
 ---
 description: "Next.js development agent for modular and functional development"
 mode: primary
-model: claude-sonnet-4-5
+model: claude-haiku-4-5
 temperature: 0.1
 tools:
   read: true
