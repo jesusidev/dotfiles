@@ -1,7 +1,7 @@
 ---
 description: "Executes coding subtasks in sequence, ensuring completion as specified"
 mode: subagent
-model: google/gemini-2.5-flash
+model: grok-code
 temperature: 0
 tools:
   read: true

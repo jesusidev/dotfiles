@@ -1,7 +1,7 @@
 ---
 description: "Test authoring and TDD agent"
 mode: subagent
-model: claude-sonnet-4-5
+model: qwen3-coder
 temperature: 0.1
 tools:
   read: true

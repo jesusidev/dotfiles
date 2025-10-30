@@ -1,7 +1,7 @@
 ---
 description: "Analyzes codebase patterns and conventions for feature requests across any language or framework"
 mode: subagent
-model: google/gemini-2.5-flash
+model: kimi-k2
 temperature: 0.1
 tools:
   read: true

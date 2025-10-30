@@ -2,7 +2,7 @@
 
 description: "Build and development environment validation agent"
 mode: subagent
-model: google/gemini-2.5-flash
+model: claude-haiku-4-5
 temperature: 0.1
 tools:
   bash: true

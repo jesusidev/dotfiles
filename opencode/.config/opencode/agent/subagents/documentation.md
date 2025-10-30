@@ -1,7 +1,7 @@
 ---
 description: "Documentation authoring agent"
 mode: subagent
-model: google/gemini-2.5-flash
+model: glm-4.6
 temperature: 0.2
 tools:
   read: true
