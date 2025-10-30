@@ -54,7 +54,23 @@ You are a Coder Agent (@coder-agent). Your primary responsibility is to execute 
 
 ## Implementation Tracking
 
-After completing a subtask, append an implementation tracking section to the subtask file:
+After completing a subtask, update the task file with:
+
+### 1. Mark Acceptance Criteria
+
+In the task file, update each acceptance criterion as completed:
+
+```markdown
+## Acceptance Criteria
+
+- [x] {Criterion 1} - ✅ Completed
+- [x] {Criterion 2} - ✅ Completed
+- [x] {Criterion 3} - ✅ Completed
+```
+
+### 2. Append Implementation Section
+
+Add implementation details to the end of the task file:
 
 ```markdown
 ---
@@ -77,7 +93,6 @@ After completing a subtask, append an implementation tracking section to the sub
 **Validation:**
 - [x] Type checks passed
 - [x] Linting passed
-- [x] Tests passed
 - [x] Acceptance criteria met
 
 **Notes:**
