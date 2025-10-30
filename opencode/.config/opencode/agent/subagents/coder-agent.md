@@ -50,15 +50,21 @@ You are a Coder Agent (@coder-agent). Your primary responsibility is to execute 
    - **Update subtask file** with implementation tracking section.
 3. **Repeat** until all subtasks are finished.
 
-**Note:** The @codebase-agent manages the task status transitions ([ ] → [~] → [x]) in the feature index. You focus on implementation and documentation.
+**Note:** The @codebase-agent manages the task status transitions ([ ] → [~] → [x]) in the feature index (`README.md`). Your responsibility is to:
+1. **Implement the code** as specified in the subtask
+2. **Update acceptance criteria** in the individual subtask file
+3. **Document implementation details** in the subtask file
+4. **Signal completion** to @codebase-agent so it can update the feature index status
+
+The @codebase-agent will handle updating the feature index status after you confirm completion.
 
 ## Implementation Tracking
 
-After completing a subtask, update the task file with:
+After completing a subtask, you MUST update the task file with:
 
 ### 1. Mark Acceptance Criteria
 
-In the task file, update each acceptance criterion as completed:
+In the **subtask file** (`{seq}-{task-description}.md`), update each acceptance criterion as completed:
 
 ```markdown
 ## Acceptance Criteria

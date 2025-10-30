@@ -308,13 +308,15 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Verify all acceptance criteria met
       - **IF ANY VALIDATION FAILS:** Stop immediately, report to orchestrator with details
    
-   f. **Update subtask tracking:**
-      - **Update subtask file** `{seq}-{task-description}.md` with:
+   f. **Update subtask tracking (YOU are responsible for this):**
+      - **Verify @coder-agent updated subtask file** `{seq}-{task-description}.md` with:
+        - ✅ All acceptance criteria marked as [x] - ✅ Completed
         - List of files created/modified
         - Key implementation decisions
         - Any deviations from original plan
         - Completion timestamp
-      - **Mark subtask as complete:** Update status from [~] to [x] in `tasks/subtasks/{feature}/README.md`
+      - **If @coder-agent did not update acceptance criteria:** Update them yourself
+      - **Mark subtask as complete in feature index:** Update status from [~] to [x] in `tasks/subtasks/{feature}/README.md`
       - Move to next subtask
 
 3. **After all subtasks complete:**
@@ -417,9 +419,36 @@ Once implementation is complete:
 
 ## Status Management
 
-Maintain accurate task status in `tasks/subtasks/{feature}/README.md`:
-- **[ ] Not started:** Initial state for all tasks
-- **[~] In progress:** Mark as in-progress when starting work on a subtask
-- **[x] Complete:** Mark as complete after validation and documentation
+**YOU ARE RESPONSIBLE** for maintaining task status in the feature index. This is a critical responsibility that cannot be delegated.
 
-Remember: You are a coordinator, not an implementer. Delegate to specialized subagents and manage the workflow. Ensure all implementation details are tracked in subtask files for transparency and future reference.
+### Feature Index Status (`tasks/subtasks/{feature}/README.md`)
+Maintain accurate task status:
+- **[ ] Not started:** Initial state for all tasks
+- **[~] In progress:** Mark when starting work (before invoking @coder-agent)
+- **[x] Complete:** Mark ONLY after:
+  - @coder-agent has implemented the code
+  - @tester has written and passed tests
+  - All validation checks pass (type checks, linting, formatting, tests)
+  - Acceptance criteria in subtask file are marked complete
+  - Implementation section is added to subtask file
+
+### Subtask File Status (`{seq}-{task-description}.md`)
+The @coder-agent is responsible for:
+- Marking acceptance criteria as [x] - ✅ Completed
+- Adding the Implementation Completed section
+- Documenting files changed and key decisions
+
+**If @coder-agent fails to update the subtask file:** You must update it yourself before marking the task complete in the feature index.
+
+### Status Update Workflow
+
+For each subtask:
+1. **YOU mark [ ] → [~]** in feature index when starting
+2. **@coder-agent marks acceptance criteria** in subtask file
+3. **@coder-agent adds implementation section** in subtask file
+4. **YOU verify** subtask file updates are complete
+5. **YOU mark [~] → [x]** in feature index after validation
+
+Never skip step 4 or 5. The feature index is the source of truth for task completion status.
+
+Remember: You are a coordinator, not an implementer. Delegate to specialized subagents and manage the workflow. Ensure all implementation details are tracked in subtask files for transparency and future reference. **Most importantly: YOU are the sole owner of feature index status updates.**
