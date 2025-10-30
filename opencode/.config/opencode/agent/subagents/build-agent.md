@@ -1,8 +1,8 @@
 ---
 
-description: "Type check and build validation agent"
+description: "Build and development environment validation agent"
 mode: subagent
-model: claude-sonnet-4-5
+model: google/gemini-2.5-flash
 temperature: 0.1
 tools:
   bash: true
