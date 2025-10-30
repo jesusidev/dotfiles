@@ -236,6 +236,168 @@ Exit criteria
 **Updated:** {Date}
 ```
 
+**Testing Task Template** (for test-specific tasks):
+
+```markdown
+# Task {seq}: {Title}
+
+**Status:** ⬜ Not Started  
+**Estimated Time:** {time estimate}  
+**Priority:** {High/Medium/Low}
+
+## Description
+
+{Clear description of what is being tested and why}
+
+## Acceptance Criteria
+
+- ✅ {Test criterion 1}
+- ✅ {Test criterion 2}
+- ✅ {Coverage requirement (e.g., 100% for the module)}
+- ✅ {Performance requirement (e.g., tests run in <500ms)}
+
+## Dependencies
+
+**Before:**
+- {List of implementation tasks that must complete first}
+
+**Blocks:**
+- {List of tasks that need these tests to pass}
+
+## Files to Create
+
+- `path/to/test/file.test.ts`
+
+## Files to Reference
+
+- `path/to/implementation/file.ts` - Implementation to test
+- `path/to/existing/tests/` - Existing test patterns
+- Test configuration files
+
+## Test Cases
+
+### 1. {Test Category 1}
+```typescript
+describe('{category}', () => {
+  it('should {expected behavior}', () => {});
+  it('should {expected behavior}', () => {});
+});
+```
+
+### 2. {Test Category 2}
+```typescript
+describe('{category}', () => {
+  it('should {expected behavior}', () => {});
+  it('should {expected behavior}', () => {});
+});
+```
+
+### 3. Edge Cases
+```typescript
+describe('edge cases', () => {
+  it('should handle {edge case 1}', () => {});
+  it('should handle {edge case 2}', () => {});
+});
+```
+
+## Testing Setup
+
+### Mock Setup
+```typescript
+// Example mock setup
+const createMock = () => ({
+  // mock structure
+});
+```
+
+### Timer/Async Handling
+```typescript
+// Example timer setup if needed
+beforeEach(() => {
+  jest.useFakeTimers();
+});
+
+afterEach(() => {
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
+});
+```
+
+## Testing Requirements
+
+- [ ] All test cases pass
+- [ ] Uses appropriate test framework (Jest, Vitest, etc.)
+- [ ] Properly mocks dependencies
+- [ ] Tests TypeScript types (compile check)
+- [ ] No console warnings or errors
+- [ ] Fast execution (target time specified)
+
+## Performance Benchmarks
+
+- Each test should complete in <{X}ms
+- Total suite should complete in <{Y}ms
+- No memory leaks in teardown
+
+## Code Template
+
+```typescript
+import { /* testing utilities */ } from '@testing-library/react';
+import { /* implementation */ } from '../implementation';
+
+describe('{Module/Component Name}', () => {
+  beforeEach(() => {
+    // Setup
+  });
+
+  afterEach(() => {
+    // Cleanup
+  });
+
+  it('should {test case description}', () => {
+    // Arrange
+    
+    // Act
+    
+    // Assert
+  });
+
+  // TODO: Add more tests
+});
+```
+
+## Run Tests
+
+```bash
+{command to run specific test file}
+```
+
+## Success Criteria Checklist
+
+- [ ] All tests pass
+- [ ] No skipped tests
+- [ ] Coverage report shows {X}% for module
+- [ ] TypeScript compilation succeeds
+- [ ] No linting warnings
+
+## Related Documentation
+
+- [Testing framework documentation]
+- [Testing library documentation]
+- Existing test patterns: `path/to/examples`
+
+## Notes
+
+- {Testing approach notes}
+- {Mock strategy notes}
+- {Edge case considerations}
+
+---
+
+**Pattern Reference:** `docs/feature-analysts/{feature}.md#{section}`  
+**Created:** {Date}  
+**Updated:** {Date}
+```
+
 3. **Provide creation summary:**
 
 ```
