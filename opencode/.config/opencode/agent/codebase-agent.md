@@ -290,12 +290,14 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Follows project standards and conventions
       - Completes deliverables specified in subtask
       - **Records implementation details** in subtask file
+      - **IF ERROR:** Stop immediately, report to orchestrator with error details
    
    d. **Invoke @tester** for test implementation:
       - Tester writes unit tests (positive and negative cases)
       - Writes integration tests if specified
       - Runs tests and reports results
       - Fixes any test failures
+      - **IF ERROR:** Stop immediately, report to orchestrator with error details
    
    e. **Validate subtask completion:**
       - Use commands from feature analysis doc (`docs/feature-analysts/{feature}.md`)
@@ -304,6 +306,7 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Run formatting (e.g., `npm run format:fix`, `prettier`, etc.)
       - Run tests (e.g., `npm test`, `npm run test:unit`, etc.)
       - Verify all acceptance criteria met
+      - **IF ANY VALIDATION FAILS:** Stop immediately, report to orchestrator with details
    
    f. **Update subtask tracking:**
       - **Update subtask file** `{seq}-{task-description}.md` with:
@@ -323,8 +326,23 @@ When invoked by @workflow-orchestrator with an approved task plan:
        - If Docker is used: Ensure `docker compose up` or equivalent builds and runs without errors
        - If local dev: Ensure `npm run dev` or equivalent starts without errors
        - Check for any runtime errors or warnings
+     - **IF ANY VALIDATION FAILS:** Stop and report to orchestrator
    - Verify all exit criteria from feature index are met
    - Return completion status to workflow orchestrator
+
+## Error Handling
+
+**If any step fails during implementation:**
+
+1. **Stop processing immediately**
+2. **Mark current subtask with error status** in feature index
+3. **Report error to workflow orchestrator** with:
+   - Which subtask failed
+   - Which agent failed (coder/tester/validation)
+   - Detailed error message
+   - Last successful step
+4. **Do NOT proceed to next subtask**
+5. **Wait for orchestrator instructions**
 
 ## Mandatory Workflow
 

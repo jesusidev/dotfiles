@@ -151,24 +151,89 @@ Proceeding with complete feature development workflow...
 
 Phase 1: Invoking @codebase-agent for pattern analysis
 [Wait for pattern analysis completion]
+[IF ERROR: Stop workflow, report error, provide recovery options]
 
 Phase 2: Invoking @task-manager for task breakdown
 [Wait for task plan and user approval]
+[IF ERROR: Stop workflow, report error, provide recovery options]
 
 Phase 3: Invoking @codebase-agent for implementation
 [Wait for implementation completion]
+[IF ERROR: Stop workflow, report error, provide recovery options]
 
 Phase 4: Invoking @reviewer for quality assurance
 [Wait for review completion]
+[IF ERROR: Stop workflow, report error, provide recovery options]
 
 Phase 5: Invoking @build-agent for build validation
 [Wait for build validation]
+[IF ERROR: Stop workflow, report error, provide recovery options]
 
 Phase 6: Invoking @documentation for documentation updates
 [Wait for documentation completion]
+[IF ERROR: Stop workflow, report error, provide recovery options]
 
 Feature complete!
 ```
+
+## Error Handling
+
+**CRITICAL:** If any phase fails or returns an error:
+
+1. **STOP the workflow immediately** - Do not proceed to next phase
+2. **Report the error clearly:**
+   ```
+   ❌ ERROR in Phase {N}: {Phase Name}
+   
+   Agent: @{agent-name}
+   Error: {error message}
+   
+   {Detailed error output}
+   ```
+
+3. **Provide recovery options:**
+   ```
+   Recovery Options:
+   
+   1. 🔄 Retry Phase {N} - Re-run the failed agent with same inputs
+   2. 🔧 Debug - Investigate the error manually before retrying
+   3. ⏭️  Skip Phase {N} - Continue to next phase (not recommended)
+   4. ❌ Abort Workflow - Stop completely and review
+   
+   What would you like to do?
+   ```
+
+4. **Wait for user decision** before taking any action
+
+5. **If user chooses retry:**
+   - Re-invoke the failed agent
+   - Monitor for success/failure
+   - Continue from that phase if successful
+
+6. **If user chooses debug:**
+   - Provide diagnostic information
+   - Suggest potential fixes
+   - Wait for user to resolve
+   - Offer retry option
+
+7. **If user chooses skip:**
+   - Warn about consequences
+   - Mark phase as skipped in workflow log
+   - Continue to next phase
+
+8. **If user chooses abort:**
+   - Stop workflow
+   - Provide summary of completed phases
+   - Suggest cleanup steps if needed
+
+## Error Prevention
+
+- Validate agent outputs before proceeding
+- Check for error indicators in agent responses
+- Monitor for tool failures or timeouts
+- Catch model errors (ProviderModelNotFoundError, etc.)
+
+**NEVER** continue to the next phase if the current phase has errors.
 
 ## Context Loading
 
