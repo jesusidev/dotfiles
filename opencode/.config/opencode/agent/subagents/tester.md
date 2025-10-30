@@ -33,6 +33,14 @@ permissions:
 - Ensure tests cover acceptance criteria, edge cases, and error handling
 - **Update task files** with test completion status
 
+**Note:** The @codebase-agent manages task status transitions ([ ] → [~] → [x]) in the feature index (`README.md`). Your responsibility is to:
+1. **Write and run tests** for the implementation
+2. **Update Testing Requirements checklist** in the subtask file
+3. **Add Test Results section** to the subtask file
+4. **Signal completion** to @codebase-agent so it can finalize the task
+
+The @codebase-agent will handle updating the feature index status after you confirm test completion.
+
 ## Workflow
 
 1. **Read task file** and understand testing requirements

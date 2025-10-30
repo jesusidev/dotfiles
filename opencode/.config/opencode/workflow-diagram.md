@@ -32,13 +32,13 @@ flowchart TD
     
     CodebaseImpl --> SubtaskLoop{More Subtasks?}
     
-    SubtaskLoop -->|Yes| MarkStarted[Mark Task Status<br/>In Progress ~]
-    MarkStarted --> ReadSubtask[Read Subtask<br/>seq-task.md]
-    ReadSubtask --> CoderAgent[Coder Agent Subagent<br/>Implement Code<br/>Mark Acceptance Criteria]
-    CoderAgent --> TesterAgent[Tester Subagent<br/>Write & Run Tests<br/>Mark Test Checklists]
-    TesterAgent --> Validate[Validate<br/>Type Check, Lint, Tests]
-    Validate --> UpdateTask[Update Task File<br/>Implementation & Test Results]
-    UpdateTask --> UpdateStatus[Update Task Status<br/>Mark Complete x]
+    SubtaskLoop -->|Yes| MarkStarted[Codebase Agent:<br/>Mark [ ] → [~] in Feature Index]
+    MarkStarted --> ReadSubtask[Codebase Agent:<br/>Read Subtask seq-task.md]
+    ReadSubtask --> CoderAgent[Coder Agent Subagent:<br/>Implement Code<br/>Mark Acceptance Criteria in Subtask File]
+    CoderAgent --> TesterAgent[Tester Subagent:<br/>Write & Run Tests<br/>Mark Test Checklists in Subtask File]
+    TesterAgent --> Validate[Codebase Agent:<br/>Validate Type Check, Lint, Tests]
+    Validate --> VerifyUpdates[Codebase Agent:<br/>Verify Subtask File Updated<br/>Fallback: Update if Missing]
+    VerifyUpdates --> UpdateStatus[Codebase Agent:<br/>Mark [~] → [x] in Feature Index]
     UpdateStatus --> SubtaskLoop
     
     SubtaskLoop -->|No| FinalValidation[Final Validation<br/>Run Full Test Suite<br/>Verify Dev Environment]
@@ -157,11 +157,14 @@ flowchart LR
 - **Subagents:** @coder-agent, @tester
 - **Output:** Source code + tests + updated task status + marked acceptance criteria
 - **Purpose:** Implement each subtask sequentially
-- **Tracking:** 
-  - Task status transitions: [ ] → [~] → [x]
-  - @coder-agent marks acceptance criteria as completed
-  - @tester marks testing requirements and success checklists
-  - Both append implementation/test results to task files
+- **Status Tracking Workflow:**
+  1. **@codebase-agent** marks [ ] → [~] in feature index (`README.md`)
+  2. **@coder-agent** marks acceptance criteria in subtask file (`{seq}-task.md`)
+  3. **@coder-agent** adds implementation section to subtask file
+  4. **@tester** adds test results section to subtask file
+  5. **@codebase-agent** verifies subtask file updates (fallback: updates if missing)
+  6. **@codebase-agent** marks [~] → [x] in feature index
+- **Responsibility:** @codebase-agent owns feature index status, @coder-agent/@tester own subtask file updates
 - **Final Validation:** Runs full test suite and verifies dev environment (Docker/local)
 
 ### Phase 4: Quality Assurance
