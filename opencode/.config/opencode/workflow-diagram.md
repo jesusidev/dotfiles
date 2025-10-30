@@ -34,18 +34,20 @@ flowchart TD
     
     SubtaskLoop -->|Yes| MarkStarted[Mark Task Status<br/>In Progress ~]
     MarkStarted --> ReadSubtask[Read Subtask<br/>seq-task.md]
-    ReadSubtask --> CoderAgent[Coder Agent Subagent<br/>Implement Code]
-    CoderAgent --> TesterAgent[Tester Subagent<br/>Write Tests]
+    ReadSubtask --> CoderAgent[Coder Agent Subagent<br/>Implement Code<br/>Mark Acceptance Criteria]
+    CoderAgent --> TesterAgent[Tester Subagent<br/>Write & Run Tests<br/>Mark Test Checklists]
     TesterAgent --> Validate[Validate<br/>Type Check, Lint, Tests]
-    Validate --> UpdateStatus[Update Task Status<br/>Mark Complete x]
+    Validate --> UpdateTask[Update Task File<br/>Implementation & Test Results]
+    UpdateTask --> UpdateStatus[Update Task Status<br/>Mark Complete x]
     UpdateStatus --> SubtaskLoop
     
-    SubtaskLoop -->|No| Phase4[Phase 4: Quality Assurance]
+    SubtaskLoop -->|No| FinalValidation[Final Validation<br/>Run Full Test Suite<br/>Verify Dev Environment]
+    FinalValidation --> Phase4[Phase 4: Quality Assurance]
     
-    Phase4 --> ReviewerAgent[Reviewer Subagent<br/>Code Review]
+    Phase4 --> ReviewerAgent[Reviewer Subagent<br/>Code Review<br/>Verify Acceptance Criteria]
     ReviewerAgent --> Phase5[Phase 5: Build Validation]
     
-    Phase5 --> BuildAgent[Build Agent Subagent<br/>Build Check]
+    Phase5 --> BuildAgent[Build Agent Subagent<br/>Build & Environment Check<br/>Docker/Local Dev Validation]
     BuildAgent --> Phase6[Phase 6: Documentation]
     
     Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
@@ -141,28 +143,44 @@ flowchart LR
 - **Subagent:** @feature-analyst
 - **Output:** `docs/feature-analysts/{feature}.md`
 - **Purpose:** Understand existing codebase patterns relevant to the feature request
+- **Extracts:** Development environment setup, validation commands (lint, format, test, build)
 
 ### Phase 2: Planning
 - **Agent:** @task-manager
 - **Input:** Pattern analysis from Phase 1
 - **Output:** Task plan in `tasks/subtasks/{feature}/`
-- **Purpose:** Break down feature into atomic subtasks
+- **Purpose:** Break down feature into atomic subtasks with comprehensive templates
+- **Task Structure:** Status tracking, acceptance criteria, dependencies, implementation details, test requirements
 
 ### Phase 3: Implementation
 - **Agent:** @codebase-agent (implementation mode)
 - **Subagents:** @coder-agent, @tester
-- **Output:** Source code + tests + updated task status
+- **Output:** Source code + tests + updated task status + marked acceptance criteria
 - **Purpose:** Implement each subtask sequentially
+- **Tracking:** 
+  - Task status transitions: [ ] → [~] → [x]
+  - @coder-agent marks acceptance criteria as completed
+  - @tester marks testing requirements and success checklists
+  - Both append implementation/test results to task files
+- **Final Validation:** Runs full test suite and verifies dev environment (Docker/local)
 
 ### Phase 4: Quality Assurance
 - **Subagent:** @reviewer
-- **Output:** Code review feedback
-- **Purpose:** Validate code quality and security
+- **Output:** Code review feedback + acceptance criteria verification
+- **Purpose:** Validate code quality, security, and acceptance criteria
+- **Verification:** Reads task files and confirms each acceptance criterion is actually met in the code
+- **Flags:** Criteria marked as complete but not actually implemented
 
 ### Phase 5: Build Validation
 - **Subagent:** @build-agent
-- **Output:** Build validation results
-- **Purpose:** Ensure project compiles successfully
+- **Output:** Build validation results + environment verification
+- **Purpose:** Ensure project builds AND runs successfully in its development environment
+- **Validates:**
+  - Type checking
+  - Build process
+  - Docker containers start successfully (if Docker-based)
+  - Dev server starts without errors (if local development)
+  - Uses project-specific commands from feature analysis
 
 ### Phase 6: Documentation
 - **Subagent:** @documentation
