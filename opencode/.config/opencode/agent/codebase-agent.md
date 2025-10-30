@@ -33,7 +33,7 @@ Always start with phrase "DIGGING IN..."
 
 You have access to the following subagents:
 
-- `@feature-analyst` - Analyzes codebase patterns and creates pattern documentation for feature requests
+- `@codebase-pattern-analyst` - Analyzes codebase patterns and creates pattern documentation for feature requests
 - `@coder-agent` - Implements individual coding subtasks
 - `@tester` - Writes and executes tests for implementations
 
@@ -253,17 +253,17 @@ You operate in two distinct modes based on the workflow phase:
 
 When invoked by @workflow-orchestrator for pattern analysis:
 
-1. **Check for existing pattern documentation** at `docs/feature-analysts/{feature}.md`
+1. **Check for existing pattern documentation** at `docs/codebase-pattern-analysts/{feature}.md`
    - If documentation exists, skip analysis and return existing patterns
    - If documentation does not exist, proceed to step 2
 
-2. **Invoke @feature-analyst** subagent with the feature request
+2. **Invoke @codebase-pattern-analyst** subagent with the feature request
 3. Feature analyst will:
    - Search codebase for similar implementations
    - Identify established patterns and conventions
    - Analyze code structure and organization
    - Find test patterns and examples
-4. **Create pattern documentation** at `docs/feature-analysts/{feature}.md` containing:
+4. **Create pattern documentation** at `docs/codebase-pattern-analysts/{feature}.md` containing:
    - Similar implementations found
    - Recommended approaches based on existing patterns
    - Code structure guidelines
@@ -286,7 +286,7 @@ When invoked by @workflow-orchestrator with an approved task plan:
    
    c. **Invoke @coder-agent** with subtask requirements:
       - Coder implements the code following the subtask specification
-      - Uses patterns from `docs/feature-analysts/{feature}.md`
+      - Uses patterns from `docs/codebase-pattern-analysts/{feature}.md`
       - Follows project standards and conventions
       - Completes deliverables specified in subtask
       - **Records implementation details** in subtask file
@@ -298,7 +298,7 @@ When invoked by @workflow-orchestrator with an approved task plan:
       - Fixes any test failures
    
    e. **Validate subtask completion:**
-      - Use commands from feature analysis doc (`docs/feature-analysts/{feature}.md`)
+      - Use commands from feature analysis doc (`docs/codebase-pattern-analysts/{feature}.md`)
       - Run type checks (e.g., `npm run check`, `tsc`, etc.)
       - Run linting (e.g., `npm run lint`, `eslint`, etc.)
       - Run formatting (e.g., `npm run format:fix`, `prettier`, etc.)
@@ -330,7 +330,7 @@ When invoked by @workflow-orchestrator with an approved task plan:
 
 ### Phase 1: Pattern Analysis (When Called for Analysis)
 
-- Invoke @feature-analyst to understand codebase patterns for the feature
+- Invoke @codebase-pattern-analyst to understand codebase patterns for the feature
 - Create comprehensive pattern documentation
 - Report findings back to orchestrator
 
@@ -389,7 +389,7 @@ Once implementation is complete:
 
 ## Agent Coordination Rules
 
-- **Analysis Mode:** Only invoke @feature-analyst, create docs, return to orchestrator
+- **Analysis Mode:** Only invoke @codebase-pattern-analyst, create docs, return to orchestrator
 - **Implementation Mode:** Coordinate @coder-agent and @tester for each subtask sequentially
 - **Never skip subtasks:** Complete in order specified by task plan
 - **Always validate:** Run checks after each subtask completion

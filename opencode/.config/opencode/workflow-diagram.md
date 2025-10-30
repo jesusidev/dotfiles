@@ -17,8 +17,8 @@ flowchart TD
     Decision -->|Complex Feature| Phase1[Phase 1: Analysis]
     
     Phase1 --> CodebaseAnalysis[Codebase Agent<br/>Analysis Mode]
-    CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
-    FeatureAnalyst --> AnalysisDoc[Create Analysis Doc<br/>docs/feature-analysts/feature.md]
+    CodebaseAnalysis --> FeatureAnalyst[Codebase Pattern Analyst Subagent]
+    FeatureAnalyst --> AnalysisDoc[Create Analysis Doc<br/>docs/codebase-pattern-analysts/feature.md]
     
     AnalysisDoc --> Phase2[Phase 2: Planning]
     Phase2 --> TaskManager[Task Manager]
@@ -51,7 +51,7 @@ flowchart TD
     BuildAgent --> Phase6[Phase 6: Documentation]
     
     Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
-    DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>docs/feature-analysts/feature.md]
+    DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>docs/codebase-pattern-analysts/feature.md]
     UpdatePatterns --> Complete([Feature Complete])
     
     Review --> SimpleComplete([Task Complete])
@@ -83,7 +83,7 @@ graph TD
     WO --> CA[Codebase Agent<br/>Primary Agent]
     WO --> TM[Task Manager<br/>Primary Agent]
     
-    CA --> FA[Feature Analyst<br/>Subagent]
+    CA --> FA[Codebase Pattern Analyst<br/>Subagent]
     CA --> COD[Coder Agent<br/>Subagent]
     CA --> TST[Tester<br/>Subagent]
     
@@ -140,8 +140,8 @@ flowchart LR
 
 ### Phase 1: Analysis
 - **Agent:** @codebase-agent (analysis mode)
-- **Subagent:** @feature-analyst
-- **Output:** `docs/feature-analysts/{feature}.md`
+- **Subagent:** @codebase-pattern-analyst
+- **Output:** `docs/codebase-pattern-analysts/{feature}.md`
 - **Purpose:** Understand existing codebase patterns relevant to the feature request
 - **Extracts:** Development environment setup, validation commands (lint, format, test, build)
 
@@ -186,4 +186,4 @@ flowchart LR
 - **Subagent:** @documentation
 - **Output:** Updated documentation (README, API docs, feature analysis docs)
 - **Purpose:** Keep docs current with changes and update feature analysis documentation with new patterns discovered during implementation
-- **Analysis Update:** Reviews implementation and updates `docs/feature-analysts/{feature}.md` to prevent drift
+- **Analysis Update:** Reviews implementation and updates `docs/codebase-pattern-analysts/{feature}.md` to prevent drift

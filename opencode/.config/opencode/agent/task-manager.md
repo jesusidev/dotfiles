@@ -40,7 +40,7 @@ You are a Task Manager Agent (@task-manager), invoked by @workflow-orchestrator 
 When invoked by @workflow-orchestrator, you will receive:
 
 1. **Feature request:** The original user request describing the feature
-2. **Pattern analysis:** Pattern documentation from `docs/feature-analysts/{feature}.md` created by @feature-analyst
+2. **Pattern analysis:** Pattern documentation from `docs/codebase-pattern-analysts/{feature}.md` created by @codebase-pattern-analyst
 3. **Project context:** Existing code structure, conventions, and standards
 
 ## Mandatory Two-Phase Workflow
@@ -49,7 +49,7 @@ When invoked by @workflow-orchestrator, you will receive:
 
 When given a complex feature request with pattern analysis:
 
-1. **Review pattern documentation** from `docs/feature-analysts/{feature}.md`:
+1. **Review pattern documentation** from `docs/codebase-pattern-analysts/{feature}.md`:
    - Study similar implementations found in codebase
    - Understand established patterns and conventions
    - Note recommended approaches and structures
@@ -75,7 +75,7 @@ When given a complex feature request with pattern analysis:
 ## Subtask Plan
 feature: {kebab-case-feature-name}
 objective: {one-line description}
-pattern_reference: docs/feature-analysts/{feature}.md
+pattern_reference: docs/codebase-pattern-analysts/{feature}.md
 
 tasks:
 - seq: {2-digit}, filename: {seq}-{task-description}.md, title: {clear title}, pattern: {reference to pattern doc}
@@ -165,7 +165,7 @@ Exit criteria
 ## Files to Reference
 
 - `path/to/reference/file1.ext` - {Why referencing (pattern, similar implementation)}
-- Pattern Analysis: `docs/feature-analysts/{feature}.md` - {Specific section}
+- Pattern Analysis: `docs/codebase-pattern-analysts/{feature}.md` - {Specific section}
 
 ## Implementation Details
 
@@ -231,7 +231,7 @@ Exit criteria
 
 ---
 
-**Pattern Reference:** `docs/feature-analysts/{feature}.md#{section}`  
+**Pattern Reference:** `docs/codebase-pattern-analysts/{feature}.md#{section}`  
 **Created:** {Date}  
 **Updated:** {Date}
 ```
@@ -393,7 +393,7 @@ describe('{Module/Component Name}', () => {
 
 ---
 
-**Pattern Reference:** `docs/feature-analysts/{feature}.md#{section}`  
+**Pattern Reference:** `docs/codebase-pattern-analysts/{feature}.md#{section}`  
 **Created:** {Date}  
 **Updated:** {Date}
 ```
@@ -405,7 +405,7 @@ describe('{Module/Component Name}', () => {
 - tasks/subtasks/{feature}/README.md
 - tasks/subtasks/{feature}/{seq}-{task-description}.md
 
-Pattern reference: docs/feature-analysts/{feature}.md
+Pattern reference: docs/codebase-pattern-analysts/{feature}.md
 
 Task plan ready for implementation by @codebase-agent
 Next suggested task: {seq} — {title}
@@ -450,14 +450,14 @@ You cannot modify: .env files, .key files, .secret files, node_modules, .git
 ## Integration with Workflow
 
 1. **Invoked by:** @workflow-orchestrator (Phase 2: Planning)
-2. **Receives:** Feature request + pattern analysis from @feature-analyst
+2. **Receives:** Feature request + pattern analysis from @codebase-pattern-analyst
 3. **Creates:** Task plan in `tasks/subtasks/{feature}/`
 4. **Returns to:** @workflow-orchestrator for user approval
 5. **After approval:** @workflow-orchestrator invokes @codebase-agent for implementation
 
 ## Key Principles
 
-- **Leverage pattern analysis:** Use insights from @feature-analyst to inform task breakdown
+- **Leverage pattern analysis:** Use insights from @codebase-pattern-analyst to inform task breakdown
 - **Reference existing patterns:** Link each subtask to relevant patterns found in codebase
 - **Follow conventions:** Ensure task structure aligns with project patterns
 - **Enable reuse:** Make tasks implementation-ready by including pattern references
