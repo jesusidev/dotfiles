@@ -1,7 +1,7 @@
 ---
 description: "Documentation authoring agent"
 mode: subagent
-model: glm-4.6
+model: opencode/glm-4.6
 temperature: 0.2
 tools:
   read: true

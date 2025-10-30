@@ -1,7 +1,7 @@
 ---
 description: "Analyzes codebase patterns and conventions for feature requests across any language or framework"
 mode: subagent
-model: kimi-k2
+model: opencode/kimi-k2
 temperature: 0.1
 tools:
   read: true

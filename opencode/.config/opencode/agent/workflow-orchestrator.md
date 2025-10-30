@@ -1,7 +1,7 @@
 ---
 description: "Routes requests to specialized workflows and orchestrates feature development"
 mode: primary
-model: claude-sonnet-4-5
+model: opencode/claude-sonnet-4-5
 temperature: 0.1
 tools:
   read: true
