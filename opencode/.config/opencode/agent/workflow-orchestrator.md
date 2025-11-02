@@ -107,6 +107,10 @@ For all requests (after user confirmation if simple):
 ```
 Request received
     │
+    ├─> Phase 0: Git branch check
+    │       ├─> If on main/master: Create feature branch
+    │       └─> If on feature branch: Continue
+    │
     ├─> Analyze complexity
     │
     ├─> If appears simple: Ask user to confirm proceeding with full workflow
@@ -130,8 +134,11 @@ Request received
             │
             ├─> Phase 5: @build-agent (validation)
             │
-            └─> Phase 6: @documentation (docs)
-                    └─> Done
+            ├─> Phase 6: @documentation (docs)
+            │
+            └─> Phase 7: Pull request creation
+                    ├─> If on feature branch: Create PR
+                    └─> If on main/master: Skip (warn user)
 
 <!-- FUTURE: Simple task routing (not yet active)
     ├─── Simple? ────> Route to appropriate subagent ────> Done
@@ -139,6 +146,44 @@ Request received
 ```
 
 ## Execution Instructions
+
+**Step 0: Git Branch Check**
+
+```bash
+# Check current branch
+git branch --show-current
+```
+
+```
+[If on main/master branch]
+⚠️  You are currently on the main/master branch.
+
+For safety, I recommend creating a new feature branch before proceeding.
+This allows you to:
+  • Keep main/master clean and stable
+  • Review changes via pull request
+  • Easily rollback if needed
+
+I will create a new branch: feature/{feature-name}
+
+Continue with branch creation? (yes/no)
+
+[Wait for user response]
+
+[If yes]
+Creating feature branch...
+git checkout -b feature/{feature-name}
+✅ Switched to new branch: feature/{feature-name}
+
+[If no]
+⚠️  Proceeding on main/master branch (not recommended)
+```
+
+```
+[If already on feature branch]
+✅ Currently on feature branch: {branch-name}
+Proceeding with workflow...
+```
 
 **Step 1: Analyze and Inform User**
 
@@ -290,6 +335,85 @@ Proceed with Phase 6? (yes/no)
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
+### Phase 7: Pull Request Creation
+```
+═══════════════════════════════════════════════════════════
+🔀 PHASE 7: Pull Request Creation
+═══════════════════════════════════════════════════════════
+
+All implementation phases completed successfully!
+
+[Check if on feature branch]
+```
+
+**If on feature branch:**
+```bash
+# Check current branch
+git branch --show-current
+
+# Check if changes are committed
+git status
+```
+
+```
+Current branch: feature/{feature-name}
+
+I will now:
+  1. Push your feature branch to remote
+  2. Create a pull request to merge into main/master
+
+PR Summary will include:
+  • All commits from this feature branch
+  • Summary of changes and their purpose
+  • Link to task documentation
+
+Create pull request? (yes/no)
+
+[Wait for user confirmation]
+
+[If yes]
+Pushing branch and creating pull request...
+
+git push -u origin feature/{feature-name}
+
+gh pr create --title "{Feature Title}" --body "$(cat <<'EOF'
+## Summary
+- {Summary point 1 from commits}
+- {Summary point 2 from commits}
+
+## Tasks Completed
+- [x] {Task 1}
+- [x] {Task 2}
+
+## Documentation
+- Feature analysis: docs/feature-analysts/{feature}.md
+- Task breakdown: tasks/subtasks/{feature}/README.md
+
+## Validation
+- ✅ All tests passing
+- ✅ Build successful
+- ✅ Type checks passed
+- ✅ Linting passed
+EOF
+)"
+
+✅ Pull request created: {PR_URL}
+
+[If no]
+⏭️  Skipping PR creation. You can create it manually later with:
+   gh pr create --title "{title}" --body "{description}"
+```
+
+**If on main/master branch:**
+```
+⚠️  You are on main/master branch.
+
+Changes have been committed directly to main/master.
+Pull request creation is not applicable.
+
+Consider using feature branches in the future for better workflow.
+```
+
 ### Completion
 ```
 ═══════════════════════════════════════════════════════════
@@ -297,6 +421,19 @@ Proceed with Phase 6? (yes/no)
 ═══════════════════════════════════════════════════════════
 
 All phases completed successfully!
+
+[If PR created]
+📋 Pull Request: {PR_URL}
+📁 Feature Branch: feature/{feature-name}
+
+Next Steps:
+  1. Review the pull request
+  2. Request reviews from team members
+  3. Merge when approved
+
+[If on main/master]
+⚠️  Changes committed to main/master
+📋 Commits: {commit_list}
 ```
 
 ## Error Handling

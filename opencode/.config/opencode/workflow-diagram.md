@@ -6,7 +6,11 @@
 flowchart TD
     Start([User Request]) --> Orchestrator[Workflow Orchestrator]
     
-    Orchestrator --> Decision{Request Type?}
+    Orchestrator --> BranchCheck{On main/master<br/>branch?}
+    
+    BranchCheck -->|Yes| CreateBranch["Create Feature Branch<br/>feature/{feature-name}"]
+    BranchCheck -->|No| Decision{Request Type?}
+    CreateBranch --> Decision
     
     Decision -->|Simple Task| SimpleRoute[Route to Subagent]
     SimpleRoute --> Review[Reviewer Subagent]
@@ -52,7 +56,14 @@ flowchart TD
     
     Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
     DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>docs/feature-analysts/feature.md]
-    UpdatePatterns --> Complete([Feature Complete])
+    UpdatePatterns --> Phase7[Phase 7: Pull Request]
+    
+    Phase7 --> PRCheck{On feature<br/>branch?}
+    PRCheck -->|Yes| CreatePR["Push Branch & Create PR<br/>gh pr create"]
+    PRCheck -->|No| SkipPR["Skip PR Creation<br/>On main/master"]
+    
+    CreatePR --> Complete([Feature Complete])
+    SkipPR --> Complete
     
     Review --> SimpleComplete([Task Complete])
     Build --> SimpleComplete
@@ -138,6 +149,18 @@ flowchart LR
 
 ## Phase Details
 
+### Phase 0: Git Branch Check
+- **Agent:** @workflow-orchestrator
+- **Purpose:** Ensure work happens on feature branches, not main/master
+- **Workflow:**
+  1. Check current branch with `git branch --show-current`
+  2. If on main/master: Prompt user to create feature branch
+  3. If user confirms: Create and checkout `feature/{feature-name}`
+  4. If user declines: Warn and proceed on main/master
+  5. If already on feature branch: Proceed without changes
+- **Safety:** Prevents accidental commits to main/master branch
+- **Best Practice:** All feature work should happen on dedicated branches
+
 ### Phase 1: Analysis
 - **Agent:** @codebase-agent (analysis mode)
 - **Subagent:** @feature-analyst
@@ -190,3 +213,18 @@ flowchart LR
 - **Output:** Updated documentation (README, API docs, feature analysis docs)
 - **Purpose:** Keep docs current with changes and update feature analysis documentation with new patterns discovered during implementation
 - **Analysis Update:** Reviews implementation and updates `docs/feature-analysts/{feature}.md` to prevent drift
+
+### Phase 7: Pull Request Creation
+- **Agent:** @workflow-orchestrator
+- **Output:** Pull request (if on feature branch)
+- **Purpose:** Create PR for code review and merge approval
+- **Workflow:**
+  1. Check if on feature branch
+  2. If yes: Push branch and create PR with summary
+  3. If no (on main/master): Skip PR creation, warn user
+- **PR Contents:**
+  - Summary of changes from all commits
+  - List of completed tasks
+  - Links to feature documentation
+  - Validation status (tests, build, lint)
+- **Commands Used:** `git push -u origin {branch}`, `gh pr create`
