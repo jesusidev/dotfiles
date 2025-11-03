@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart TD
-    Start([User Request]) --> Orchestrator[/workflow Command]
+    Start([User Request]) --> Orchestrator["workflow Command"]
 
     Orchestrator --> BranchCheck{On main/master<br/>branch?}
 
@@ -24,7 +24,7 @@ flowchart TD
     PatternAnalysis --> AnalysisDoc[Create Analysis Doc<br/>docs/feature-analysts/feature.md]
 
     AnalysisDoc --> Phase2[Phase 2: Planning]
-    Phase2 --> TaskManager[/plan-tasks Command]
+    Phase2 --> TaskManager["plan-tasks Command"]
     TaskManager --> TaskPlan[Create Task Plan<br/>tasks/subtasks/feature/]
     TaskPlan --> Approval{User Approval?}
 
@@ -35,13 +35,13 @@ flowchart TD
 
     CodebaseImpl --> SubtaskLoop{More Subtasks?}
 
-    SubtaskLoop -->|Yes| MarkStarted["Codebase Agent:<br/>Mark \\[ \\] → \\[~\\] in Feature Index"]
+    SubtaskLoop -->|Yes| MarkStarted["Codebase Agent:<br/>Mark [ ] → [~] in Feature Index"]
     MarkStarted --> ReadSubtask["Codebase Agent:<br/>Read Subtask seq-task.md"]
     ReadSubtask --> CoderAgent["Task Tool: Coder Agent<br/>Implement Code<br/>Mark Acceptance Criteria in Subtask"]
     CoderAgent --> TesterAgent["Task Tool: Tester Agent<br/>Write & Run Tests<br/>Mark Test Checklists in Subtask"]
     TesterAgent --> Validate["Codebase Agent:<br/>Validate Type Check, Lint, Tests"]
     Validate --> VerifyUpdates["Codebase Agent:<br/>Verify Subtask File Updated<br/>Fallback: Update if Missing"]
-    VerifyUpdates --> UpdateStatus["Codebase Agent:<br/>Mark \\[~\\] → \\[x\\] in Feature Index"]
+    VerifyUpdates --> UpdateStatus["Codebase Agent:<br/>Mark [~] → [x] in Feature Index"]
     UpdateStatus --> SubtaskLoop
 
     SubtaskLoop -->|No| FinalValidation[Final Validation<br/>Run Full Test Suite<br/>Verify Dev Environment]
@@ -87,10 +87,10 @@ flowchart TD
 
 ```mermaid
 graph TD
-    WO["/workflow Command<br/>Orchestrator"]
+    WO["workflow Command<br/>Orchestrator"]
 
     WO --> Explore[Task Tool: Explore<br/>Built-in Subagent]
-    WO --> PlanTasks["/plan-tasks Command<br/>Task Planning"]
+    WO --> PlanTasks["plan-tasks Command<br/>Task Planning"]
     WO --> CA[Task Tool: Codebase Agent<br/>Implementation Coordinator]
 
     CA --> COD[Task Tool: Coder Agent<br/>Code Implementation]
