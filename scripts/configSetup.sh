@@ -20,23 +20,33 @@ function check_file_exists() {
 
 checkIfDirectoryExists() {
 	local timestamp=$(date +"%Y%m%d_%H%M%S")
-	local configDirectory=~/.config/$1
+	local targetDirectory
+
+	# Special cases for non-.config directories
 	if [[ "$1" == "scripts" || "$1" == "zshrc" ]]; then
 		if [ "$1" == "zshrc" ]; then
 			check_file_exists ~/.zshrc
 		fi
+		return
+	elif [ "$1" == "claude" ]; then
+		# Claude Code uses ~/.claude instead of ~/.config/claude
+		targetDirectory=~/.$1
 	else
-		if [ -d "$configDirectory" ]; then
-			echo "$configDirectory exist"
-			echo "Backing up $configDirectory"
-			mv "${configDirectory}" "${configDirectory}_${timestamp}.bk"
-			echo "Using stow for symlinking $1..."
-			stow $1
-		else
-			echo "$configDirectory does not exist"
-			echo "Using stow for symlinking $1..."
-			stow $1
-		fi
+		# Default: use ~/.config/
+		targetDirectory=~/.config/$1
+	fi
+
+	# Check and stow
+	if [ -d "$targetDirectory" ]; then
+		echo "$targetDirectory exist"
+		echo "Backing up $targetDirectory"
+		mv "${targetDirectory}" "${targetDirectory}_${timestamp}.bk"
+		echo "Using stow for symlinking $1..."
+		stow $1
+	else
+		echo "$targetDirectory does not exist"
+		echo "Using stow for symlinking $1..."
+		stow $1
 	fi
 }
 

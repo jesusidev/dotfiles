@@ -2,6 +2,19 @@
 
 Dotfiles for macos & New Mac Setup
 
+## Stow Packages
+
+Available configurations:
+- `nvim` - Neovim configuration
+- `tmux` - Tmux configuration
+- `starship` - Starship prompt
+- `skhd` - Simple hotkey daemon
+- `yabai` - Yabai window manager
+- `ghostty` - Ghostty terminal
+- `opencode` - OpenCode agent system
+- `claude` - Claude Code configuration (migrated from OpenCode)
+- `zshrc` - Zsh configuration
+
 ## Usage for syncing .config
 
 Moving from Lunar VIM to Lazy VIM
