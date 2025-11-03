@@ -6,11 +6,16 @@ This directory contains Claude Code slash commands and agent prompts adapted fro
 
 ```
 .claude/
-├── commands/          # Slash commands (invoked with /command-name)
-│   ├── workflow.md    # Main orchestration workflow
-│   └── plan-tasks.md  # Task planning and breakdown
-└── agents/            # Agent prompts (used via Task tool)
-    └── (future agent prompts)
+├── commands/             # Slash commands (invoked with /command-name)
+│   ├── workflow.md       # Main orchestration workflow
+│   └── plan-tasks.md     # Task planning and breakdown
+└── agents/               # Agent prompts (used via Task tool)
+    ├── codebase-agent.md    # Implementation orchestrator
+    ├── coder-agent.md       # Code implementation
+    ├── tester.md            # Test writing and execution
+    ├── reviewer.md          # Code review and quality
+    ├── build-agent.md       # Build validation
+    └── documentation.md     # Documentation updates
 ```
 
 ## Architecture Differences: OpenCode vs Claude Code
@@ -44,11 +49,69 @@ Use AskUserQuestion for user confirmations
 
 | Feature | OpenCode | Claude Code |
 |---------|----------|-------------|
-| Invocation | `@agent-name` | `/command-name` |
+| Invocation | `@agent-name` | `/command-name` or Task tool |
 | Config | YAML frontmatter | N/A (controlled by main agent) |
-| Sub-agents | `@subagent` | Task tool with prompts |
+| Sub-agents | `@subagent` | Task tool with agent prompts |
 | Model selection | Per-agent YAML | Runtime (Task tool parameter) |
 | Tools | YAML permissions | Available by default |
+| Agent prompts | Built-in | Stored in `.claude/agents/` |
+
+## How the Agent System Works
+
+### Slash Commands → Task Tool → Agent Prompts
+
+When you invoke a slash command like `/workflow`, here's what happens:
+
+1. **Workflow orchestrator** (the slash command) analyzes your request
+2. **For each phase**, it invokes a specialized agent using the Task tool:
+   - Loads the full agent prompt from `.claude/agents/{agent-name}.md`
+   - Adds context (feature name, paths, etc.)
+   - Passes to Task tool with appropriate model
+3. **Agent executes** autonomously with its instructions
+4. **Agent can invoke sub-agents** (e.g., codebase-agent → coder-agent → tester)
+5. **Results flow back** through the workflow
+
+### Agent Hierarchy
+
+```
+/workflow (slash command)
+  ├─> Phase 1: Pattern Analysis
+  │     └─> Task tool (Explore subagent)
+  ├─> Phase 2: Task Planning
+  │     └─> /plan-tasks (slash command)
+  ├─> Phase 3: Implementation
+  │     └─> codebase-agent.md
+  │           ├─> coder-agent.md
+  │           └─> tester.md
+  ├─> Phase 4: Code Review
+  │     └─> reviewer.md
+  ├─> Phase 5: Build Validation
+  │     └─> build-agent.md
+  ├─> Phase 6: Documentation
+  │     └─> documentation.md
+  └─> Phase 7: PR Creation
+        └─> git commands (direct)
+```
+
+### Agent Invocation Example
+
+In `workflow.md`, Phase 3 looks like:
+```markdown
+Use the Task tool with:
+- subagent_type: "general-purpose"
+- model: "haiku"
+- description: "Implement feature: {feature-name}"
+- prompt: "
+  [Load full content from ~/.claude/agents/codebase-agent.md]
+
+  ## Implementation Context
+  Feature: {feature-name}
+  Task Directory: tasks/subtasks/{feature}/
+  ...
+  "
+```
+
+The workflow loads the agent prompt and adds context dynamically.
 
 ## Using the Slash Commands
 

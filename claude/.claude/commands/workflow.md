@@ -124,7 +124,32 @@ Proceed with Phase 3? (yes/no)
 
 [Use AskUserQuestion tool for confirmation]
 
-[Use Task tool with subagent_type="general-purpose" for implementation]
+[Invoke codebase-agent for implementation]
+
+Use the Task tool with:
+- subagent_type: "general-purpose"
+- model: "haiku"
+- description: "Implement feature: {feature-name}"
+- prompt: "
+  [Load the full content from ~/.claude/agents/codebase-agent.md]
+
+  ## Implementation Context
+
+  **Mode:** Implementation (Post-Planning)
+
+  **Feature:** {feature-name}
+
+  **Task Directory:** tasks/subtasks/{feature}/
+
+  **Pattern Analysis:** docs/feature-analysts/{feature}.md
+
+  **Feature Request:** {original user request}
+
+  Follow the Implementation workflow (Mode 2) from the codebase-agent instructions.
+  Coordinate coder-agent and tester for each subtask.
+  Update task status in feature index.
+  Report completion when all tasks done.
+  "
 
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -147,7 +172,34 @@ Proceed with Phase 4? (yes/no)
 
 [Use AskUserQuestion tool for confirmation]
 
-[Perform thorough code review of changes]
+[Invoke reviewer agent for code review]
+
+Use the Task tool with:
+- subagent_type: "general-purpose"
+- model: "sonnet"
+- description: "Review feature: {feature-name}"
+- prompt: "
+  [Load the full content from ~/.claude/agents/reviewer.md]
+
+  ## Review Context
+
+  **Feature:** {feature-name}
+
+  **Task Directory:** tasks/subtasks/{feature}/
+
+  **Pattern Analysis:** docs/feature-analysts/{feature}.md
+
+  **Changed Files:** [List files that were modified/created]
+
+  Perform comprehensive code review covering:
+  - Code quality and correctness
+  - Security vulnerabilities
+  - Performance issues
+  - Test coverage
+  - Acceptance criteria verification
+
+  Provide detailed feedback with file:line references.
+  "
 
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -170,7 +222,29 @@ Proceed with Phase 5? (yes/no)
 
 [Use AskUserQuestion tool for confirmation]
 
-[Run build validation using Bash tool]
+[Invoke build-agent for validation]
+
+Use the Task tool with:
+- subagent_type: "general-purpose"
+- model: "haiku"
+- description: "Validate build for: {feature-name}"
+- prompt: "
+  [Load the full content from ~/.claude/agents/build-agent.md]
+
+  ## Build Validation Context
+
+  **Feature:** {feature-name}
+
+  **Pattern Analysis:** docs/feature-analysts/{feature}.md (check for build commands)
+
+  Run all validation steps:
+  1. Type checking
+  2. Linting
+  3. Build
+  4. Development environment startup
+
+  Report success or detailed errors.
+  "
 
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -192,7 +266,33 @@ Proceed with Phase 6? (yes/no)
 
 [Use AskUserQuestion tool for confirmation]
 
-[Update documentation as needed]
+[Invoke documentation agent for updates]
+
+Use the Task tool with:
+- subagent_type: "general-purpose"
+- model: "haiku"
+- description: "Update documentation for: {feature-name}"
+- prompt: "
+  [Load the full content from ~/.claude/agents/documentation.md]
+
+  ## Documentation Context
+
+  **Feature:** {feature-name}
+
+  **Task Directory:** tasks/subtasks/{feature}/
+
+  **Pattern Analysis:** docs/feature-analysts/{feature}.md
+
+  **Changed Files:** [List implementation files]
+
+  Review implementation and update:
+  1. README.md (if user-facing changes)
+  2. Feature analysis documentation (with new patterns)
+  3. API documentation (if new APIs)
+  4. Other relevant docs
+
+  Propose updates, get approval, then apply.
+  "
 
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
