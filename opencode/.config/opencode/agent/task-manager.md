@@ -127,7 +127,9 @@ Exit criteria
 ```markdown
 # Task {seq}: {Title}
 
-**Status:** ⬜ Not Started  
+## Status
+🔲 Pending
+
 **Estimated Time:** {time estimate}  
 **Priority:** {High/Medium/Low} ({Blocking/Non-blocking})
 
@@ -137,12 +139,12 @@ Exit criteria
 
 ## Acceptance Criteria
 
-- ✅ {Criterion 1 - specific, measurable}
-- ✅ {Criterion 2 - specific, measurable}
-- ✅ {Criterion 3 - specific, measurable}
-- ✅ {Uses project conventions from pattern analysis}
-- ✅ {Includes proper error handling}
-- ✅ {Fully typed with TypeScript (if applicable)}
+- [ ] {Criterion 1 - specific, measurable}
+- [ ] {Criterion 2 - specific, measurable}
+- [ ] {Criterion 3 - specific, measurable}
+- [ ] {Uses project conventions from pattern analysis}
+- [ ] {Includes proper error handling}
+- [ ] {Fully typed with TypeScript (if applicable)}
 
 ## Dependencies
 
@@ -200,6 +202,16 @@ Exit criteria
 - [ ] Type checking passes
 - [ ] Linting passes
 
+## Code Review Checklist
+
+- [ ] All files created/modified as specified
+- [ ] TypeScript compilation successful
+- [ ] No linting warnings or errors
+- [ ] All imports resolve correctly
+- [ ] Code follows existing patterns
+- [ ] Proper error handling implemented
+- [ ] Edge cases handled
+
 ## Code Template
 
 ```{language}
@@ -241,7 +253,9 @@ Exit criteria
 ```markdown
 # Task {seq}: {Title}
 
-**Status:** ⬜ Not Started  
+## Status
+🔲 Pending
+
 **Estimated Time:** {time estimate}  
 **Priority:** {High/Medium/Low}
 
@@ -251,10 +265,10 @@ Exit criteria
 
 ## Acceptance Criteria
 
-- ✅ {Test criterion 1}
-- ✅ {Test criterion 2}
-- ✅ {Coverage requirement (e.g., 100% for the module)}
-- ✅ {Performance requirement (e.g., tests run in <500ms)}
+- [ ] {Test criterion 1}
+- [ ] {Test criterion 2}
+- [ ] {Coverage requirement (e.g., 100% for the module)}
+- [ ] {Performance requirement (e.g., tests run in <500ms)}
 
 ## Dependencies
 

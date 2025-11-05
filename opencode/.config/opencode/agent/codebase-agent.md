@@ -323,16 +323,38 @@ You are the ONLY agent responsible for:
       ```
       
       **Check for these required elements:**
-      - [ ] All acceptance criteria marked: `- [x] {criterion} - ✅ Completed`
+      
+      **1. Status Header:**
+      - [ ] Status changed to "✅ Completed"
+      - [ ] "Completed:" date field present with timestamp
+      - [ ] "Verified:" statement present
+      
+      **2. Acceptance Criteria:**
+      - [ ] ALL acceptance criteria marked: `- [x] {criterion} ✅`
+      - [ ] NO unchecked boxes `- [ ]` remain
+      - [ ] Every criterion has ✅ checkmark
+      
+      **3. Code Review Checklist (if present):**
+      - [ ] ALL code review items marked: `- [x] {item} ✅`
+      - [ ] TypeScript compilation item checked
+      - [ ] Linting item checked
+      
+      **4. Implementation Completed Section:**
       - [ ] "Implementation Completed" section exists
       - [ ] "Date:" field present with timestamp
-      - [ ] "Files Changed:" section lists all modified files
+      - [ ] "Files Created/Modified:" section lists ALL files
       - [ ] "Key Decisions:" section documents choices made
+      - [ ] "Technical Verification:" checklist present and marked
+      - [ ] "Acceptance Criteria Verification:" checklist present and marked
       
       **IF ANY ELEMENT IS MISSING:**
       - **STOP and use Edit tool to add missing elements**
-      - Use the template from lines 72-100 in coder-agent.md
-      - DO NOT proceed until subtask file is complete
+      - Update status header if missing
+      - Mark ALL unchecked acceptance criteria boxes
+      - Mark ALL unchecked code review boxes
+      - Add "Implementation Completed" section if missing
+      - Use the template from coder-agent.md
+      - DO NOT proceed until subtask file is 100% complete
    
    e. **Invoke @tester** for test implementation:
       - Tester writes unit tests (positive and negative cases)
@@ -373,21 +395,52 @@ You are the ONLY agent responsible for:
    h. **🚨 MANDATORY VERIFICATION BEFORE MARKING COMPLETE 🚨**
       
       **Complete this checklist (DO NOT SKIP):**
+      
+      **Subtask File Verification:**
       - [ ] Read subtask file one final time
-      - [ ] Confirmed all acceptance criteria marked [x]
+      - [ ] Confirmed status is "✅ Completed" with date
+      - [ ] Confirmed ALL acceptance criteria marked [x] with ✅
+      - [ ] Confirmed NO unchecked boxes remain in acceptance criteria
+      - [ ] Confirmed code review checklist fully checked (if present)
       - [ ] Confirmed "Implementation Completed" section present
-      - [ ] Confirmed "Test Results" section present
+      - [ ] Confirmed "Test Results" section present (after testing)
+      - [ ] Confirmed "Files Created/Modified:" list is complete
+      - [ ] Confirmed "Key Decisions:" documented
+      - [ ] Confirmed "Technical Verification:" checklist marked
+      
+      **Validation Commands:**
       - [ ] All validation commands passed (type check, lint, format, tests)
       - [ ] No errors in validation output
+      - [ ] TypeScript compiles successfully
+      - [ ] No linting warnings
+      - [ ] All tests passing
       
       **ONLY AFTER ALL ITEMS CHECKED:**
       - **Mark subtask as complete in feature index:** Update status from [~] to [x] in `tasks/subtasks/{feature}/README.md`
+      - **Report completion with summary:**
+        ```
+        ✅ Task {seq}: {Task Name} - COMPLETED
+        
+        **Files Created/Modified:**
+        - [List of files from subtask file]
+        
+        **Acceptance Criteria:** X/X verified ✅
+        **Code Review Checklist:** X/X verified ✅
+        **Time Taken:** XX minutes
+        
+        **Checklists Updated:** ✅
+        **Subtask File Complete:** ✅
+        **Validation Passed:** ✅
+        
+        Ready to proceed to Task {seq+1}.
+        ```
       - Move to next subtask
       
       **IF ANY ITEM UNCHECKED:**
       - **DO NOT mark complete**
       - Go back and fix the missing item
-      - Re-run this checklist
+      - Use Edit tool to update subtask file
+      - Re-run this checklist from the beginning
 
 3. **After all subtasks complete:**
    - **Run final validation suite** using commands from feature analysis:
@@ -427,31 +480,59 @@ grep "## Test Results" tasks/subtasks/{feature}/{seq}-{task-description}.md
 ### Verification Checklist
 
 - [ ] **Step 1:** Read entire subtask file
-- [ ] **Step 2:** Verified ALL acceptance criteria marked: `- [x] {criterion} - ✅ Completed`
-- [ ] **Step 3:** Verified "## Implementation Completed" section exists
-- [ ] **Step 4:** Verified implementation section contains:
+- [ ] **Step 2:** Verified status header shows "✅ Completed" with date
+- [ ] **Step 3:** Verified ALL acceptance criteria marked: `- [x] {criterion} ✅`
+- [ ] **Step 4:** Verified NO unchecked boxes `- [ ]` remain in acceptance criteria
+- [ ] **Step 5:** Verified code review checklist fully marked (if section present)
+- [ ] **Step 6:** Verified "## Implementation Completed" section exists
+- [ ] **Step 7:** Verified implementation section contains:
   - [ ] Date/timestamp
-  - [ ] Files Changed list
+  - [ ] Files Created/Modified list (complete)
   - [ ] Key Decisions documented
-- [ ] **Step 5:** Verified "## Test Results" section exists
-- [ ] **Step 6:** Verified test results section contains:
+  - [ ] Technical Verification checklist marked
+  - [ ] Acceptance Criteria Verification checklist marked
+- [ ] **Step 8:** Verified "## Test Results" section exists (after testing phase)
+- [ ] **Step 9:** Verified test results section contains:
   - [ ] Date/timestamp
   - [ ] Command Used
-  - [ ] Pass/fail results
-- [ ] **Step 7:** All validation commands passed (type check, lint, format, tests)
-- [ ] **Step 8:** No errors in validation output
+  - [ ] Pass/fail results with counts
+- [ ] **Step 10:** All validation commands passed (type check, lint, format, tests)
+- [ ] **Step 11:** No errors in validation output
 
 ### Fallback Actions (If Verification Fails)
 
+**If status header NOT updated:**
+```markdown
+# Use Edit tool to update the Status section at top of file:
+
+## Status
+✅ Completed
+
+**Completed:** {current date/time}
+**Verified:** All acceptance criteria met
+```
+
 **If acceptance criteria NOT marked:**
 ```bash
-# Use Edit tool to mark each criterion
-# Pattern: - [ ] {criterion} → - [x] {criterion} - ✅ Completed
+# Use Edit tool to mark EACH criterion
+# Change ALL: - [ ] {criterion} → - [x] {criterion} ✅
+# Example:
+# - [ ] Component created → - [x] Component created ✅
+# - [ ] Props defined → - [x] Props defined ✅
+```
+
+**If code review checklist NOT marked (if section exists):**
+```bash
+# Use Edit tool to mark ALL code review items
+# Change ALL: - [ ] {item} → - [x] {item} ✅
+# Example:
+# - [ ] TypeScript compilation succeeds → - [x] TypeScript compilation succeeds ✅
+# - [ ] No linting warnings → - [x] No linting warnings ✅
 ```
 
 **If "Implementation Completed" section missing:**
 ```markdown
-# Use Edit tool to append this section:
+# Use Edit tool to append this section at END of file:
 
 ---
 
@@ -459,24 +540,35 @@ grep "## Test Results" tasks/subtasks/{feature}/{seq}-{task-description}.md
 
 **Date:** {current date/time}
 
-**Files Changed:**
-- `{file path}` - {Created/Modified} - {description}
+**Files Created/Modified:**
+- `{file path}` - Created - {description}
+- `{file path}` - Modified - {description}
 
 **Key Decisions:**
-- {Decision 1}: {Rationale}
+- {Decision 1}: {Rationale for approach chosen}
+- {Decision 2}: {Why this pattern was used}
 
 **Deviations from Plan:**
-- None / {Description}
+- None / {Description of any changes}
 
-**Validation:**
-- [x] Type checks passed
-- [x] Linting passed
-- [x] Acceptance criteria met
+**Technical Verification:**
+- [x] TypeScript compilation succeeds ✅
+- [x] No linting warnings or errors ✅
+- [x] All imports resolve correctly ✅
+- [x] Code follows existing patterns ✅
+
+**Acceptance Criteria Verification:**
+- [x] All acceptance criteria boxes checked ✅
+- [x] All requirements implemented ✅
+- [x] All edge cases handled ✅
+
+**Notes:**
+- {Any additional context or important information}
 ```
 
 **If "Test Results" section missing:**
 ```markdown
-# Use Edit tool to append this section:
+# Use Edit tool to append this section at END of file:
 
 ---
 
