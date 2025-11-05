@@ -49,16 +49,22 @@ flowchart TD
     FinalValidation --> Phase4[Phase 4: Quality Assurance]
     
     Phase4 --> ReviewerAgent[Reviewer Subagent<br/>Code Review<br/>Verify Acceptance Criteria]
-    ReviewerAgent --> Phase5[Phase 5: Build Validation]
+    ReviewerAgent --> Phase5[Phase 5: Accessibility Audit]
     
-    Phase5 --> BuildAgent[Build Agent Subagent<br/>Build & Environment Check<br/>Docker/Local Dev Validation]
-    BuildAgent --> Phase6[Phase 6: Documentation]
+    Phase5 --> WebCheck{Web Project?}
+    WebCheck -->|Yes| AccessibilityAgent[Accessibility Subagent<br/>WCAG Audit<br/>Semantic HTML & ARIA]
+    WebCheck -->|No| Phase6[Phase 6: Build Validation]
+    AccessibilityAgent --> Phase6
     
-    Phase6 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
+    Phase6 --> BuildAgent[Build Agent Subagent<br/>Build & Environment Check<br/>Docker/Local Dev Validation]
+    BuildAgent --> Phase7[Phase 7: Documentation]
+    
+    Phase7 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
     DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>docs/feature-analysts/feature.md]
-    UpdatePatterns --> Phase7[Phase 7: Pull Request]
+    UpdatePatterns --> Phase8[Phase 8: Pull Request]
     
-    Phase7 --> PRCheck{On feature<br/>branch?}
+    Phase8 --> PRCheck{On feature<br/>branch?}
+    
     PRCheck -->|Yes| CreatePR["Push Branch & Create PR<br/>gh pr create"]
     PRCheck -->|No| SkipPR["Skip PR Creation<br/>On main/master"]
     
@@ -99,6 +105,7 @@ graph TD
     CA --> TST[Tester<br/>Subagent]
     
     WO --> REV[Reviewer<br/>Subagent]
+    WO --> ACC[Accessibility<br/>Subagent]
     WO --> BLD[Build Agent<br/>Subagent]
     WO --> DOC[Documentation<br/>Subagent]
     
@@ -109,6 +116,7 @@ graph TD
     style COD fill:#f0f0f0
     style TST fill:#f0f0f0
     style REV fill:#f0f0f0
+    style ACC fill:#f0f0f0
     style BLD fill:#f0f0f0
     style DOC fill:#f0f0f0
 ```
@@ -129,11 +137,12 @@ flowchart LR
     P3 --> A5[Test Files]
     P3 --> A6[Updated Task Status]
     
-    A6 --> P4[Phase 4-6: QA and Docs]
+    A6 --> P4[Phase 4-7: QA and Docs]
     P4 --> A7[Review Feedback]
-    P4 --> A8[Build Validation]
-    P4 --> A9[Updated Documentation]
-    P4 --> A10[Updated Analysis Doc]
+    P4 --> A8[Accessibility Report]
+    P4 --> A9[Build Validation]
+    P4 --> A10[Updated Documentation]
+    P4 --> A11[Updated Analysis Doc]
     
     style A1 fill:#e8f5e9
     style A2 fill:#e8f5e9
@@ -143,8 +152,9 @@ flowchart LR
     style A6 fill:#e8f5e9
     style A7 fill:#ffe0b2
     style A8 fill:#ffe0b2
-    style A9 fill:#e8f5e9
+    style A9 fill:#ffe0b2
     style A10 fill:#e8f5e9
+    style A11 fill:#e8f5e9
 ```
 
 ## Phase Details
@@ -197,7 +207,24 @@ flowchart LR
 - **Verification:** Reads task files and confirms each acceptance criterion is actually met in the code
 - **Flags:** Criteria marked as complete but not actually implemented
 
-### Phase 5: Build Validation
+### Phase 5: Accessibility Audit (Web Projects Only)
+- **Subagent:** @accessibility
+- **Output:** Accessibility audit report with WCAG compliance findings
+- **Purpose:** Ensure web applications meet accessibility standards
+- **Validates:**
+  - Semantic HTML structure and proper heading hierarchy
+  - ARIA attributes and roles
+  - Keyboard navigation support
+  - Color contrast ratios (WCAG 2.1 AA/AAA)
+  - Screen reader compatibility
+  - Form accessibility and error handling
+  - Alternative text for images
+  - Dynamic content announcements
+- **Automated Tools:** Runs axe-core, Lighthouse accessibility audit
+- **Manual Checks:** Provides checklist for keyboard navigation and screen reader testing
+- **Skip Condition:** Automatically skipped if no web files detected (HTML, JSX, TSX, Vue, Svelte)
+
+### Phase 6: Build Validation
 - **Subagent:** @build-agent
 - **Output:** Build validation results + environment verification
 - **Purpose:** Ensure project builds AND runs successfully in its development environment
@@ -208,13 +235,13 @@ flowchart LR
   - Dev server starts without errors (if local development)
   - Uses project-specific commands from feature analysis
 
-### Phase 6: Documentation
+### Phase 7: Documentation
 - **Subagent:** @documentation
 - **Output:** Updated documentation (README, API docs, feature analysis docs)
 - **Purpose:** Keep docs current with changes and update feature analysis documentation with new patterns discovered during implementation
 - **Analysis Update:** Reviews implementation and updates `docs/feature-analysts/{feature}.md` to prevent drift
 
-### Phase 7: Pull Request Creation
+### Phase 8: Pull Request Creation
 - **Agent:** @workflow-orchestrator
 - **Output:** Pull request (if on feature branch)
 - **Purpose:** Create PR for code review and merge approval

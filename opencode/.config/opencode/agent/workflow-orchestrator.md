@@ -88,16 +88,25 @@ For all requests (after user confirmation if simple):
    - Provides feedback and suggests improvements
    - Validates against established patterns
 
-#### Phase 5: Build Validation
+#### Phase 5: Accessibility Audit
 
-5. **Invoke @build-agent** subagent
+5. **Invoke @accessibility** subagent (for web projects)
+   - Audits HTML, CSS, and JavaScript for WCAG compliance
+   - Verifies semantic HTML and ARIA implementation
+   - Tests keyboard navigation and screen reader compatibility
+   - Checks color contrast and visual accessibility
+   - Provides remediation suggestions
+
+#### Phase 6: Build Validation
+
+6. **Invoke @build-agent** subagent
    - Runs type checks and build validation
    - Ensures no compilation errors
    - Confirms project builds successfully
 
-#### Phase 6: Documentation
+#### Phase 7: Documentation
 
-6. **Invoke @documentation** subagent
+7. **Invoke @documentation** subagent
    - Updates relevant documentation (README, API docs, etc.)
    - Documents new patterns or changes
    - Ensures documentation is consistent and complete
@@ -132,11 +141,13 @@ Request received
             │
             ├─> Phase 4: @reviewer (quality check)
             │
-            ├─> Phase 5: @build-agent (validation)
+            ├─> Phase 5: @accessibility (WCAG audit - web projects only)
             │
-            ├─> Phase 6: @documentation (docs)
+            ├─> Phase 6: @build-agent (validation)
             │
-            └─> Phase 7: Pull request creation
+            ├─> Phase 7: @documentation (docs)
+            │
+            └─> Phase 8: Pull request creation
                     ├─> If on feature branch: Create PR
                     └─> If on main/master: Skip (warn user)
 
@@ -290,10 +301,40 @@ Proceed with Phase 4? (yes/no)
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-### Phase 5: Build Validation
+### Phase 5: Accessibility Audit (Web Projects Only)
 ```
 ═══════════════════════════════════════════════════════════
-🏗️  PHASE 5: Build & Environment Validation
+♿ PHASE 5: Accessibility Audit
+═══════════════════════════════════════════════════════════
+
+This phase will audit accessibility compliance (WCAG 2.1 AA/AAA).
+
+[Check if project contains web files: HTML, JSX, TSX, Vue, Svelte, etc.]
+
+[If web files found]
+Agents to be invoked:
+  • @accessibility (claude-sonnet-4-5) - Audits WCAG compliance
+
+Audit coverage:
+  • Semantic HTML structure
+  • ARIA attributes and roles
+  • Keyboard navigation
+  • Color contrast ratios
+  • Screen reader compatibility
+  • Form accessibility
+
+Proceed with Phase 5? (yes/no/skip)
+```
+[Wait for user confirmation]
+[If yes: Invoke agents]
+[If skip: Continue to Phase 6]
+[If no web files found: Skip to Phase 6 automatically]
+[IF ERROR: Stop workflow, report error, provide recovery options]
+
+### Phase 6: Build Validation
+```
+═══════════════════════════════════════════════════════════
+🏗️  PHASE 6: Build & Environment Validation
 ═══════════════════════════════════════════════════════════
 
 This phase will validate the build and development environment.
@@ -307,16 +348,16 @@ Validation:
   • Docker/Local dev environment startup
   • Runtime error checks
 
-Proceed with Phase 5? (yes/no)
+Proceed with Phase 6? (yes/no)
 ```
 [Wait for user confirmation]
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-### Phase 6: Documentation
+### Phase 7: Documentation
 ```
 ═══════════════════════════════════════════════════════════
-📚 PHASE 6: Documentation Updates
+📚 PHASE 7: Documentation Updates
 ═══════════════════════════════════════════════════════════
 
 This phase will update all relevant documentation.
@@ -329,16 +370,16 @@ Output:
   • Updated API documentation (if needed)
   • Updated docs/feature-analysts/{feature}.md
 
-Proceed with Phase 6? (yes/no)
+Proceed with Phase 7? (yes/no)
 ```
 [Wait for user confirmation]
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
-### Phase 7: Pull Request Creation
+### Phase 8: Pull Request Creation
 ```
 ═══════════════════════════════════════════════════════════
-🔀 PHASE 7: Pull Request Creation
+🔀 PHASE 8: Pull Request Creation
 ═══════════════════════════════════════════════════════════
 
 All implementation phases completed successfully!
@@ -510,6 +551,7 @@ Next Steps:
 - **Planning:** Load task templates and examples
 - **Implementation:** Load relevant code patterns
 - **Review:** Load quality standards and security guidelines
+- **Accessibility:** Load WCAG guidelines and web accessibility standards
 - **Build:** Load build configuration
 - **Documentation:** Load documentation standards
 
