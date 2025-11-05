@@ -211,6 +211,7 @@ Exit criteria
 - [ ] Code follows existing patterns
 - [ ] Proper error handling implemented
 - [ ] Edge cases handled
+- [ ] Mobile-first styling (if applicable - uses `min-width`, not `max-width`)
 
 ## Code Template
 
@@ -240,6 +241,15 @@ Exit criteria
 - {Important assumption or constraint}
 - {Link to similar implementation in codebase}
 - {Any project-specific considerations}
+
+## Styling Guidelines (if task involves CSS/Tailwind)
+
+**Mobile-First Approach Required:**
+- Base styles for mobile (< 576px) without media queries
+- Tablet enhancements at `@media (min-width: 576px)`
+- Desktop enhancements at `@media (min-width: 992px)`
+- ❌ Never use `max-width` media queries
+- ✅ Always use `min-width` for progressive enhancement
 
 ---
 

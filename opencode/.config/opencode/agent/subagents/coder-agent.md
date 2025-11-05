@@ -184,4 +184,77 @@ Before signaling completion to @codebase-agent, verify:
 - Request clarification if instructions are ambiguous.
 - **Always document what was done** - Update subtask file with implementation details.
 
+## Mobile-First Styling Requirements
+
+**🚨 CRITICAL: All CSS/Tailwind styling MUST follow mobile-first approach.**
+
+### Breakpoint Standards
+
+**Base Styles (Mobile First):**
+- **Mobile**: `< 576px` - Write base styles without media queries
+- **Tablet**: `≥ 576px` - Use `@media (min-width: 576px)` for enhancements
+- **Desktop**: `≥ 992px` - Use `@media (min-width: 992px)` for full enhancements
+
+### Media Query Rules
+
+✅ **CORRECT - Use min-width:**
+```css
+/* Mobile base styles (no media query) */
+.component {
+  padding: 1rem;
+  font-size: 14px;
+}
+
+/* Tablet enhancements */
+@media (min-width: 576px) {
+  .component {
+    padding: 1.5rem;
+    font-size: 16px;
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 992px) {
+  .component {
+    padding: 2rem;
+    font-size: 18px;
+  }
+}
+```
+
+❌ **INCORRECT - Never use max-width:**
+```css
+/* This breaks mobile-first approach - DO NOT USE */
+@media (max-width: 992px) {
+  .component { ... }
+}
+```
+
+### Tailwind Mobile-First
+
+Tailwind is mobile-first by default. Use responsive prefixes:
+
+```jsx
+// Base = mobile, sm = tablet (640px), lg = desktop (1024px)
+<div className="p-4 sm:p-6 lg:p-8 text-sm sm:text-base lg:text-lg">
+  Content
+</div>
+```
+
+**Note:** Tailwind breakpoints differ slightly from our standards. Adjust if needed:
+- `sm:` = 640px (close to our 576px)
+- `md:` = 768px
+- `lg:` = 1024px (close to our 992px)
+- `xl:` = 1280px
+
+### Validation Checklist
+
+Before marking styling tasks complete, verify:
+- [ ] Base styles written without media queries (mobile first)
+- [ ] Only `min-width` media queries used
+- [ ] No `max-width` media queries present
+- [ ] Breakpoints match standards (576px, 992px)
+- [ ] Styles progressively enhance from mobile to desktop
+- [ ] Tested at all three breakpoints
+
 ---

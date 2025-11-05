@@ -211,6 +211,7 @@ find src/ -type d -name "*api*" -o -name "*service*" -o -name "*util*"
 - **TODO Comments**: Unfinished implementations
 - **FIXME Comments**: Known broken code
 - **Hack Comments**: Temporary workarounds
+- **Desktop-First CSS**: Using `max-width` media queries (breaks mobile-first approach)
 
 ### **Performance Anti-Patterns** 🐌
 - **N+1 Queries**: Database queries in loops
@@ -232,6 +233,54 @@ find src/ -type d -name "*api*" -o -name "*service*" -o -name "*util*"
 - **No Assertions**: Tests without actual assertions
 - **Test Pollution**: Tests that affect each other
 - **Mock Everything**: Over-mocking that hides real issues
+
+### **Styling Anti-Patterns** 🎨
+- **Desktop-First CSS**: Using `max-width` media queries instead of `min-width`
+- **Incorrect Breakpoints**: Not following project breakpoint standards (576px, 992px)
+- **No Base Styles**: Missing mobile base styles before media queries
+- **Mixed Approaches**: Combining mobile-first and desktop-first in same component
+- **Hardcoded Sizes**: Not using responsive units (rem, em, %)
+
+## Mobile-First Styling Standard
+
+**🚨 PROJECT REQUIREMENT: All styling MUST be mobile-first.**
+
+### Breakpoint Standards
+- **Mobile**: `< 576px` - Base styles (no media query)
+- **Tablet**: `≥ 576px` - Enhanced with `@media (min-width: 576px)`
+- **Desktop**: `≥ 992px` - Full features with `@media (min-width: 992px)`
+
+### Pattern Recognition
+
+**✅ Good Mobile-First Pattern:**
+```css
+/* Mobile base (default) */
+.component { padding: 1rem; }
+
+/* Tablet enhancement */
+@media (min-width: 576px) {
+  .component { padding: 1.5rem; }
+}
+
+/* Desktop enhancement */
+@media (min-width: 992px) {
+  .component { padding: 2rem; }
+}
+```
+
+**❌ Bad Desktop-First Pattern (Do NOT recommend):**
+```css
+/* This breaks mobile-first - flag as anti-pattern */
+@media (max-width: 992px) {
+  .component { padding: 1rem; }
+}
+```
+
+When analyzing CSS/styling patterns:
+1. **Identify** if project uses mobile-first or desktop-first
+2. **Flag** any `max-width` media queries as anti-patterns
+3. **Document** correct breakpoints if found (576px, 992px)
+4. **Recommend** mobile-first approach for all new styling
 
 ## Output Format
 

@@ -46,6 +46,7 @@ permissions:
    - Security vulnerabilities
    - Performance issues
    - Pattern adherence
+   - Mobile-first styling compliance (CSS/Tailwind)
 
 4. **Verify acceptance criteria:**
    - Read task files for each completed subtask
@@ -89,6 +90,76 @@ If any criteria are not met:
 - Flag deviations from team standards
 - Verify all acceptance criteria are truly met
 
+## Mobile-First Styling Validation
+
+**🚨 CRITICAL: Verify all CSS/Tailwind follows mobile-first approach.**
+
+### Validation Checklist
+
+When reviewing changes with CSS or styling:
+
+- [ ] **Check for `max-width` media queries** - These break mobile-first approach
+- [ ] **Verify `min-width` media queries** - Required for proper mobile-first
+- [ ] **Confirm breakpoints** - Should be 576px (tablet) and 992px (desktop)
+- [ ] **Validate base styles** - Mobile styles should NOT be in media queries
+- [ ] **Check Tailwind usage** - Should use `sm:`, `lg:` prefixes (inherently mobile-first)
+
+### Common Violations
+
+❌ **Flag these as issues:**
+```css
+/* Desktop-first (WRONG) */
+@media (max-width: 992px) {
+  .component { padding: 1rem; }
+}
+```
+
+✅ **Approve these patterns:**
+```css
+/* Mobile base */
+.component { padding: 1rem; }
+
+/* Tablet enhancement */
+@media (min-width: 576px) {
+  .component { padding: 1.5rem; }
+}
+
+/* Desktop enhancement */
+@media (min-width: 992px) {
+  .component { padding: 2rem; }
+}
+```
+
+### Review Response for Styling Issues
+
+If `max-width` media queries found:
+
+```
+## 🚨 BLOCKING ISSUE: Desktop-First Styling Detected
+
+**Location:** `{file}:{line}`
+
+**Problem:** Using `max-width` media queries breaks mobile-first approach.
+
+**Current code:**
+```css
+@media (max-width: 992px) { ... }
+```
+
+**Required fix:**
+```css
+/* Mobile base (no media query) */
+.component { ... }
+
+/* Tablet/Desktop enhancements with min-width */
+@media (min-width: 576px) { ... }
+@media (min-width: 992px) { ... }
+```
+
+**Impact:** High - Violates project styling standards
+**Action Required:** Refactor to mobile-first before approval
+```
+
 ## Output Format
 
 ```
@@ -99,6 +170,9 @@ Reviewing..., what would you devs do if I didn't check up on you?
 
 ## Code Quality
 {Quality observations and concerns}
+
+## Mobile-First Styling
+{Validation results for CSS/Tailwind - flag any max-width usage}
 
 ## Security Concerns
 {Any security issues found}
