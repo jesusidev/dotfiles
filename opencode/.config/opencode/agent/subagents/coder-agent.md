@@ -197,7 +197,7 @@ Before signaling completion to @codebase-agent, verify:
 
 ### Media Query Rules
 
-✅ **CORRECT - Use min-width:**
+✅ **CORRECT - Use min-width with standard breakpoints:**
 ```css
 /* Mobile base styles (no media query) */
 .component {
@@ -222,10 +222,66 @@ Before signaling completion to @codebase-agent, verify:
 }
 ```
 
+✅ **CORRECT - Use PostCSS variables (if project uses them):**
+
+**Check for `postcss.config.js` or `postcss.config.cjs` first:**
+```javascript
+// Example postcss.config.js
+const config = {
+  plugins: {
+    'postcss-simple-vars': {
+      variables: {
+        'breakpoint-mobile': '36em',
+        'breakpoint-tablet': '48em',
+        'breakpoint-laptop': '64em',
+        'breakpoint-desktop': '74em',
+      },
+    },
+  },
+};
+```
+
+**If PostCSS variables exist, use them:**
+```css
+/* Mobile base styles (no media query) */
+.component {
+  padding: 1rem;
+  grid-template-columns: 1fr;
+}
+
+/* Tablet enhancements - use $breakpoint-tablet */
+@media (min-width: $breakpoint-tablet) {
+  .component {
+    padding: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--mantine-spacing-xl) * 3);
+  }
+}
+
+/* Desktop enhancements - use $breakpoint-desktop */
+@media (min-width: $breakpoint-desktop) {
+  .component {
+    padding: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
+**Priority Order:**
+1. **Check if project has PostCSS config** with breakpoint variables
+2. **If yes:** Use PostCSS variables (`$breakpoint-tablet`, `$breakpoint-desktop`)
+3. **If no:** Use standard px values (576px, 992px)
+4. **Always:** Use `min-width`, never `max-width`
+
 ❌ **INCORRECT - Never use max-width:**
 ```css
 /* This breaks mobile-first approach - DO NOT USE */
 @media (max-width: 992px) {
+  .component { ... }
+}
+
+/* Even with variables - DO NOT USE */
+@media (max-width: $breakpoint-tablet) {
   .component { ... }
 }
 ```
@@ -247,14 +303,27 @@ Tailwind is mobile-first by default. Use responsive prefixes:
 - `lg:` = 1024px (close to our 992px)
 - `xl:` = 1280px
 
+### Implementation Checklist
+
+Before writing any CSS/styling:
+1. **Check for PostCSS config:**
+   ```bash
+   # Look for postcss.config.js or postcss.config.cjs
+   ls postcss.config.*
+   ```
+2. **If PostCSS exists:** Read breakpoint variables from config
+3. **Use project variables** if available, otherwise use standard values
+
 ### Validation Checklist
 
 Before marking styling tasks complete, verify:
+- [ ] Checked for PostCSS config and used variables if available
 - [ ] Base styles written without media queries (mobile first)
 - [ ] Only `min-width` media queries used
 - [ ] No `max-width` media queries present
-- [ ] Breakpoints match standards (576px, 992px)
+- [ ] Breakpoints match project standards (PostCSS vars or 576px/992px)
 - [ ] Styles progressively enhance from mobile to desktop
 - [ ] Tested at all three breakpoints
+- [ ] If using PostCSS vars, verified they're defined in config
 
 ---

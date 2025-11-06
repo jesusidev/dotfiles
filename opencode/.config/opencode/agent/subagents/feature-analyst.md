@@ -246,13 +246,32 @@ find src/ -type d -name "*api*" -o -name "*service*" -o -name "*util*"
 **🚨 PROJECT REQUIREMENT: All styling MUST be mobile-first.**
 
 ### Breakpoint Standards
-- **Mobile**: `< 576px` - Base styles (no media query)
-- **Tablet**: `≥ 576px` - Enhanced with `@media (min-width: 576px)`
-- **Desktop**: `≥ 992px` - Full features with `@media (min-width: 992px)`
+
+**Check for PostCSS Configuration First:**
+
+1. **Look for `postcss.config.js` or `postcss.config.cjs`:**
+   ```javascript
+   // Example PostCSS config with breakpoint variables
+   const config = {
+     plugins: {
+       'postcss-simple-vars': {
+         variables: {
+           'breakpoint-mobile': '36em',
+           'breakpoint-tablet': '48em',
+           'breakpoint-laptop': '64em',
+           'breakpoint-desktop': '74em',
+         },
+       },
+     },
+   };
+   ```
+
+2. **If PostCSS exists:** Document the breakpoint variables
+3. **If no PostCSS:** Use standard values (576px, 992px)
 
 ### Pattern Recognition
 
-**✅ Good Mobile-First Pattern:**
+**✅ Good Mobile-First Pattern (Standard CSS):**
 ```css
 /* Mobile base (default) */
 .component { padding: 1rem; }
@@ -268,19 +287,56 @@ find src/ -type d -name "*api*" -o -name "*service*" -o -name "*util*"
 }
 ```
 
+**✅ Good Mobile-First Pattern (PostCSS Variables):**
+```css
+/* Mobile base (default) */
+.component {
+  padding: 1rem;
+  grid-template-columns: 1fr;
+}
+
+/* Tablet enhancement - using PostCSS variable */
+@media (min-width: $breakpoint-tablet) {
+  .component {
+    padding: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--mantine-spacing-xl) * 3);
+  }
+}
+
+/* Desktop enhancement - using PostCSS variable */
+@media (min-width: $breakpoint-desktop) {
+  .component {
+    padding: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
 **❌ Bad Desktop-First Pattern (Do NOT recommend):**
 ```css
 /* This breaks mobile-first - flag as anti-pattern */
 @media (max-width: 992px) {
   .component { padding: 1rem; }
 }
+
+/* Even with PostCSS variables - still wrong */
+@media (max-width: $breakpoint-tablet) {
+  .component { padding: 1rem; }
+}
 ```
 
+### Analysis Checklist
+
 When analyzing CSS/styling patterns:
-1. **Identify** if project uses mobile-first or desktop-first
-2. **Flag** any `max-width` media queries as anti-patterns
-3. **Document** correct breakpoints if found (576px, 992px)
-4. **Recommend** mobile-first approach for all new styling
+1. **Check for PostCSS config** - Note if project uses breakpoint variables
+2. **Identify** if project uses mobile-first or desktop-first
+3. **Flag** any `max-width` media queries as anti-patterns (even with variables)
+4. **Document** correct breakpoints:
+   - If PostCSS: List variable names and values
+   - If standard: Note 576px, 992px
+5. **Recommend** mobile-first approach for all new styling
+6. **Include in output** whether to use PostCSS variables or standard values
 
 ## Output Format
 

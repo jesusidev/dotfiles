@@ -98,23 +98,44 @@ If any criteria are not met:
 
 When reviewing changes with CSS or styling:
 
-- [ ] **Check for `max-width` media queries** - These break mobile-first approach
-- [ ] **Verify `min-width` media queries** - Required for proper mobile-first
-- [ ] **Confirm breakpoints** - Should be 576px (tablet) and 992px (desktop)
-- [ ] **Validate base styles** - Mobile styles should NOT be in media queries
-- [ ] **Check Tailwind usage** - Should use `sm:`, `lg:` prefixes (inherently mobile-first)
+1. **Check for PostCSS config first:**
+   - [ ] Look for `postcss.config.js` or `postcss.config.cjs`
+   - [ ] If exists, verify breakpoint variables are defined
+   - [ ] If exists, ensure code uses PostCSS variables
+
+2. **Validate mobile-first approach:**
+   - [ ] **Check for `max-width` media queries** - These break mobile-first approach
+   - [ ] **Verify `min-width` media queries** - Required for proper mobile-first
+   - [ ] **Confirm breakpoints match project:**
+     - If PostCSS: Using `$breakpoint-tablet`, `$breakpoint-desktop`, etc.
+     - If standard: Using 576px (tablet) and 992px (desktop)
+   - [ ] **Validate base styles** - Mobile styles should NOT be in media queries
+   - [ ] **Check Tailwind usage** - Should use `sm:`, `lg:` prefixes (inherently mobile-first)
 
 ### Common Violations
 
 ❌ **Flag these as issues:**
 ```css
-/* Desktop-first (WRONG) */
+/* Desktop-first with standard CSS (WRONG) */
 @media (max-width: 992px) {
   .component { padding: 1rem; }
+}
+
+/* Desktop-first with PostCSS variables (STILL WRONG) */
+@media (max-width: $breakpoint-tablet) {
+  .component { padding: 1rem; }
+}
+
+/* Not using project's PostCSS variables when they exist (WRONG) */
+/* If postcss.config.js has $breakpoint-tablet defined: */
+@media (min-width: 576px) {  /* Should use $breakpoint-tablet instead */
+  .component { padding: 1.5rem; }
 }
 ```
 
 ✅ **Approve these patterns:**
+
+**Standard CSS (if no PostCSS config):**
 ```css
 /* Mobile base */
 .component { padding: 1rem; }
@@ -130,9 +151,35 @@ When reviewing changes with CSS or styling:
 }
 ```
 
+**PostCSS Variables (if postcss.config.js exists):**
+```css
+/* Mobile base */
+.component {
+  padding: 1rem;
+  grid-template-columns: 1fr;
+}
+
+/* Tablet enhancement - using PostCSS variable */
+@media (min-width: $breakpoint-tablet) {
+  .component {
+    padding: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: calc(var(--mantine-spacing-xl) * 3);
+  }
+}
+
+/* Desktop enhancement - using PostCSS variable */
+@media (min-width: $breakpoint-desktop) {
+  .component {
+    padding: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
+
 ### Review Response for Styling Issues
 
-If `max-width` media queries found:
+**If `max-width` media queries found:**
 
 ```
 ## 🚨 BLOCKING ISSUE: Desktop-First Styling Detected
@@ -144,20 +191,65 @@ If `max-width` media queries found:
 **Current code:**
 ```css
 @media (max-width: 992px) { ... }
+/* or */
+@media (max-width: $breakpoint-tablet) { ... }
 ```
 
 **Required fix:**
+[Check if project has PostCSS config]
+
+[If PostCSS config exists with breakpoint variables]
 ```css
 /* Mobile base (no media query) */
 .component { ... }
 
-/* Tablet/Desktop enhancements with min-width */
+/* Tablet/Desktop enhancements with PostCSS variables */
+@media (min-width: $breakpoint-tablet) { ... }
+@media (min-width: $breakpoint-desktop) { ... }
+```
+
+[If no PostCSS config]
+```css
+/* Mobile base (no media query) */
+.component { ... }
+
+/* Tablet/Desktop enhancements with standard breakpoints */
 @media (min-width: 576px) { ... }
 @media (min-width: 992px) { ... }
 ```
 
 **Impact:** High - Violates project styling standards
 **Action Required:** Refactor to mobile-first before approval
+```
+
+**If not using PostCSS variables when they exist:**
+
+```
+## ⚠️ ISSUE: Not Using Project's PostCSS Variables
+
+**Location:** `{file}:{line}`
+
+**Problem:** Project has PostCSS breakpoint variables but hardcoded values used.
+
+**Current code:**
+```css
+@media (min-width: 576px) { ... }
+```
+
+**Required fix:**
+```css
+@media (min-width: $breakpoint-tablet) { ... }
+```
+
+**PostCSS Config Location:** `postcss.config.js`
+**Defined Variables:**
+- `$breakpoint-mobile: 36em`
+- `$breakpoint-tablet: 48em`
+- `$breakpoint-laptop: 64em`
+- `$breakpoint-desktop: 74em`
+
+**Impact:** Medium - Inconsistent with project conventions
+**Action Required:** Use PostCSS variables for maintainability
 ```
 
 ## Output Format
