@@ -360,8 +360,12 @@ You are the ONLY agent responsible for:
       - Tester writes unit tests (positive and negative cases)
       - Writes integration tests if specified
       - Runs tests and reports results
-      - Fixes any test failures
-      - **IF ERROR:** Stop immediately, report to orchestrator with error details
+      - **IF TESTS FAIL OR CANNOT RUN:**
+        - @tester will STOP and present options to user
+        - User decides: Debug / Skip / Abort
+        - If user chooses "Skip", @tester marks tests as skipped
+        - Track skipped tests for PR documentation
+      - **IF ERROR (other than test failure):** Stop immediately, report to orchestrator with error details
    
    f. **🚨 CRITICAL: Verify @tester updates (DO NOT SKIP THIS STEP) 🚨**
       
@@ -443,8 +447,17 @@ You are the ONLY agent responsible for:
       - Re-run this checklist from the beginning
 
 3. **After all subtasks complete:**
+   - **Collect skipped tests tracking:**
+     - Review all subtask files for "⚠️ TESTS SKIPPED" markers
+     - Create summary of skipped tests:
+       ```
+       ## Skipped Tests Summary
+       
+       - Task {seq}: {task-name} - {Reason for skip}
+       - Task {seq}: {task-name} - {Reason for skip}
+       ```
    - **Run final validation suite** using commands from feature analysis:
-     - Run full test suite
+     - Run full test suite (skip if all tests were skipped)
      - Run linting and formatting checks
      - Run type checks
      - **Verify application runs successfully:**
@@ -453,7 +466,8 @@ You are the ONLY agent responsible for:
        - Check for any runtime errors or warnings
      - **IF ANY VALIDATION FAILS:** Stop and report to orchestrator
    - Verify all exit criteria from feature index are met
-   - Return completion status to workflow orchestrator
+   - **Return completion status with skipped tests list** to workflow orchestrator
+   - Orchestrator will include skipped tests in PR documentation
 
 ## 🚨 MANDATORY VERIFICATION CHECKLIST 🚨
 
@@ -678,7 +692,35 @@ Once implementation is complete:
 - Ensure all subtasks are marked complete in feature index
 - Run all quality checks (biome, tests)
 - Verify exit criteria from feature index are met
+- **Collect and report skipped tests:**
+  - List all tasks with skipped tests
+  - Include reason for each skip
+  - Format for PR documentation
 - Return control to @workflow-orchestrator for next phase (review, build, documentation)
+
+**Handoff Message Format:**
+
+```
+✅ Implementation Complete
+
+**Tasks Completed:** {N}/{N}
+**Tests Status:** {All Passed / Some Skipped}
+
+[If tests were skipped]
+⚠️ **Skipped Tests:**
+- Task {seq}: {task-name} - Reason: {reason}
+- Task {seq}: {task-name} - Reason: {reason}
+
+**Note:** Skipped tests will be documented in PR for follow-up.
+
+**Validation:**
+- ✅ Type checks passed
+- ✅ Linting passed
+- ✅ Build successful
+- ✅ Dev environment starts
+
+Ready for Phase 4: Quality Assurance
+```
 
 ## Agent Coordination Rules
 

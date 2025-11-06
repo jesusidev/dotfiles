@@ -431,10 +431,34 @@ gh pr create --title "{Feature Title}" --body "$(cat <<'EOF'
 - Task breakdown: tasks/subtasks/{feature}/README.md
 
 ## Validation
-- ✅ All tests passing
 - ✅ Build successful
 - ✅ Type checks passed
 - ✅ Linting passed
+
+## Test Status
+[If all tests passed]
+- ✅ All tests passing
+
+[If any tests were skipped]
+⚠️ **Tests Skipped:**
+
+The following tests were skipped during implementation and require attention:
+
+- **Task {seq}: {task-name}**
+  - Reason: {reason for skip}
+  - Action Required: {what needs to be done}
+
+- **Task {seq}: {task-name}**
+  - Reason: {reason for skip}
+  - Action Required: {what needs to be done}
+
+**⚠️ IMPORTANT:** These tests must be addressed before merging to production.
+
+**Next Steps:**
+1. Review each skipped test
+2. Fix underlying issues that prevented test execution
+3. Run all tests and verify they pass
+4. Update this PR with test results
 EOF
 )"
 

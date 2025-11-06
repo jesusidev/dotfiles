@@ -202,6 +202,8 @@ Exit criteria
 - [ ] Type checking passes
 - [ ] Linting passes
 
+**Note:** If tests cannot run or fail, @tester will stop and ask user for decision (debug/skip/abort). Skipped tests will be tracked and documented in PR.
+
 ## Code Review Checklist
 
 - [ ] All files created/modified as specified
@@ -397,11 +399,16 @@ describe('{Module/Component Name}', () => {
 
 ## Success Criteria Checklist
 
-- [ ] All tests pass
-- [ ] No skipped tests
+- [ ] All tests pass (or documented if skipped)
+- [ ] No skipped tests (unless approved by user)
 - [ ] Coverage report shows {X}% for module
 - [ ] TypeScript compilation succeeds
 - [ ] No linting warnings
+
+**Test Skipping Protocol:**
+If tests are skipped by user decision, this section should reflect:
+- [ ] ⚠️ Tests were skipped - See Test Results section for details
+- [ ] Skipped tests documented for PR follow-up
 
 ## Related Documentation
 
