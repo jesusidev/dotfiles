@@ -22,11 +22,11 @@ flowchart TD
     
     Phase1 --> CodebaseAnalysis[Codebase Agent<br/>Analysis Mode]
     CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
-    FeatureAnalyst --> AnalysisDoc[Create Analysis Doc<br/>{feature}/docs/feature-analysis.md]
+    FeatureAnalyst --> AnalysisDoc["Create Analysis Doc<br/>(feature)/docs/feature-analysis.md"]
     
     AnalysisDoc --> Phase2[Phase 2: Planning]
     Phase2 --> TaskManager[Task Manager]
-    TaskManager --> TaskPlan[Create Task Plan<br/>{feature}/tasks/]
+    TaskManager --> TaskPlan["Create Task Plan<br/>(feature)/tasks/"]
     TaskPlan --> Approval{User Approval?}
     
     Approval -->|No| TaskManager
@@ -60,7 +60,7 @@ flowchart TD
     BuildAgent --> Phase7[Phase 7: Documentation]
     
     Phase7 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
-    DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>{feature}/docs/feature-analysis.md]
+    DocsAgent --> UpdatePatterns["Update Analysis Doc<br/>(feature)/docs/feature-analysis.md"]
     UpdatePatterns --> Phase8[Phase 8: Pull Request]
     
     Phase8 --> PRCheck{On feature<br/>branch?}
