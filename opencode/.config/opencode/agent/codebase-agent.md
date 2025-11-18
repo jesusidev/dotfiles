@@ -263,7 +263,7 @@ When invoked by @workflow-orchestrator for pattern analysis:
    - Identify established patterns and conventions
    - Analyze code structure and organization
    - Find test patterns and examples
-4. **Create pattern documentation** at `docs/feature-analysts/{feature}.md` containing:
+4. **Create pattern documentation** at `{feature}/docs/feature-analysis.md` containing:
    - Similar implementations found
    - Recommended approaches based on existing patterns
    - Code structure guidelines
@@ -297,18 +297,22 @@ You are the ONLY agent responsible for:
 
 ---
 
-1. **Load the task plan** from `tasks/subtasks/{feature}/README.md`
-2. **For each subtask in sequence:**
+1. **Load the task plan** from `{feature}/tasks/README.md`
+2. **Determine structure:**
+   - Check if simple (flat) or complex (grouped)
+   - For grouped structure, process groups in dependency order
+3. **For each subtask in sequence:**
    
    a. **Mark subtask as started:**
-      - Update status from [ ] to [~] in `tasks/subtasks/{feature}/README.md`
+      - Simple: Update status from [ ] to [~] in `{feature}/tasks/README.md`
+      - Grouped: Update in both main `README.md` and group `{group}/README.md`
       - Indicates subtask is now in progress
    
    b. **Read subtask file** `{seq}-{task-description}.md`
    
    c. **Invoke @coder-agent** with subtask requirements:
       - Coder implements the code following the subtask specification
-      - Uses patterns from `docs/feature-analysts/{feature}.md`
+      - Uses patterns from `{feature}/docs/feature-analysis.md`
       - Follows project standards and conventions
       - Completes deliverables specified in subtask
       - **Records implementation details** in subtask file
@@ -318,8 +322,11 @@ You are the ONLY agent responsible for:
       
       **Read the subtask file and verify:**
       ```bash
-      # Use this command to read subtask file
-      cat tasks/subtasks/{feature}/{seq}-{task-description}.md
+      # For simple structure:
+      cat {feature}/tasks/subtasks/{seq}-{task-description}.md
+      
+      # For grouped structure:
+      cat {feature}/tasks/subtasks/{group}/{seq}-{task-description}.md
       ```
       
       **Check for these required elements:**
@@ -371,8 +378,11 @@ You are the ONLY agent responsible for:
       
       **Read the subtask file again and verify:**
       ```bash
-      # Re-read to check test updates
-      cat tasks/subtasks/{feature}/{seq}-{task-description}.md
+      # For simple structure:
+      cat {feature}/tasks/subtasks/{seq}-{task-description}.md
+      
+      # For grouped structure:
+      cat {feature}/tasks/subtasks/{group}/{seq}-{task-description}.md
       ```
       
       **Check for these required elements:**
@@ -388,7 +398,7 @@ You are the ONLY agent responsible for:
       - DO NOT proceed until subtask file is complete
    
    g. **Validate subtask completion:**
-      - Use commands from feature analysis doc (`docs/feature-analysts/{feature}.md`)
+      - Use commands from feature analysis doc (`{feature}/docs/feature-analysis.md`)
       - Run type checks (e.g., `npm run check`, `tsc`, etc.)
       - Run linting (e.g., `npm run lint`, `eslint`, etc.)
       - Run formatting (e.g., `npm run format:fix`, `prettier`, etc.)
@@ -420,7 +430,9 @@ You are the ONLY agent responsible for:
       - [ ] All tests passing
       
       **ONLY AFTER ALL ITEMS CHECKED:**
-      - **Mark subtask as complete in feature index:** Update status from [~] to [x] in `tasks/subtasks/{feature}/README.md`
+      - **Mark subtask as complete:**
+        - Simple: Update status from [~] to [x] in `{feature}/tasks/README.md`
+        - Grouped: Update in both main `{feature}/tasks/README.md` and group `subtasks/{group}/README.md`
       - **Report completion with summary:**
         ```
         ✅ Task {seq}: {Task Name} - COMPLETED
@@ -478,17 +490,20 @@ You are the ONLY agent responsible for:
 Run these commands to verify subtask file completeness:
 
 ```bash
-# Read the subtask file
-cat tasks/subtasks/{feature}/{seq}-{task-description}.md
+# Read the subtask file (simple structure)
+cat {feature}/tasks/subtasks/{seq}-{task-description}.md
+
+# Or for grouped structure:
+cat {feature}/tasks/subtasks/{group}/{seq}-{task-description}.md
 
 # Search for acceptance criteria completion
-grep "\\[x\\].*✅ Completed" tasks/subtasks/{feature}/{seq}-{task-description}.md
+grep "\\[x\\].*✅ Completed" {feature}/tasks/subtasks/**/{seq}-{task-description}.md
 
 # Search for Implementation Completed section
-grep "## Implementation Completed" tasks/subtasks/{feature}/{seq}-{task-description}.md
+grep "## Implementation Completed" {feature}/tasks/subtasks/**/{seq}-{task-description}.md
 
 # Search for Test Results section
-grep "## Test Results" tasks/subtasks/{feature}/{seq}-{task-description}.md
+grep "## Test Results" {feature}/tasks/subtasks/**/{seq}-{task-description}.md
 ```
 
 ### Verification Checklist
@@ -607,7 +622,9 @@ grep "## Test Results" tasks/subtasks/{feature}/{seq}-{task-description}.md
 ### Final Action
 
 **ONLY after ALL checklist items are verified:**
-1. Use Edit tool to update feature index
+1. Use Edit tool to update feature index(es)
+   - Simple: Update `{feature}/tasks/README.md`
+   - Grouped: Update both `{feature}/tasks/README.md` and `{feature}/tasks/subtasks/{group}/README.md`
 2. Change `[~] {seq} — {task-description}` to `[x] {seq} — {task-description}`
 3. Proceed to next subtask
 
@@ -624,7 +641,9 @@ grep "## Test Results" tasks/subtasks/{feature}/{seq}-{task-description}.md
 **If any step fails during implementation:**
 
 1. **Stop processing immediately**
-2. **Mark current subtask with error status** in feature index
+2. **Mark current subtask with error status** in feature index(es)
+   - Update main `{feature}/tasks/README.md`
+   - Update group index if applicable
 3. **Report error to workflow orchestrator** with:
    - Which subtask failed
    - Which agent failed (coder/tester/validation)
@@ -736,7 +755,7 @@ Ready for Phase 4: Quality Assurance
 
 **YOU ARE RESPONSIBLE** for maintaining task status in the feature index. This is a critical responsibility that cannot be delegated.
 
-### Feature Index Status (`tasks/subtasks/{feature}/README.md`)
+### Feature Index Status (`{feature}/tasks/README.md`)
 Maintain accurate task status:
 - **[ ] Not started:** Initial state for all tasks
 - **[~] In progress:** Mark when starting work (before invoking @coder-agent)

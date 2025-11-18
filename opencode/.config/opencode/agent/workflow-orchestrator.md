@@ -59,16 +59,19 @@ For all requests (after user confirmation if simple):
 1. **Invoke @codebase-agent** with analysis request
    - @codebase-agent will delegate to @feature-analyst subagent
    - Feature analyst searches codebase for similar implementations
-   - Creates feature analysis documentation in `docs/feature-analysts/{feature}.md`
+   - Creates feature analysis documentation in `{feature}/docs/feature-analysis.md`
    - Returns insights about existing patterns, conventions, and approaches
 
 #### Phase 2: Planning
 
 2. **Invoke @task-manager** with feature requirements and pattern insights
+   - Task manager analyzes complexity and determines structure (simple/grouped)
    - Task manager breaks down feature into atomic subtasks
-   - Creates task directory: `tasks/subtasks/{feature}/`
-   - Generates task files: `{seq}-{task-description}.md`
-   - Creates feature index: `README.md`
+   - Creates task directory: `{feature}/tasks/`
+   - Simple structure: `{feature}/tasks/subtasks/{seq}-{task}.md`
+   - Grouped structure: `{feature}/tasks/subtasks/{group}/{seq}-{task}.md`
+   - Creates feature index: `{feature}/tasks/README.md`
+   - Creates group indexes if grouped: `{feature}/tasks/subtasks/{group}/README.md`
    - Waits for user approval of task plan
 
 #### Phase 3: Implementation
@@ -128,10 +131,11 @@ Request received
             │
             ├─> Phase 1: @codebase-agent (analysis)
             │       └─> Calls @feature-analyst
-            │           └─> Creates docs/feature-analysts/{feature}.md (if not exists)
+            │           └─> Creates {feature}/docs/feature-analysis.md (if not exists)
             │
             ├─> Phase 2: @task-manager (planning)
-            │       └─> Creates tasks/subtasks/{feature}/
+            │       └─> Analyzes complexity (simple vs grouped)
+            │       └─> Creates {feature}/tasks/ structure
             │           └─> Wait for approval
             │
             ├─> Phase 3: @codebase-agent (implementation)
@@ -225,7 +229,7 @@ Agents to be invoked:
   • @feature-analyst (kimi-k2) - Searches for patterns
 
 Output:
-  • docs/feature-analysts/{feature}.md - Pattern documentation
+  • {feature}/docs/feature-analysis.md - Pattern documentation
 
 Proceed with Phase 1? (yes/no)
 ```
@@ -245,8 +249,10 @@ Agents to be invoked:
   • @task-manager (claude-haiku-4-5) - Creates task plan
 
 Output:
-  • tasks/subtasks/{feature}/README.md - Feature index
-  • tasks/subtasks/{feature}/{seq}-{task}.md - Subtask files
+  • {feature}/tasks/README.md - Feature index
+  • {feature}/tasks/subtasks/{seq}-{task}.md - Subtask files (simple)
+  • {feature}/tasks/subtasks/{group}/README.md - Group indexes (grouped)
+  • {feature}/tasks/subtasks/{group}/{seq}-{task}.md - Subtask files (grouped)
 
 Proceed with Phase 2? (yes/no)
 ```
@@ -427,8 +433,8 @@ gh pr create --title "{Feature Title}" --body "$(cat <<'EOF'
 - [x] {Task 2}
 
 ## Documentation
-- Feature analysis: docs/feature-analysts/{feature}.md
-- Task breakdown: tasks/subtasks/{feature}/README.md
+- Feature analysis: {feature}/docs/feature-analysis.md
+- Task breakdown: {feature}/tasks/README.md
 
 ## Validation
 - ✅ Build successful

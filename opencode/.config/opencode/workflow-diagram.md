@@ -22,11 +22,11 @@ flowchart TD
     
     Phase1 --> CodebaseAnalysis[Codebase Agent<br/>Analysis Mode]
     CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
-    FeatureAnalyst --> AnalysisDoc[Create Analysis Doc<br/>docs/feature-analysts/feature.md]
+    FeatureAnalyst --> AnalysisDoc[Create Analysis Doc<br/>{feature}/docs/feature-analysis.md]
     
     AnalysisDoc --> Phase2[Phase 2: Planning]
     Phase2 --> TaskManager[Task Manager]
-    TaskManager --> TaskPlan[Create Task Plan<br/>tasks/subtasks/feature/]
+    TaskManager --> TaskPlan[Create Task Plan<br/>{feature}/tasks/]
     TaskPlan --> Approval{User Approval?}
     
     Approval -->|No| TaskManager
@@ -60,7 +60,7 @@ flowchart TD
     BuildAgent --> Phase7[Phase 7: Documentation]
     
     Phase7 --> DocsAgent[Documentation Subagent<br/>Update Docs & Analysis]
-    DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>docs/feature-analysts/feature.md]
+    DocsAgent --> UpdatePatterns[Update Analysis Doc<br/>{feature}/docs/feature-analysis.md]
     UpdatePatterns --> Phase8[Phase 8: Pull Request]
     
     Phase8 --> PRCheck{On feature<br/>branch?}
@@ -174,14 +174,17 @@ flowchart LR
 ### Phase 1: Analysis
 - **Agent:** @codebase-agent (analysis mode)
 - **Subagent:** @feature-analyst
-- **Output:** `docs/feature-analysts/{feature}.md`
+- **Output:** `{feature}/docs/feature-analysis.md`
 - **Purpose:** Understand existing codebase patterns relevant to the feature request
 - **Extracts:** Development environment setup, validation commands (lint, format, test, build)
 
 ### Phase 2: Planning
 - **Agent:** @task-manager
 - **Input:** Pattern analysis from Phase 1
-- **Output:** Task plan in `tasks/subtasks/{feature}/`
+- **Output:** Task plan in `{feature}/tasks/`
+- **Structure Options:**
+  - **Simple:** `{feature}/tasks/subtasks/{seq}-{task}.md` (< 5 tasks, single concern)
+  - **Grouped:** `{feature}/tasks/subtasks/{group}/{seq}-{task}.md` (5+ tasks, multiple concerns)
 - **Purpose:** Break down feature into atomic subtasks with comprehensive templates
 - **Task Structure:** Status tracking, acceptance criteria, dependencies, implementation details, test requirements
 
@@ -239,7 +242,7 @@ flowchart LR
 - **Subagent:** @documentation
 - **Output:** Updated documentation (README, API docs, feature analysis docs)
 - **Purpose:** Keep docs current with changes and update feature analysis documentation with new patterns discovered during implementation
-- **Analysis Update:** Reviews implementation and updates `docs/feature-analysts/{feature}.md` to prevent drift
+- **Analysis Update:** Reviews implementation and updates `{feature}/docs/feature-analysis.md` to prevent drift
 
 ### Phase 8: Pull Request Creation
 - **Agent:** @workflow-orchestrator
