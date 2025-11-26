@@ -22,7 +22,13 @@ flowchart TD
     
     Phase1 --> CodebaseAnalysis[Codebase Agent<br/>Analysis Mode]
     CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
-    FeatureAnalyst --> AnalysisDoc["Create Analysis Doc<br/>(feature)/docs/feature-analysis.md"]
+    FeatureAnalyst --> CheckUIRelated{UI/Design<br/>Related?}
+    CheckUIRelated -->|Yes| DesignBrief[Design Brief Subagent<br/>Visual/UX Analysis]
+    CheckUIRelated -->|No| CheckCopyRelated{Copy/Messaging<br/>Related?}
+    DesignBrief --> CheckCopyRelated
+    CheckCopyRelated -->|Yes| CopywritingBrief[Copywriting Brief Subagent<br/>Messaging Analysis]
+    CheckCopyRelated -->|No| AnalysisDoc["Create Analysis Doc<br/>\{feature\}/docs/feature-analysis.md"]
+    CopywritingBrief --> AnalysisDoc
     
     AnalysisDoc --> Phase2[Phase 2: Planning]
     Phase2 --> TaskManager[Task Manager]
@@ -101,6 +107,8 @@ graph TD
     WO --> TM[Task Manager<br/>Primary Agent]
     
     CA --> FA[Feature Analyst<br/>Subagent]
+    FA --> DB[Design Brief<br/>Subagent]
+    FA --> CB[Copywriting Brief<br/>Subagent]
     CA --> COD[Coder Agent<br/>Subagent]
     CA --> TST[Tester<br/>Subagent]
     
@@ -113,6 +121,8 @@ graph TD
     style CA fill:#fff4e1
     style TM fill:#ffe1f5
     style FA fill:#f0f0f0
+    style DB fill:#e8f5e9
+    style CB fill:#e8f5e9
     style COD fill:#f0f0f0
     style TST fill:#f0f0f0
     style REV fill:#f0f0f0
@@ -173,10 +183,18 @@ flowchart LR
 
 ### Phase 1: Analysis
 - **Agent:** @codebase-agent (analysis mode)
-- **Subagent:** @feature-analyst
+- **Primary Subagent:** @feature-analyst
+- **Specialized Subagents:** 
+  - @design-brief (visual/UX analysis if UI-related)
+  - @copywriting-brief (messaging analysis if copy-related)
 - **Output:** `{feature}/docs/feature-analysis.md`
 - **Purpose:** Understand existing codebase patterns relevant to the feature request
-- **Extracts:** Development environment setup, validation commands (lint, format, test, build)
+- **Analysis Coverage:**
+  - Code patterns and conventions
+  - Design system and visual patterns (if UI-related)
+  - Messaging and copy patterns (if conversion-focused)
+  - Development environment setup
+  - Validation commands (lint, format, test, build)
 
 ### Phase 2: Planning
 - **Agent:** @task-manager
