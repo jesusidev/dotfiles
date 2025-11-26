@@ -37,10 +37,9 @@ flowchart TD
     
     SaveVision --> LocalSetup["Local Project Setup<br/>Follow SETUP_GUIDE.md"]
     LocalSetup --> InstallDeps["Install Dependencies<br/>npm/pnpm/yarn install"]
-    InstallDeps --> AskClerkKeys["Ask User for Clerk Keys<br/>dashboard.clerk.com"]
-    AskClerkKeys --> WaitKeys[Wait for User Keys]
-    WaitKeys --> ConfigEnv["Create .env.local<br/>with Clerk Keys"]
-    ConfigEnv --> StartDev["Start Dev Server<br/>npm run dev"]
+    InstallDeps --> NotifyClerkKeys["Notify User:<br/>Add Clerk Keys to .env.local<br/>dashboard.clerk.com"]
+    NotifyClerkKeys --> WaitConfirm["Wait for User Confirmation<br/>Keys Added"]
+    WaitConfirm --> StartDev["Start Dev Server<br/>npm run dev"]
     
     StartDev --> CustomizeHome["Customize Homepage"]
     CustomizeHome --> HomeBranding["Update Hero Section<br/>Problem/Solution Messaging<br/>Feature Highlights"]
@@ -358,24 +357,23 @@ flowchart TD
      - Commands: `npm install` or `pnpm install` or `yarn install`
      - Wait for installation to complete
   2. **Configure Environment Variables**
-     - Ask user for Clerk authentication keys
+     - Notify user to set up Clerk authentication keys
      - Provide link: https://dashboard.clerk.com
-     - Required keys:
+     - Instruct user to create `.env.local` file with required keys:
        - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` (starts with `pk_test_` or `pk_live_`)
        - `CLERK_SECRET_KEY` (starts with `sk_test_` or `sk_live_`)
-     - Wait for user to provide keys
-  3. **Create .env.local File**
-     - Write environment variables to `.env.local`
-     - Include comments with key source
-  4. **Start Development Server**
+     - Wait for user confirmation that keys are added
+     - **Important:** User adds keys manually, not provided to agent
+  3. **Start Development Server**
      - Run dev server command
      - Commands: `npm run dev` or `pnpm dev` or `yarn dev`
      - Verify server starts successfully at http://localhost:3000
 - **Mandatory Environment Variable:** Clerk authentication keys only
 - **Optional Variables:** Can be configured later as needed
+- **Security:** User adds keys directly to `.env.local` file (not shared with agent)
 - **Output:** 
   - Dependencies installed
-  - `.env.local` file created with Clerk keys
+  - `.env.local` file created by user with Clerk keys
   - Development server running locally
   - Project accessible at http://localhost:3000
 - **Next Step:** Homepage customization with live preview
@@ -657,7 +655,8 @@ Orchestrator:
 - ✅ Discovery session completed (5 questions answered)
 - ✅ `docs/project-vision.md` created with feature roadmap
 - ✅ Dependencies installed (npm/pnpm/yarn)
-- ✅ `.env.local` created with Clerk authentication keys
+- ✅ User notified to add Clerk keys to `.env.local`
+- ✅ User confirmed keys are added
 - ✅ Development server running at http://localhost:3000
 - ✅ Homepage customized with project branding
 - ✅ SEO and accessibility implemented

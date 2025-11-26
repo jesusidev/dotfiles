@@ -278,26 +278,20 @@ yarn install
 ```
 Step 2: Environment Configuration
 
-I need your Clerk authentication keys to proceed.
+⚠️  ACTION REQUIRED: Set up Clerk Authentication
 
-Please provide your Clerk keys from: https://dashboard.clerk.com
+Please complete the following steps:
 
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=?
-CLERK_SECRET_KEY=?
+1. Visit https://dashboard.clerk.com to get your API keys
+2. Create a .env.local file in the project root
+3. Add the following environment variables:
 
-[Wait for user to provide keys]
-```
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
+   CLERK_SECRET_KEY=sk_test_your_secret_key_here
 
-**After receiving keys, create .env.local file:**
+4. Let me know when you've added the keys
 
-```bash
-# Create .env.local file with Clerk keys
-cat > .env.local <<EOF
-# Clerk Authentication
-# Get your keys from https://dashboard.clerk.com
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY={user-provided-publishable-key}
-CLERK_SECRET_KEY={user-provided-secret-key}
-EOF
+[Wait for user confirmation that keys are added]
 ```
 
 ```
