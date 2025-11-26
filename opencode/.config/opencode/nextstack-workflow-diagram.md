@@ -21,19 +21,9 @@ flowchart TD
     CreateGuidelines --> BuildDocs["Document Build Instructions<br/>Testing Setup<br/>Development Info"]
     BuildDocs --> VerifyTest["Create & Verify Working Test<br/>Before Documenting"]
     
-    VerifyTest --> Discovery["5-Question Discovery Session<br/>Ask One at a Time"]
-    Discovery --> Q1["Q1: What problem does<br/>project solve?"]
-    Q1 --> Feedback1[Encouraging Feedback]
-    Feedback1 --> Q2["Q2: Who is target audience?"]
-    Q2 --> Feedback2[Encouraging Feedback]
-    Feedback2 --> Q3["Q3: Top 3 features to<br/>build first?"]
-    Q3 --> Feedback3[Encouraging Feedback]
-    Feedback3 --> Q4["Q4: What makes project<br/>different?"]
-    Q4 --> Feedback4[Encouraging Feedback]
-    Feedback4 --> Q5["Q5: Timeline and priority<br/>for launch?"]
-    Q5 --> Feedback5[Encouraging Feedback]
+    VerifyTest --> Discovery["5-Question Discovery Session"]
     
-    Feedback5 --> SaveVision["Save Responses to<br/>docs/project-vision.md<br/>with Feature Roadmap"]
+    Discovery --> SaveVision["Save Responses to<br/>docs/project-vision.md<br/>with Feature Roadmap"]
     
     SaveVision --> LocalSetup["Local Project Setup<br/>Follow SETUP_GUIDE.md"]
     LocalSetup --> InstallDeps["Install Dependencies<br/>npm/pnpm/yarn install"]
