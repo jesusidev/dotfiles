@@ -301,12 +301,8 @@ Step 3: Starting development server...
 ```
 
 ```bash
-# Start the development server
-npm run dev
-# or
-pnpm dev
-# or
-yarn dev
+# Start the development server with Docker
+docker compose up -d
 ```
 
 ```
@@ -316,7 +312,7 @@ Your project is now set up locally!
   • URL: http://localhost:3000
   • Dependencies: Installed
   • Environment: Configured with Clerk authentication
-  • Dev Server: Running
+  • Docker Containers: Running in detached mode
 
 Ready to proceed with homepage customization.
 ```
