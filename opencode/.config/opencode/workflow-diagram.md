@@ -23,10 +23,10 @@ flowchart TD
     Phase1 --> CodebaseAnalysis[Codebase Agent<br/>Analysis Mode]
     CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
     FeatureAnalyst --> CheckUIRelated{UI/Design<br/>Related?}
-    CheckUIRelated -->|Yes| DesignBrief[Design Brief Subagent<br/>Visual/UX Analysis]
+    CheckUIRelated -->|Yes| DesignBrief[Design Agent Subagent<br/>Visual/UX Analysis]
     CheckUIRelated -->|No| CheckCopyRelated{Copy/Messaging<br/>Related?}
     DesignBrief --> CheckCopyRelated
-    CheckCopyRelated -->|Yes| CopywritingBrief[Copywriting Brief Subagent<br/>Messaging Analysis]
+    CheckCopyRelated -->|Yes| CopywritingBrief[Copywriting Agent Subagent<br/>Messaging Analysis]
     CheckCopyRelated -->|No| AnalysisDoc["Create Analysis Doc<br/>\{feature\}/docs/feature-analysis.md"]
     CopywritingBrief --> AnalysisDoc
     
@@ -107,8 +107,8 @@ graph TD
     WO --> TM[Task Manager<br/>Primary Agent]
     
     CA --> FA[Feature Analyst<br/>Subagent]
-    FA --> DB[Design Brief<br/>Subagent]
-    FA --> CB[Copywriting Brief<br/>Subagent]
+    FA --> DB[Design Agent<br/>Subagent]
+    FA --> CB[Copywriting Agent<br/>Subagent]
     CA --> COD[Coder Agent<br/>Subagent]
     CA --> TST[Tester<br/>Subagent]
     
@@ -185,8 +185,8 @@ flowchart LR
 - **Agent:** @codebase-agent (analysis mode)
 - **Primary Subagent:** @feature-analyst
 - **Specialized Subagents:** 
-  - @design-brief (visual/UX analysis if UI-related)
-  - @copywriting-brief (messaging analysis if copy-related)
+  - @design-agent (visual/UX analysis if UI-related)
+  - @copywriting-agent (messaging analysis if copy-related)
 - **Output:** `{feature}/docs/feature-analysis.md`
 - **Purpose:** Understand existing codebase patterns relevant to the feature request
 - **Analysis Coverage:**

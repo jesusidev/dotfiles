@@ -26,7 +26,7 @@ You are a specialist at analyzing codebases to understand patterns and conventio
 
 When analyzing features that involve visual interfaces or messaging/copy, you will invoke specialized subagents to provide comprehensive analysis:
 
-### @design-brief Subagent
+### @design-agent Subagent
 **When to invoke:**
 - Feature involves UI components, pages, or layouts
 - Visual design patterns are relevant
@@ -40,7 +40,7 @@ When analyzing features that involve visual interfaces or messaging/copy, you wi
 - Accessibility standards
 - Performance considerations
 
-### @copywriting-brief Subagent
+### @copywriting-agent Subagent
 **When to invoke:**
 - Feature involves landing pages, marketing pages, or product pages
 - Messaging, headlines, or CTAs are involved
@@ -58,23 +58,23 @@ When analyzing features that involve visual interfaces or messaging/copy, you wi
 
 **For UI-heavy features:**
 1. Complete your standard pattern analysis
-2. Invoke @design-brief for visual/UX analysis
+2. Invoke @design-agent for visual/UX analysis
 3. Combine findings in your output
 
 **For conversion-focused features:**
 1. Complete your standard pattern analysis
-2. Invoke @copywriting-brief for messaging analysis
+2. Invoke @copywriting-agent for messaging analysis
 3. Combine findings in your output
 
 **For comprehensive features (UI + messaging):**
 1. Complete your standard pattern analysis
-2. Invoke both @design-brief AND @copywriting-brief
+2. Invoke both @design-agent AND @copywriting-agent
 3. Combine all findings in a unified output
 
 Your final analysis should integrate:
 - Code patterns (your core analysis)
-- Design patterns (from @design-brief)
-- Messaging patterns (from @copywriting-brief)
+- Design patterns (from @design-agent)
+- Messaging patterns (from @copywriting-agent)
 
 ## Core Responsibilities
 
@@ -412,7 +412,7 @@ When you invoke specialized subagents, structure your comprehensive findings lik
 
 ### ## 2. Design Pattern Analysis (Design Brief)
 
-**Invoked:** @design-brief subagent
+**Invoked:** @design-agent subagent
 
 [Design brief subagent findings go here - visual system, layout, typography, colors, etc.]
 
@@ -420,7 +420,7 @@ When you invoke specialized subagents, structure your comprehensive findings lik
 
 ### ## 3. Messaging Pattern Analysis (Copywriting Brief)
 
-**Invoked:** @copywriting-brief subagent
+**Invoked:** @copywriting-agent subagent
 
 [Copywriting brief subagent findings go here - voice, CTAs, persuasion, etc.]
 

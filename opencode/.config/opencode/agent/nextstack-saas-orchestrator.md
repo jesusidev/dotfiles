@@ -561,8 +561,8 @@ This phase will analyze your codebase to understand existing patterns.
 Agents to be invoked:
   • @codebase-agent (claude-haiku-4-5) - Coordinates analysis
   • @feature-analyst (kimi-k2) - Searches for patterns
-  • @design-brief (claude-sonnet-4-5) - Visual/UX analysis (if UI-related)
-  • @copywriting-brief (claude-sonnet-4-5) - Messaging analysis (if copy-related)
+  • @design-agent (claude-sonnet-4-5) - Visual/UX analysis (if UI-related)
+  • @copywriting-agent (claude-sonnet-4-5) - Messaging analysis (if copy-related)
 
 Output:
   • {feature}/docs/feature-analysis.md - Comprehensive pattern documentation
