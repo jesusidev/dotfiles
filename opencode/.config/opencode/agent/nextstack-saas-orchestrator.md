@@ -1,7 +1,7 @@
 ---
 description: "Specialized orchestrator for NextStack SaaS Starter template projects"
 mode: primary
-model: opencode/claude-sonnet-4-5
+model: opencode/claude-opus-4-5
 temperature: 0.1
 tools:
   read: true

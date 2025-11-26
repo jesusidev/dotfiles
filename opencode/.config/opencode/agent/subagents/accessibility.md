@@ -1,7 +1,7 @@
 ---
 description: "Accessibility auditing and WCAG compliance verification agent"
 mode: subagent
-model: opencode/claude-sonnet-4-5
+model: opencode/claude-haiku-4-5
 temperature: 0.1
 tools:
   read: true

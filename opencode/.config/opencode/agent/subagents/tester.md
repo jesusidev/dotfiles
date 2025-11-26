@@ -1,7 +1,7 @@
 ---
 description: "Test authoring and TDD agent"
 mode: subagent
-model: opencode/qwen3-coder
+model: opencode/claude-opus-4-5
 temperature: 0.1
 tools:
   read: true
