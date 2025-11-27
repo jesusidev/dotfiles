@@ -21,7 +21,7 @@ permissions:
     "**/*.secret": "deny"
 ---
 
-# Documentation Agent
+# Documentation Agent (@documentation)
 
 Responsibilities:
 

@@ -16,7 +16,7 @@ permissions:
     "**/*": "deny"
 ---
 
-# Workflow Orchestrator
+# Workflow Orchestrator (@workflow-orchestrator)
 
 You are the main orchestration agent that analyzes requests and coordinates specialized agents to deliver complete features.
 
@@ -228,10 +228,10 @@ Would you like to proceed with the complete workflow? (yes/no)
 This phase will analyze your codebase to understand existing patterns.
 
 Agents to be invoked:
-  • @codebase-agent (claude-haiku-4-5) - Coordinates analysis
-  • @feature-analyst (kimi-k2) - Searches for patterns
-  • @design-agent (claude-sonnet-4-5) - Visual/UX analysis (if UI-related)
-  • @copywriting-agent (claude-sonnet-4-5) - Messaging analysis (if copy-related)
+  • @codebase-agent (opencode/claude-opus-4-5 via Zen) - Coordinates analysis
+  • @feature-analyst (opencode/kimi-k2) - Searches for patterns
+  • @design-agent (opencode/claude-sonnet-4-5) - Visual/UX analysis (if UI-related)
+  • @copywriting-agent (opencode/claude-sonnet-4-5) - Messaging analysis (if copy-related)
 
 Output:
   • {feature}/docs/feature-analysis.md - Comprehensive pattern documentation
@@ -252,7 +252,7 @@ Proceed with Phase 1? (yes/no)
 This phase will break down the feature into atomic subtasks.
 
 Agents to be invoked:
-  • @task-manager (claude-haiku-4-5) - Creates task plan
+  • @task-manager (opencode/claude-haiku-4-5) - Creates task plan
 
 Output:
   • {feature}/tasks/README.md - Feature index
@@ -276,9 +276,9 @@ Proceed with Phase 2? (yes/no)
 This phase will implement all subtasks with code and tests.
 
 Agents to be invoked:
-  • @codebase-agent (claude-haiku-4-5) - Coordinates implementation
-  • @coder-agent (grok-code - FREE) - Implements code
-  • @tester (qwen3-coder) - Writes tests
+  • @codebase-agent (opencode/claude-opus-4-5 via Zen) - Coordinates implementation
+  • @coder-agent (opencode/grok-code - free Zen tier) - Implements code
+  • @tester (opencode/qwen3-coder) - Writes tests
 
 Output:
   • Source code files
@@ -300,7 +300,7 @@ Proceed with Phase 3? (yes/no)
 This phase will review code for quality, security, and acceptance criteria.
 
 Agents to be invoked:
-  • @reviewer (claude-sonnet-4-5) - Reviews all changes
+  • @reviewer (opencode/claude-opus-4-5) - Reviews all changes
 
 Output:
   • Code review feedback
@@ -325,7 +325,7 @@ This phase will audit accessibility compliance (WCAG 2.1 AA/AAA).
 
 [If web files found]
 Agents to be invoked:
-  • @accessibility (claude-sonnet-4-5) - Audits WCAG compliance
+  • @accessibility (opencode/claude-sonnet-4-5) - Audits WCAG compliance
 
 Audit coverage:
   • Semantic HTML structure
@@ -352,7 +352,7 @@ Proceed with Phase 5? (yes/no/skip)
 This phase will validate the build and development environment.
 
 Agents to be invoked:
-  • @build-agent (claude-haiku-4-5) - Validates build
+  • @build-agent (opencode/claude-haiku-4-5) - Validates build
 
 Validation:
   • Type checking

@@ -27,7 +27,7 @@ permissions:
     ".git/**": "deny"
 ---
 
-# Codebase Agent
+# Codebase Agent (@codebase-agent)
 
 Always start with phrase "DIGGING IN..."
 

@@ -1,7 +1,7 @@
 ---
 description: "Test authoring and TDD agent"
 mode: subagent
-model: opencode/claude-opus-4-5
+model: opencode/qwen3-coder
 temperature: 0.1
 tools:
   read: true
@@ -20,7 +20,7 @@ permissions:
     "**/*.secret": "deny"
 ---
 
-# Test Agent
+# Test Agent (@tester)
 
 ## Core Responsibilities
 

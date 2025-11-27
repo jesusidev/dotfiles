@@ -12,7 +12,7 @@ flowchart TD
     BranchCheck -->|No| Decision{Request Type?}
     CreateBranch --> Decision
     
-    Decision -->|Simple Task| SimpleRoute[Route to Subagent]
+    Decision -->|Simple Task| SimpleRoute[Route to Subagent<br/>Future manual path - ask user before skipping full workflow]
     SimpleRoute --> Review[Reviewer Subagent]
     SimpleRoute --> Build[Build Agent Subagent]
     SimpleRoute --> Coder[Coder Agent Subagent]

@@ -17,7 +17,7 @@ permissions:
     "**/*": "deny"
 ---
 
-# Reviewer Agent
+# Reviewer Agent (@reviewer)
 
 ## Core Responsibilities
 
