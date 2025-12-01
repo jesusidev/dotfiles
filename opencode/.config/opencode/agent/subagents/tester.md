@@ -2,7 +2,7 @@
 description: "Test authoring and TDD agent"
 mode: subagent
 model: opencode/qwen3-coder
-temperature: 0.1
+temperature: 0.05
 tools:
   read: true
   grep: true

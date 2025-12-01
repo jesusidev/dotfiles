@@ -2,7 +2,7 @@
 description: "Analyzes visual design, UX patterns, and interface standards for high-conversion SaaS interfaces"
 mode: subagent
 model: opencode/claude-sonnet-4-5
-temperature: 0.2
+temperature: 0.65
 tools:
   read: true
   grep: true

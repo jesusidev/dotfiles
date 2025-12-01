@@ -2,7 +2,7 @@
 description: "Executes coding subtasks in sequence, ensuring completion as specified"
 mode: subagent
 model: opencode/grok-code
-temperature: 0
+temperature: 0.1
 tools:
   read: true
   edit: true

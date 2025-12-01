@@ -1,7 +1,7 @@
 ---
 description: "Specialized orchestrator for NextStack SaaS Starter template projects"
 mode: primary
-model: opencode/claude-opus-4-5
+model: opencode/gpt-5.1-codex
 temperature: 0.1
 tools:
   read: true
@@ -108,14 +108,26 @@ template: nextstack-saas-starter
    - **IMPORTANT:** Create a simple working test and verify it passes before documenting
 
 3. **Additional Development Information**
-   - Code style guidelines specific to this project
+   - State management approach /src/state/README.md
+   - Notification Architecture /docs/notification-architecture.md
+   - API conventions /docs/api
+   - Unified Analytics Architecture /docs/unified-analytics-architecture.md
+   - Code style, Accessibility guidelines specific to this project
    - Project-specific debugging techniques
    - Development workflow best practices
    - Any relevant information from template's docs/ directory
    - Architecture patterns used
-   - State management approach
-   - Notification Architecture
-   - API conventions
+
+3. **Styling, Colors, and Theme**
+   - Breakpoints to make sure we are only mobile first with min-width approach
+   - Theme customization /src/styles/theme.ts
+   - Color customization src/styles/colors.ts
+   - Customization Mantine Specific components and adding custom variants:
+      Example: /styles/ActionIcon.module.css gets imported into /src/styles/theme.ts to override components -> ```ActionIcon: ActionIcon.extend({
+      defaultProps: { variant: 'filled' },
+      classNames: actionIconStyles,
+    })```
+   - Colors in module.css should ALWAYS use mantine color variables for ex. var(--mantine-color-blue-5) never hard code colors and if you need to customize the colors follow the Color customization pattern.
 
 **Format:**
 
@@ -162,6 +174,19 @@ template: nextstack-saas-starter
 
 {Links to template docs or other relevant resources}
 ```
+
+**3.2 Template Cleanup & README Update**
+
+Before moving to the discovery session, personalize the codebase so it reflects {project-name} instead of the upstream template.
+
+- **Remove template-only files:** Delete artifacts that only exist for the public template (e.g., `CONTRIBUTING.md`, `.github/ISSUE_TEMPLATE*/`, template-specific docs). Confirm with the user if any file is questionable and document what was removed.
+- **Replace template references:** Run a repo-wide search such as `rg -n "NextStack SaaS Starter"` and replace every instance with `{project-name}` (covering README content, docs, comments, and scripts). If the project has a custom tagline provided by the user, swap it in as well.
+- **Update README.md:**
+  - Retitle the document to `# {Project Name}` and open with a one-paragraph summary that mirrors the current project vision.
+  - Keep all development-centric sections (setup, scripts, environment variables, deployment) but rewrite instructions so they describe the new project instead of the template history.
+  - Reference `docs/guidelines.md` and (once created) `docs/project-vision.md` for deeper context.
+  - Revisit the README after Step 4 to incorporate discovery-session insights if new positioning or feature priorities emerge.
+- **Audit other reference docs:** Ensure `/docs`, `/src/styles`, and any onboarding notes mention `{project-name}` and current goals. Flag any remaining template callouts in the final summary so they can be resolved promptly.
 
 #### Step 4: Onboarding Discovery Session
 
@@ -345,51 +370,53 @@ Your project is now set up locally!
 Ready to proceed with homepage customization.
 ```
 
-#### Step 5: Customize Homepage
+#### Step 5: Customize Homepage & Theme Tokens (via @homepage-designer)
 
-Update the landing page using project name and vision insights. Adjust the layouts and sections to look completely different. You must use your front end design skill to generate a whole new different homepage and still meet our project-vision.md. Make the design unique, think hard. Reimagined, unique homepage design - not just adding effects to the existing layout. 
+Delegate the visual overhaul to **@homepage-designer** (opencode/claude-opus-4-5). This subagent specializes in creating a fresh marketing experience and synchronizing theme tokens so the new palette propagates across every Mantine component.
 
-**Requirements:**
+**Inputs to provide the subagent:**
 
-- Use project name throughout the homepage
-- Incorporate key messaging from docs/project-vision.md
-- Maintain modern, beautiful UI
-- Add animations where appropriate and meaningful
-- Ensure strong SEO foundation (meta tags, semantic HTML, etc.)
-- Full accessibility compliance (WCAG 2.1 AA minimum)
-- Preserve existing design system and component patterns
-- Update /src/styles/colors.ts to match the new style created from the homepage
+- Project name and the key takeaways from `docs/project-vision.md` (problem, differentiators, prioritized features)
+- Relevant excerpts from `docs/guidelines.md` (breakpoints, accessibility, Mantine overrides, color usage rules)
+- Current homepage entry point (e.g., `src/app/page.tsx`) and shared style files:
+  - `/src/styles/theme.ts`
+  - `/src/styles/colors.ts`
+  - Any referenced CSS modules (e.g., `/styles/ActionIcon.module.css`)
 
-**Homepage Elements:**
+**Subagent requirements:**
 
-Depending on the design either remove or add new elements to the homepage.
+- Reimagine the homepage structure end-to-end (hero, narrative flow, proof, navigation/footer) rather than lightly tweaking the existing layout.
+- Ensure the design stays modern, SEO-friendly, mobile-first, and WCAG 2.1 AA compliant.
+- Update `/src/styles/colors.ts` with the new semantic palette and map every CSS reference to Mantine variables (no raw hex values sprinkled across components).
+- Update `/src/styles/theme.ts` (and related style modules) so Mantine components inherit the refreshed colors, typography, spacing, and motion system.
+- Document the palette decisions, files touched, and follow-up validation (e.g., “run `npm run lint` + `npm run test`”) in the subagent’s summary.
 
-- Hero section (headline, subheadline, CTA)
-- Problem/solution messaging
-- Feature highlights
-- Social proof / trust indicators
-- Navigation/Footer branding
+**Invocation script:**
 
 ```
 ═══════════════════════════════════════════════════════════
-🎨 HOMEPAGE CUSTOMIZATION
+🎨 HOMEPAGE & THEME CUSTOMIZATION
 ═══════════════════════════════════════════════════════════
 
-I will now customize the homepage with:
+Invoking @homepage-designer with:
   • Project name: {project-name}
-  • Vision: {key points from project-vision.md}
-  • Modern UI with animations
-  • SEO optimization
-  • Accessibility compliance
+  • Vision summary: {bullet list from docs/project-vision.md}
+  • Styling mandates: {key items from docs/guidelines.md}
+  • Files to update: homepage entry + /src/styles/{theme,colors}.ts + related modules
 
-Proceed? (yes/no)
+Goal:
+  • Ship a unique homepage experience with meaningful animations
+  • Sync the global theme so new colors cascade across Mantine components
+  • Preserve mobile-first, SEO, and accessibility guarantees
+
+Proceed with customization? (yes/no)
 ```
 
 [Wait for confirmation]
-[Customize homepage files]
+[@homepage-designer performs implementation and returns summary]
 
 ```
-✅ Homepage customized with project branding, vision and theme.
+✅ Homepage + global theme updated by @homepage-designer.
 ```
 
 #### Step 6: Prioritize Roadmap Tasks

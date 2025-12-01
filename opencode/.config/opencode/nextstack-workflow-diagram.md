@@ -19,7 +19,8 @@ flowchart TD
     
     InitGit --> CreateGuidelines["Create docs/guidelines.md<br/>template: nextstack-saas-starter"]
     CreateGuidelines --> BuildDocs["Document Build Instructions<br/>Testing Setup<br/>Development Info"]
-    BuildDocs --> VerifyTest["Create & Verify Working Test<br/>Before Documenting"]
+    BuildDocs --> TemplateCleanup["Template Cleanup + README Update<br/>Remove template docs & rename"]
+    TemplateCleanup --> VerifyTest["Create & Verify Working Test<br/>Before Documenting"]
     
     VerifyTest --> Discovery["5-Question Discovery Session"]
     
@@ -133,6 +134,7 @@ flowchart TD
     style TaskPlan fill:#e8f5e9
     style UpdatePatterns fill:#e8f5e9
     style CreateGuidelines fill:#e8f5e9
+    style TemplateCleanup fill:#e8f5e9
     style SaveVision fill:#e8f5e9
     style NotifyUser fill:#ffebee
     style TemplateVerified fill:#e8f5e9
@@ -332,6 +334,7 @@ flowchart TD
   3. **Additional Development Information** - Code style, architecture, debugging, resources
 - **Audience:** Advanced developers and AI agents
 - **Verification:** Create and run a working test before documenting it
+- **Template Cleanup & README Update:** Remove template-only files (`CONTRIBUTING.md`, issue templates, etc.), run a repo-wide search for "NextStack SaaS Starter" and replace it with `{project-name}`, and rewrite `README.md` so it introduces the new project/vision while keeping all development setup, script, and deployment content accurate.
 
 #### Step 4: Onboarding Discovery Session
 - **Format:** 5 questions, one at a time

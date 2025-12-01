@@ -2,7 +2,7 @@
 description: "Analyzes messaging, copywriting, and persuasion patterns for high-conversion SaaS interfaces"
 mode: subagent
 model: opencode/claude-sonnet-4-5
-temperature: 0.2
+temperature: 0.7
 tools:
   read: true
   grep: true

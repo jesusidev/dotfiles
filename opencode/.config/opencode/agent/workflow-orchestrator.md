@@ -1,7 +1,7 @@
 ---
 description: "Routes requests to specialized workflows and orchestrates feature development"
 mode: primary
-model: opencode/claude-opus-4-5
+model: opencode/gpt-5.1
 temperature: 0.1
 tools:
   read: true

@@ -2,7 +2,7 @@
 description: "Build and development environment validation agent"
 mode: subagent
 model: opencode/claude-haiku-4-5
-temperature: 0.1
+temperature: 0.05
 tools:
   bash: true
   read: true

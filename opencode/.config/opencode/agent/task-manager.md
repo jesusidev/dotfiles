@@ -2,7 +2,7 @@
 description: "Breaks down complex features into small, verifiable subtasks"
 mode: primary
 model: opencode/claude-haiku-4-5
-temperature: 0.1
+temperature: 0.15
 tools:
   read: true
   edit: true
