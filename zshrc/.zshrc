@@ -166,9 +166,9 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+eval "$(gh copilot alias -- zsh)"
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/jesusguzman/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-eval "$(gh copilot alias -- zsh)"
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
