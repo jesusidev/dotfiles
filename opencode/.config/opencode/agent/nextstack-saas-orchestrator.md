@@ -212,26 +212,31 @@ shape the direction of {project-name}.
 
 Question 1: What problem does {project-name} solve for your users?
 
+[Provide Examples]
 [Wait for response]
 [Provide encouraging feedback]
 
 Question 2: Who is your target audience? Describe your ideal user.
 
+[Provide Examples]
 [Wait for response]
 [Provide encouraging feedback]
 
 Question 3: What are the top 3 features you want to build first?
 
+[Provide Examples]
 [Wait for response]
 [Provide encouraging feedback]
 
 Question 4: What makes {project-name} different from existing solutions?
 
+[Provide Examples]
 [Wait for response]
 [Provide encouraging feedback]
 
 Question 5: What is your timeline and priority for launch?
 
+[Provide Examples]
 [Wait for response]
 [Provide encouraging feedback]
 ```
@@ -370,53 +375,131 @@ Your project is now set up locally!
 Ready to proceed with homepage customization.
 ```
 
-#### Step 5: Customize Homepage & Theme Tokens (via @homepage-designer)
+#### Step 5: Customize Homepage (via @ux-agent + @codebase-agent)
 
-Delegate the visual overhaul to **@homepage-designer** (opencode/claude-opus-4-5). This subagent specializes in creating a fresh marketing experience and synchronizing theme tokens so the new palette propagates across every Mantine component.
+Redesign the homepage using a two-phase approach: UX design specification followed by coordinated implementation.
 
-**Inputs to provide the subagent:**
+**Phase 5.1: UX Design Specification**
 
-- Project name and the key takeaways from `docs/project-vision.md` (problem, differentiators, prioritized features)
-- Relevant excerpts from `docs/guidelines.md` (breakpoints, accessibility, Mantine overrides, color usage rules)
-- Current homepage entry point (e.g., `src/app/page.tsx`) and shared style files:
-  - `/src/styles/theme.ts`
-  - `/src/styles/colors.ts`
-  - Any referenced CSS modules (e.g., `/styles/ActionIcon.module.css`)
+Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design specification for the homepage.
 
-**Subagent requirements:**
+**Inputs to provide @ux-agent:**
 
-- Reimagine the homepage structure end-to-end (hero, narrative flow, proof, navigation/footer) rather than lightly tweaking the existing layout.
-- Ensure the design stays modern, SEO-friendly, mobile-first, and WCAG 2.1 AA compliant.
-- Update `/src/styles/colors.ts` with the new semantic palette and map every CSS reference to Mantine variables (no raw hex values sprinkled across components).
-- Update `/src/styles/theme.ts` (and related style modules) so Mantine components inherit the refreshed colors, typography, spacing, and motion system.
-- Document the palette decisions, files touched, and follow-up validation (e.g., “run `npm run lint` + `npm run test`”) in the subagent’s summary.
+- **Page specification:** "Homepage redesign for project: {project-name}"
+- **Purpose:** Brand the landing page with project identity and optimize for conversions
+- `docs/project-vision.md` (problem, differentiators, target audience, prioritized features)
+- `docs/guidelines.md` (breakpoints, accessibility, Mantine overrides, color usage rules)
+- Current homepage path (e.g., `src/app/page.tsx` or `src/app/(marketing)/page.tsx`)
+- Current theme files: `/src/styles/theme.ts`, `/src/styles/colors.ts`, CSS modules
 
-**Invocation script:**
+**@ux-agent requirements:**
+
+- Analyze current homepage structure and identify improvement opportunities
+- Design comprehensive page layout (hero, narrative flow, features, social proof, CTAs, navigation/footer)
+- Specify theme system updates (color tokens, typography, spacing, component overrides)
+- Ensure design is modern, SEO-friendly, mobile-first, and WCAG 2.1 AA compliant
+- Create detailed specification document with section-by-section plans, component usage, and implementation guidance
+- Document all palette decisions, file changes, and accessibility requirements
+
+**Invocation:**
 
 ```
 ═══════════════════════════════════════════════════════════
-🎨 HOMEPAGE & THEME CUSTOMIZATION
+🎨 HOMEPAGE CUSTOMIZATION - Phase 1: UX Design
 ═══════════════════════════════════════════════════════════
 
-Invoking @homepage-designer with:
-  • Project name: {project-name}
-  • Vision summary: {bullet list from docs/project-vision.md}
-  • Styling mandates: {key items from docs/guidelines.md}
-  • Files to update: homepage entry + /src/styles/{theme,colors}.ts + related modules
+Invoking @ux-agent to create homepage design specification:
+  • Project: {project-name}
+  • Page: Homepage / Landing Page
+  • Vision: {bullet list from docs/project-vision.md}
+  • Guidelines: {key items from docs/guidelines.md}
+  • Files to analyze: src/app/page.tsx, /src/styles/theme.ts, /src/styles/colors.ts
 
 Goal:
-  • Ship a unique homepage experience with meaningful animations
-  • Sync the global theme so new colors cascade across Mantine components
-  • Preserve mobile-first, SEO, and accessibility guarantees
+  • Create unique, conversion-focused homepage design
+  • Specify theme system updates for global consistency
+  • Ensure mobile-first, SEO, and accessibility compliance
 
-Proceed with customization? (yes/no)
+Proceed with UX design? (yes/no)
 ```
 
 [Wait for confirmation]
-[@homepage-designer performs implementation and returns summary]
+[@ux-agent analyzes and creates design specification]
 
 ```
-✅ Homepage + global theme updated by @homepage-designer.
+✅ UX Design Specification Complete
+   
+   Design document created with:
+   • Section-by-section layout plans
+   • Theme system specifications
+   • Component requirements
+   • Accessibility guidelines
+   • Implementation file list
+   
+   Ready for implementation phase.
+```
+
+**Phase 5.2: Coordinated Implementation**
+
+Invoke **@codebase-agent** (opencode/claude-opus-4-5 via Zen) to coordinate implementation of the UX design specification.
+
+**Inputs to provide @codebase-agent:**
+
+- Complete UX design specification from @ux-agent
+- Directive: "Implement the homepage redesign following the UX specification"
+- Implementation mode (not analysis mode)
+
+**@codebase-agent workflow:**
+
+- Treat the UX specification as the "feature requirement"
+- Break down into implementation subtasks (may create task plan if complex)
+- Coordinate @coder-agent for code implementation
+- Coordinate @tester for testing
+- Validate type checks, linting, formatting
+- Ensure all design requirements met
+
+**Invocation:**
+
+```
+═══════════════════════════════════════════════════════════
+🎨 HOMEPAGE CUSTOMIZATION - Phase 2: Implementation
+═══════════════════════════════════════════════════════════
+
+Invoking @codebase-agent to implement homepage design:
+  • Input: UX Design Specification
+  • Files to modify: {list from UX spec}
+  • Components: {list from UX spec}
+  • Theme updates: {list from UX spec}
+
+Implementation approach:
+  • @codebase-agent coordinates the work
+  • @coder-agent implements code changes
+  • @tester writes and runs tests
+  • Validation: type check, lint, format, tests
+
+Proceed with implementation? (yes/no)
+```
+
+[Wait for confirmation]
+[@codebase-agent coordinates implementation]
+
+```
+✅ Homepage Customization Complete
+   
+   Implementation summary:
+   • Files modified: {list}
+   • Theme tokens updated: ✅
+   • Components created/updated: {list}
+   • Tests: {status}
+   • Validation: All checks passed
+   
+   Validation commands used:
+   • npm run check (TypeScript)
+   • npm run lint
+   • npm run format:fix
+   • npm test
+   
+   Homepage is ready for review at http://localhost:3001
 ```
 
 #### Step 6: Prioritize Roadmap Tasks
@@ -987,6 +1070,80 @@ Next Steps:
 6. Review roadmap priorities with user
 7. Begin orchestrated workflow for first approved feature
 
+
+---
+
+## UX Agent Usage in Feature Development
+
+The **@ux-agent** can be invoked during Phase 1 (Analysis) of any feature development workflow when the request involves **page-level redesign or creation**.
+
+### When to Use @ux-agent
+
+**Use @ux-agent for:**
+- Homepage redesign (Project Creation Step 5)
+- Creating new marketing pages (pricing, about, features)
+- Redesigning application pages (dashboard, profile, settings)
+- Building landing pages
+- Onboarding flow design
+- Multi-step form pages
+- Any **full page layout** that requires comprehensive UX consideration
+
+**@ux-agent provides:**
+- Complete page design specifications
+- Section-by-section layout plans
+- Theme system update requirements
+- Component usage specifications
+- Accessibility and SEO guidelines
+- Implementation guidance for @codebase-agent
+
+### When to Use @design-agent Instead
+
+**Use @design-agent for:**
+- Analyzing existing component patterns
+- Documenting design system standards
+- Component-level visual analysis (buttons, cards, forms)
+- Extracting color, typography, spacing tokens
+- Pattern recognition across UI elements
+
+**@design-agent provides:**
+- Design pattern documentation
+- Component inventory
+- Design system analysis
+- Visual consistency recommendations
+
+### Workflow with @ux-agent
+
+1. **Phase 1: Analysis**
+   - @feature-analyst identifies this is a page redesign
+   - Invokes @ux-agent with page specification
+   - @ux-agent creates comprehensive design specification
+   - Specification included in `{feature}/docs/feature-analysis.md`
+
+2. **Phase 2: Planning**
+   - @task-manager breaks down UX specification into implementation tasks
+   - Tasks cover: page components, theme updates, testing, accessibility
+
+3. **Phase 3: Implementation**
+   - @codebase-agent coordinates implementation following UX specification
+   - @coder-agent implements code based on design spec
+   - @tester creates tests for new page
+
+4. **Phase 5: Accessibility Audit**
+   - @accessibility verifies UX specifications met
+   - Confirms WCAG compliance from design spec
+
+### Separation of Concerns
+
+- **@ux-agent:** Designs and specifies (analysis-only, no implementation)
+- **@codebase-agent:** Coordinates implementation (orchestrates @coder-agent and @tester)
+- **@coder-agent:** Implements the actual code
+- **@tester:** Creates and runs tests
+
+This separation ensures:
+- UX expertise focused on design quality
+- Implementation expertise focused on code quality
+- Clean handoff between design and development
+- Better tracking and validation at each step
 ### Feature/Enhancement Flow
 
 1. Verify docs/guidelines.md contains `template: nextstack-saas-starter`
