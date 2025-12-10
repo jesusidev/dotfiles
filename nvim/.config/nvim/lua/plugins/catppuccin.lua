@@ -23,11 +23,14 @@ return {
         gitsigns = true,
         telescope = true,
         mason = true,
-        neotree = true,
+        neotree = false,
+        mini = {
+          enabled = true,
+        },
         which_key = true,
         indent_blankline = {
           enabled = true,
-          colored_indent_levels = false,
+          colored_indent_levels = true,
         },
         mini = {
           enabled = true,

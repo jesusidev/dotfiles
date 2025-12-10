@@ -264,6 +264,9 @@ format = '\[[$symbol$context]($style)\]'
 
 [dotnet]
 format = '\[[$symbol($version)(🎯 $tfm)]($style)\]'
+detect_files = ['global.json', '*.csproj', '*.fsproj', '*.sln']
+detect_extensions = ['csproj', 'fsproj', 'sln']
+detect_folders = []
 
 [elixir]
 format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
