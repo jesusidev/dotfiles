@@ -33,9 +33,11 @@ flowchart TD
     WaitConfirm --> StartDev["Start Dev Server<br/>docker compose up -d"]
     
     StartDev --> CustomizeHome["Customize Homepage"]
-    CustomizeHome --> UXDesign["Phase 5.1: UX Agent<br/>Create Design Specification"]
-    UXDesign --> UXSpec["Design Spec: Layout, Theme,<br/>Components, Accessibility"]
-    UXSpec --> CodebaseImpl2["Phase 5.2: Codebase Agent<br/>Coordinate Implementation"]
+    CustomizeHome --> DesignDirection["Phase 5.1: Design Direction<br/>Ask User Visual Preferences"]
+    DesignDirection --> DesignInput["User Specifies:<br/>Theme, Layout Style, Aesthetic,<br/>Interactive Elements"]
+    DesignInput --> UXDesign["Phase 5.2: UX Agent<br/>Create Design Specification"]
+    UXDesign --> UXSpec["Design Spec: Layout, Theme,<br/>Components, Accessibility<br/>Based on User Direction"]
+    UXSpec --> CodebaseImpl2["Phase 5.3: Codebase Agent<br/>Coordinate Implementation"]
     CodebaseImpl2 --> CoderImpl["Coder Agent: Code Changes<br/>Tester: Tests"]
     CoderImpl --> HomeQuality["Validation: Type Check,<br/>Lint, Format, Tests"]
     
@@ -391,21 +393,36 @@ flowchart TD
 - **Next Step:** Homepage customization with live preview
 
 #### Step 5: Customize Homepage
-- **Purpose:** Brand the landing page with project identity
+- **Purpose:** Brand the landing page with project identity and unique visual design
+- **Phase 5.1: Design Direction Discovery**
+  - Ask user about visual style and aesthetic preferences
+  - Provide examples: Corporate Professional, Tech Startup, Creative/Unique, Minimal/Elegant
+  - Gather specific preferences:
+    - Theme preference (light, dark, colorful)
+    - Layout style (conventional, asymmetric, experimental)
+    - Visual aesthetic (modern, retro, futuristic, organic, technical)
+    - Interactive elements (3D effects, particles, custom scroll)
+    - Visual metaphors or brand-specific features
+  - User response guides entire design specification
+- **Phase 5.2: UX Design Specification** (via @ux-agent)
+  - Create comprehensive design based on user's direction
+  - Translate visual preferences into concrete specifications
+  - Design page layout (hero, narrative flow, features, social proof, CTAs)
+  - Specify theme updates (colors, typography, spacing, components)
+  - Honor user's aesthetic choices (dark theme, asymmetric layouts, 3D elements, etc.)
+  - Ensure accessibility, SEO, and mobile-first design
+- **Phase 5.3: Implementation** (via @codebase-agent)
+  - Coordinate implementation of design specification
+  - @coder-agent implements code changes
+  - @tester writes and runs tests
+  - Validate all changes
 - **Requirements:**
   - Use project name throughout
   - Incorporate messaging from project-vision.md
-  - Maintain modern, beautiful UI (no quality degradation)
-  - Add meaningful animations
+  - Implement user's requested visual style
   - Strong SEO foundation (meta tags, semantic HTML)
   - Full accessibility compliance (WCAG 2.1 AA minimum)
-  - Preserve existing design system
-- **Elements to Customize:**
-  - Hero section (headline, subheadline, CTA)
-  - Problem/solution messaging
-  - Feature highlights
-  - Social proof / trust indicators
-  - Footer branding
+  - Balance creativity with performance
 
 #### Step 6: Prioritize Roadmap Tasks
 - **Purpose:** Get user approval on feature priorities

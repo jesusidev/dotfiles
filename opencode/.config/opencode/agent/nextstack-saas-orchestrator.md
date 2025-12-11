@@ -379,7 +379,63 @@ Ready to proceed with homepage customization.
 
 Redesign the homepage using a two-phase approach: UX design specification followed by coordinated implementation.
 
-**Phase 5.1: UX Design Specification**
+**Phase 5.1: Design Direction Discovery**
+
+Before creating the design specification, gather the user's vision for the visual design direction.
+
+```
+═══════════════════════════════════════════════════════════
+🎨 HOMEPAGE CUSTOMIZATION - Design Direction
+═══════════════════════════════════════════════════════════
+
+To create a unique homepage that reflects your vision, I need to understand 
+your design preferences.
+
+Question: What visual style and aesthetic do you envision for {project-name}?
+
+Consider:
+• Overall theme (light, dark, colorful, minimal, bold, elegant)
+• Visual aesthetic (modern, retro, futuristic, organic, technical)
+• Layout style (conventional grid, asymmetric, experimental, structured)
+• Interactive elements (subtle animations, 3D effects, particles, transitions)
+• Visual metaphors or unique features that represent your brand
+
+Examples of design directions:
+
+1. Corporate Professional:
+   - Clean, structured layouts with conventional grid
+   - Minimal animations, professional typography
+   - Light theme with accent colors
+   - Standard card-based sections
+
+2. Tech Startup:
+   - Dark-first theme with vibrant accent colors
+   - Gradient overlays and glassmorphism effects
+   - Smooth scroll animations and micro-interactions
+   - Modern, bold typography
+
+3. Creative/Unique:
+   - Asymmetric layouts breaking conventional patterns
+   - Interactive 3D elements or particle effects
+   - Custom scroll experiences (horizontal sections, parallax)
+   - Experimental typography and bold color choices
+
+4. Minimal/Elegant:
+   - Lots of white space, refined typography
+   - Subtle animations, focus on content
+   - Monochromatic or limited color palette
+   - Clean, simple component designs
+
+[Provide Examples]
+[Wait for response]
+
+Great direction! I'll incorporate these design elements:
+• {summarize user's design preferences}
+
+These will guide the UX design specification.
+```
+
+**Phase 5.2: UX Design Specification**
 
 Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design specification for the homepage.
 
@@ -387,6 +443,7 @@ Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design
 
 - **Page specification:** "Homepage redesign for project: {project-name}"
 - **Purpose:** Brand the landing page with project identity and optimize for conversions
+- **Design direction:** {user's design preferences from Phase 5.1}
 - `docs/project-vision.md` (problem, differentiators, target audience, prioritized features)
 - `docs/guidelines.md` (breakpoints, accessibility, Mantine overrides, color usage rules)
 - Current homepage path (e.g., `src/app/page.tsx` or `src/app/(marketing)/page.tsx`)
@@ -395,7 +452,8 @@ Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design
 **@ux-agent requirements:**
 
 - Analyze current homepage structure and identify improvement opportunities
-- Design comprehensive page layout (hero, narrative flow, features, social proof, CTAs, navigation/footer)
+- Design comprehensive page layout following user's design direction
+- Incorporate specified visual aesthetic (theme, layout style, interactive elements)
 - Specify theme system updates (color tokens, typography, spacing, component overrides)
 - Ensure design is modern, SEO-friendly, mobile-first, and WCAG 2.1 AA compliant
 - Create detailed specification document with section-by-section plans, component usage, and implementation guidance
@@ -405,18 +463,20 @@ Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design
 
 ```
 ═══════════════════════════════════════════════════════════
-🎨 HOMEPAGE CUSTOMIZATION - Phase 1: UX Design
+🎨 HOMEPAGE CUSTOMIZATION - Phase 2: UX Design Specification
 ═══════════════════════════════════════════════════════════
 
 Invoking @ux-agent to create homepage design specification:
   • Project: {project-name}
   • Page: Homepage / Landing Page
+  • Design Direction: {summarize user preferences}
   • Vision: {bullet list from docs/project-vision.md}
   • Guidelines: {key items from docs/guidelines.md}
   • Files to analyze: src/app/page.tsx, /src/styles/theme.ts, /src/styles/colors.ts
 
 Goal:
   • Create unique, conversion-focused homepage design
+  • Implement {user's visual style} aesthetic
   • Specify theme system updates for global consistency
   • Ensure mobile-first, SEO, and accessibility compliance
 
@@ -439,7 +499,7 @@ Proceed with UX design? (yes/no)
    Ready for implementation phase.
 ```
 
-**Phase 5.2: Coordinated Implementation**
+**Phase 5.3: Coordinated Implementation**
 
 Invoke **@codebase-agent** (opencode/claude-opus-4-5 via Zen) to coordinate implementation of the UX design specification.
 
@@ -462,7 +522,7 @@ Invoke **@codebase-agent** (opencode/claude-opus-4-5 via Zen) to coordinate impl
 
 ```
 ═══════════════════════════════════════════════════════════
-🎨 HOMEPAGE CUSTOMIZATION - Phase 2: Implementation
+🎨 HOMEPAGE CUSTOMIZATION - Phase 3: Implementation
 ═══════════════════════════════════════════════════════════
 
 Invoking @codebase-agent to implement homepage design:
