@@ -489,12 +489,27 @@ Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design
 
 **@ux-agent requirements:**
 
-- Analyze current homepage structure and identify improvement opportunities
+- Analyze current homepage, navigation, and footer structure
 - Design comprehensive page layout following user's design direction
-- Incorporate specified visual aesthetic (theme, layout style, interactive elements)
+- **Design new navigation** that matches the homepage aesthetic:
+  - Navigation structure (horizontal, sticky, transparent, solid)
+  - Logo placement and styling
+  - Menu items and organization
+  - Mobile menu design (hamburger, slide-out, full-screen)
+  - CTA buttons in navigation
+  - Hover states and active indicators
+- **Design new footer** that complements the overall design:
+  - Footer structure (simple, multi-column, mega footer)
+  - Link organization (product, company, legal, social)
+  - Newsletter signup or CTA
+  - Branding elements
+  - Social media links
+  - Copyright and legal links
+- Incorporate specified visual aesthetic (theme, layout style, interactive elements) throughout
 - Specify theme system updates (color tokens, typography, spacing, component overrides)
+- Ensure navigation and footer work across all breakpoints (mobile, tablet, desktop)
 - Ensure design is modern, SEO-friendly, mobile-first, and WCAG 2.1 AA compliant
-- Create detailed specification document with section-by-section plans, component usage, and implementation guidance
+- Create detailed specification document with section-by-section plans (including navigation and footer)
 - Document all palette decisions, file changes, and accessibility requirements
 
 **Invocation:**
@@ -514,7 +529,9 @@ Invoking @ux-agent to create homepage design specification:
 
 Goal:
   • Create unique, conversion-focused homepage design
-  • Implement {user's visual style} aesthetic
+  • Design brand new navigation matching the aesthetic
+  • Design brand new footer complementing the design
+  • Implement {user's visual style} aesthetic throughout
   • Specify theme system updates for global consistency
   • Ensure mobile-first, SEO, and accessibility compliance
 
@@ -528,9 +545,11 @@ Proceed with UX design? (yes/no)
 ✅ UX Design Specification Complete
    
    Design document created with:
-   • Section-by-section layout plans
+   • Homepage section-by-section layout plans
+   • Navigation design specification
+   • Footer design specification
    • Theme system specifications
-   • Component requirements
+   • Component requirements (navigation, footer, page components)
    • Accessibility guidelines
    • Implementation file list
    

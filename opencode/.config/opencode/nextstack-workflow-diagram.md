@@ -422,22 +422,35 @@ flowchart TD
 - **Phase 5.2: UX Design Specification** (via @ux-agent)
   - Create comprehensive design based on user's direction
   - Translate visual preferences into concrete specifications
-  - Design page layout (hero, narrative flow, features, social proof, CTAs)
+  - **Design navigation** matching the aesthetic:
+    - Navigation structure, scroll behavior, mobile menu
+    - Logo placement, menu organization, CTA buttons
+    - Hover states, active indicators, responsive breakpoints
+  - **Design page layout** (hero, narrative flow, features, social proof, CTAs)
+  - **Design footer** complementing the overall design:
+    - Footer structure, link organization, newsletter/CTA
+    - Social media, legal links, branding elements
   - Specify theme updates (colors, typography, spacing, components)
   - Honor user's aesthetic choices (dark theme, asymmetric layouts, 3D elements, etc.)
-  - Ensure accessibility, SEO, and mobile-first design
+  - Ensure navigation, page, and footer work together cohesively
+  - Ensure accessibility, SEO, and mobile-first design throughout
 - **Phase 5.3: Implementation** (via @codebase-agent)
   - Coordinate implementation of design specification
+  - Implement new navigation component
+  - Implement homepage sections
+  - Implement new footer component
   - @coder-agent implements code changes
   - @tester writes and runs tests
-  - Validate all changes
+  - Validate all changes work together cohesively
 - **Requirements:**
-  - Use project name throughout
+  - Use project name throughout (navigation, page, footer)
   - Incorporate messaging from project-vision.md
-  - Implement user's requested visual style
+  - Implement user's requested visual style consistently across all components
+  - Navigation and footer match homepage aesthetic
   - Strong SEO foundation (meta tags, semantic HTML)
-  - Full accessibility compliance (WCAG 2.1 AA minimum)
+  - Full accessibility compliance (WCAG 2.1 AA minimum - keyboard nav, focus states, ARIA)
   - Balance creativity with performance
+  - Ensure responsive design works at all breakpoints
 
 #### Step 6: Prioritize Roadmap Tasks
 - **Purpose:** Get user approval on feature priorities

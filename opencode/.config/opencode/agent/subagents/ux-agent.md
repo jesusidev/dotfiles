@@ -132,10 +132,31 @@ You provide detailed documentation that @codebase-agent can use to coordinate im
    - **Honor user's visual preferences** throughout the specification
    - Translate abstract design direction into concrete implementation details
    - Ensure design choices reflect requested aesthetic (dark theme, asymmetric layouts, 3D elements, etc.)
-   - **Section-by-Section Layout Plan:**
+   
+   - **Navigation Design:**
+     - Structure (horizontal, sticky, transparent on scroll, solid background)
+     - Logo placement and styling (left, center, size, treatment)
+     - Menu organization (main links, dropdown menus, mega menus)
+     - CTA buttons in nav (sign up, login, get started)
+     - Mobile navigation strategy (hamburger, slide-out, full-screen overlay)
+     - Scroll behavior (sticky, hide on scroll down, transparent to solid)
+     - Hover states and active page indicators
+     - Responsive breakpoints for navigation
+   
+   - **Page Section-by-Section Layout Plan:**
      - Define each section (hero, features, social proof, CTA, etc.)
      - Specify content hierarchy and visual flow
      - Define component usage and variations needed
+   
+   - **Footer Design:**
+     - Structure (simple single-row, multi-column, mega footer)
+     - Link organization (product links, company info, legal, resources)
+     - Newsletter signup or bottom CTA
+     - Logo and branding elements
+     - Social media links (placement and style)
+     - Copyright notice and legal links
+     - Visual separation from page content
+     - Responsive footer layout for mobile
    
    - **Theme System Specifications:**
      - Color token updates for `/src/styles/colors.ts`
@@ -380,7 +401,46 @@ Translate the user's design direction into concrete design decisions:
 - **Content Strategy:** {messaging priorities}
 - **Conversion Strategy:** {how design drives conversions}
 
-## Section-by-Section Layout
+## Navigation Design
+
+### Structure & Behavior
+- **Layout:** {horizontal/vertical, sticky/fixed/static}
+- **Background:** {solid color, transparent, blur effect, gradient}
+- **Scroll Behavior:** {sticky throughout, hide on scroll down, transparent to solid transition}
+- **Height:** {desktop height, mobile height}
+
+### Logo & Branding
+- **Placement:** {left, center, size}
+- **Style:** {wordmark, icon, icon + text}
+- **Interaction:** {link to homepage, animation on hover}
+
+### Menu Items
+- **Primary Links:** {list main navigation items}
+- **Organization:** {flat structure, dropdown menus, mega menu}
+- **Active State:** {underline, highlight, bold, color change}
+- **Hover Effects:** {animation, color change, underline}
+
+### CTA Buttons
+- **Buttons:** {e.g., "Sign Up", "Get Started", "Login"}
+- **Style:** {primary button, outline, ghost}
+- **Placement:** {right side, center, separate from menu}
+
+### Mobile Navigation
+- **Trigger:** {hamburger icon, menu text, custom icon}
+- **Style:** {slide-out drawer, full-screen overlay, dropdown}
+- **Animation:** {fade, slide, scale}
+- **Close Behavior:** {X button, overlay click, swipe}
+
+### Responsive Breakpoints
+- **Desktop (>1024px):** {full horizontal menu}
+- **Tablet (768-1024px):** {condensed menu or mobile menu}
+- **Mobile (<768px):** {hamburger menu}
+
+### Implementation Files
+- **Component:** {path to navigation component}
+- **Styles:** {CSS module or styled component file}
+
+## Page Section-by-Section Layout
 
 ### Section 1: {Section Name}
 - **Purpose:** {what this section achieves}
@@ -391,6 +451,51 @@ Translate the user's design direction into concrete design decisions:
 
 ### Section 2: {Section Name}
 ...
+
+## Footer Design
+
+### Structure & Layout
+- **Type:** {simple single-row, multi-column (3-4 cols), mega footer}
+- **Background:** {color, gradient, pattern}
+- **Visual Separation:** {border, spacing, background contrast}
+
+### Content Organization
+
+#### Column 1: Brand/Product
+- **Logo:** {placement and styling}
+- **Tagline:** {optional company description}
+- **Product Links:** {main product pages}
+
+#### Column 2: Company
+- **About:** {about, careers, press, contact}
+- **Company Links:** {relevant pages}
+
+#### Column 3: Resources
+- **Resources:** {blog, documentation, help center, community}
+- **Support Links:** {relevant resources}
+
+#### Column 4: Legal & Social
+- **Legal:** {privacy policy, terms of service, cookies}
+- **Social Media:** {icons with links - Twitter, LinkedIn, GitHub, etc.}
+
+### Newsletter/CTA (Optional)
+- **Placement:** {top of footer, separate column, bottom}
+- **Style:** {input + button, link to dedicated page}
+- **Copy:** {call to action text}
+
+### Bottom Bar
+- **Copyright:** {© 2024 Company Name. All rights reserved.}
+- **Legal Links:** {inline links to privacy/terms}
+- **Additional Info:** {badges, certifications, location}
+
+### Responsive Behavior
+- **Desktop:** {multi-column layout}
+- **Tablet:** {2-column or stacked}
+- **Mobile:** {single column, accordion sections if needed}
+
+### Implementation Files
+- **Component:** {path to footer component}
+- **Styles:** {CSS module or styled component file}
 
 ## Theme System Updates
 
