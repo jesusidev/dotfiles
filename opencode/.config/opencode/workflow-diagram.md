@@ -24,11 +24,11 @@ flowchart TD
     CodebaseAnalysis --> FeatureAnalyst[Feature Analyst Subagent]
     FeatureAnalyst --> CheckPageRedesign{Full Page<br/>Redesign?}
     CheckPageRedesign -->|Yes| UXAgentBrief[UX Agent Subagent<br/>Page Design Specification]
-    CheckPageRedesign -->|No| CheckUIRelated{UI/Component<br/>Analysis?}
-    UXAgentBrief --> AnalysisDoc
-    CheckUIRelated -->|Yes| DesignBrief[Design Agent Subagent<br/>Component/Visual Analysis]
-    CheckUIRelated -->|No| CheckCopyRelated{Copy/Messaging<br/>Related?}
-    DesignBrief --> CheckCopyRelated
+    CheckPageRedesign -->|No| CheckCopyRelated{Copy/Messaging<br/>Related?}
+    UXAgentBrief --> CheckCopyRelated
+    
+    
+    
     CheckCopyRelated -->|Yes| CopywritingBrief[Copywriting Agent Subagent<br/>Messaging Analysis]
     CheckCopyRelated -->|No| AnalysisDoc["Create Analysis Doc<br/>\{feature\}/docs/feature-analysis.md"]
     CopywritingBrief --> AnalysisDoc
@@ -110,8 +110,7 @@ graph TD
     WO --> TM[Task Manager<br/>Primary Agent]
     
     CA --> FA[Feature Analyst<br/>Subagent]
-    FA --> UXA[UX Agent<br/>Subagent - Page Design]
-    FA --> DB[Design Agent<br/>Subagent - Component Analysis]
+    FA --> UXA[UX Agent<br/>Subagent - Design & Analysis]
     FA --> CB[Copywriting Agent<br/>Subagent]
     CA --> COD[Coder Agent<br/>Subagent]
     CA --> TST[Tester<br/>Subagent]
@@ -127,7 +126,7 @@ graph TD
     style FA fill:#f0f0f0
     style UXA fill:#e1f5ff
     style UXAgentBrief fill:#e1f5ff
-    style DB fill:#e8f5e9
+    
     style CB fill:#e8f5e9
     style COD fill:#f0f0f0
     style TST fill:#f0f0f0
@@ -191,27 +190,25 @@ flowchart LR
 - **Agent:** @codebase-agent (analysis mode)
 - **Primary Subagent:** @feature-analyst
 - **Specialized Subagents:** 
-  - **@ux-agent** - For full page redesigns (homepage, pricing page, dashboard layout, etc.)
-    - Creates comprehensive design specifications
+  - **@ux-agent** - For page redesigns AND design system analysis
+    - **Design Mode:** Creates comprehensive page design specifications
+    - **Analysis Mode:** Extracts and documents existing design patterns
     - Defines page structure, theme updates, component usage
+    - Documents design system standards (colors, typography, spacing, components)
     - Provides implementation guidance for @codebase-agent
-  - **@design-agent** - For component-level UI analysis (buttons, cards, forms, etc.)
-    - Analyzes existing visual patterns
-    - Documents design system components
-    - Extracts color, typography, and spacing standards
   - **@copywriting-agent** - For messaging and conversion copy analysis
 - **Output:** `{feature}/docs/feature-analysis.md`
 - **Purpose:** Understand existing codebase patterns relevant to the feature request
 - **Analysis Coverage:**
   - Code patterns and conventions
-  - Page-level design specifications (if full page redesign via @ux-agent)
-  - Component-level design system patterns (if UI components via @design-agent)
+  - Page-level design specifications (if full page redesign via @ux-agent design mode)
+  - Design system patterns (if component analysis via @ux-agent analysis mode)
   - Messaging and copy patterns (if conversion-focused via @copywriting-agent)
   - Development environment setup
   - Validation commands (lint, format, test, build)
 - **Decision Logic:**
-  - Full page redesign? → Invoke @ux-agent for design specification
-  - Component/visual analysis? → Invoke @design-agent for pattern extraction
+  - Full page redesign? → Invoke @ux-agent in design mode
+  - Design system/component analysis? → Invoke @ux-agent in analysis mode
   - Copy/messaging focus? → Invoke @copywriting-agent for messaging analysis
 
 ### Phase 2: Planning

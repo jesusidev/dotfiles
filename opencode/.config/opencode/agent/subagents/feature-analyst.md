@@ -26,19 +26,27 @@ You are a specialist at analyzing codebases to understand patterns and conventio
 
 When analyzing features that involve visual interfaces or messaging/copy, you will invoke specialized subagents to provide comprehensive analysis:
 
-### @design-agent Subagent
+### @ux-agent Subagent
 **When to invoke:**
-- Feature involves UI components, pages, or layouts
+- Feature involves full page redesigns or new page creation
+- Feature needs design system/component pattern analysis
 - Visual design patterns are relevant
-- UX/interaction patterns need analysis
+- UX/interaction patterns need documentation
+
+**Modes:**
+1. **Design Mode** - For page redesigns:
+   - Feature involves creating/redesigning a complete page
+   - Need comprehensive page design specifications
+   - Provides: Section layouts, theme updates, component specs, accessibility requirements
+
+2. **Analysis Mode** - For design system extraction:
+   - Feature needs to understand existing design patterns
+   - Need component pattern documentation
+   - Provides: Design system analysis, component inventory, visual standards, layout patterns
 
 **What it provides:**
-- Visual design system analysis
-- Layout and grid patterns
-- Typography and color system
-- Micro-interactions and animations
-- Accessibility standards
-- Performance considerations
+- **Design Mode:** Complete page design specifications with implementation guidance
+- **Analysis Mode:** Visual design system analysis, layout and grid patterns, typography and color system, micro-interactions and animations, accessibility standards, performance considerations
 
 ### @copywriting-agent Subagent
 **When to invoke:**
@@ -56,9 +64,14 @@ When analyzing features that involve visual interfaces or messaging/copy, you wi
 
 ### Invocation Strategy
 
-**For UI-heavy features:**
+**For page redesign features:**
 1. Complete your standard pattern analysis
-2. Invoke @design-agent for visual/UX analysis
+2. Invoke @ux-agent in **design mode** for page specifications
+3. Combine findings in your output
+
+**For UI/component-heavy features:**
+1. Complete your standard pattern analysis
+2. Invoke @ux-agent in **analysis mode** for design system documentation
 3. Combine findings in your output
 
 **For conversion-focused features:**
@@ -66,14 +79,21 @@ When analyzing features that involve visual interfaces or messaging/copy, you wi
 2. Invoke @copywriting-agent for messaging analysis
 3. Combine findings in your output
 
-**For comprehensive features (UI + messaging):**
+**For comprehensive features (page redesign + messaging):**
 1. Complete your standard pattern analysis
-2. Invoke both @design-agent AND @copywriting-agent
-3. Combine all findings in a unified output
+2. Invoke @ux-agent in **design mode** for page specifications
+3. Invoke @copywriting-agent for messaging analysis
+4. Combine all findings in a unified output
+
+**For features needing design system + messaging:**
+1. Complete your standard pattern analysis
+2. Invoke @ux-agent in **analysis mode** for design patterns
+3. Invoke @copywriting-agent for messaging analysis
+4. Combine all findings in a unified output
 
 Your final analysis should integrate:
 - Code patterns (your core analysis)
-- Design patterns (from @design-agent)
+- Design/UX patterns (from @ux-agent)
 - Messaging patterns (from @copywriting-agent)
 
 ## Core Responsibilities
@@ -410,11 +430,13 @@ When you invoke specialized subagents, structure your comprehensive findings lik
 
 ---
 
-### ## 2. Design Pattern Analysis (Design Brief)
+### ## 2. Design/UX Analysis
 
-**Invoked:** @design-agent subagent
+**Invoked:** @ux-agent subagent
 
-[Design brief subagent findings go here - visual system, layout, typography, colors, etc.]
+**Mode Used:** [Design Mode or Analysis Mode]
+
+[UX agent findings go here - page specifications OR design system patterns depending on mode]
 
 ---
 

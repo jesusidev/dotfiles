@@ -30,7 +30,7 @@ _Last updated: November 27, 2025_
 | Codebase Agent (@codebase-agent) | Claude Sonnet 4.5 | Analysis + implementation lead | 12,000 | 6,000 | 18,000 | **0.126** | Loads multi-file context plus diffs; typically invoked twice per feature |
 | Task Manager (@task-manager) | Claude Haiku 4.5 | Breaks work into subtasks | 4,000 | 2,000 | 6,000 | **0.014** | Light planning payload; usually one run per feature |
 | Feature Analyst (@feature-analyst) | Kimi K2 | Pattern discovery | 10,000 | 5,000 | 15,000 | **0.017** | Scans codebase references and produces docs |
-| Design Agent (@design-agent) | Claude Sonnet 4.5 | Visual/UX analysis | 8,000 | 4,000 | 12,000 | **0.084** | Triggered for UI-heavy requests |
+| UX Agent (@ux-agent) | Claude Opus 4.5 | Design system analysis + page design | 12,000 | 6,000 | 18,000 | **0.252** | Analysis mode: design system extraction; Design mode: page specifications |
 | Copywriting Agent (@copywriting-agent) | Claude Sonnet 4.5 | Messaging / tone | 5,000 | 3,000 | 8,000 | **0.060** | Only runs when copy changes are requested |
 | Coder Agent (@coder-agent) | Grok Code Fast 1 | Writes code per subtask | 6,000 | 4,000 | 10,000 | **0.000** | Free tier; still consumes ~10k tokens per burst |
 | Tester (@tester) | Qwen3 Coder 480B | Test author + runner | 5,000 | 4,000 | 9,000 | **0.008** | Often invoked twice (unit + regression) |
@@ -86,10 +86,10 @@ Quality scale: 1 (minimal coverage) to 5 (full fidelity, UX polish, compliance).
 | Premium Feature | 0.75 | 4.9 |
 
 ## 6. Observations & Recommendations
-- **Largest cost drivers:** The homepage designer still uses Claude Opus 4.5 and remains the single most expensive step (~$0.17/run). Sonnet-powered codebase passes now cost ~40% less, so prioritize reuse of their analysis outputs before reinvoking.
+- **Largest cost drivers:** The UX agent uses Claude Opus 4.5 and is one of the most expensive steps (~$0.25/run for full design mode). However, analysis mode for pattern extraction is typically shorter and more cost-effective. Sonnet-powered codebase passes now cost ~40% less, so prioritize reuse of their analysis outputs before reinvoking.
 - **Low-cost leverage:** Planning, build validation, and documentation agents each cost ~1¢ per run; keep them enabled for safety nets.
-- **Accessibility & design toggles:** Skipping @design-agent, @copywriting-agent, and @accessibility can save ~$0.20 per feature but drops the quality score by ~0.7 in regression tests.
-- **Homepage vs. feature work:** The marketing overhaul is the single most expensive individual step (0.17 USD). Cache its briefing context or reuse its theme summary to avoid re-running after minor tweaks.
+- **UX & messaging toggles:** The UX agent (design/analysis) and copywriting agent are valuable for quality but can be selectively applied. Skipping UX analysis mode when patterns are already documented can save costs. Skipping @copywriting-agent and @accessibility on non-user-facing features can save ~$0.12 per feature but may reduce quality.
+- **Homepage vs. feature work:** Full page redesigns (UX agent in design mode) are expensive ($0.25). However, the two-phase approach (UX design → codebase implementation) provides better separation of concerns and quality. Cache UX specifications or reuse theme summaries to avoid re-running for minor tweaks.
 - **Future optimization ideas:**
   1. Consider keeping a “lite” homepage variant (e.g., Sonnet dry run) when only minor hero/copy tweaks are needed; reserve Opus for full rebrands.
   2. Introduce conversation caching for orchestrator prompts (each 6k-token reload adds ~0.006 USD) when branching between subtasks.

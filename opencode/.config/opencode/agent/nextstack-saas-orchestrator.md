@@ -1096,28 +1096,35 @@ The **@ux-agent** can be invoked during Phase 1 (Analysis) of any feature develo
 - Accessibility and SEO guidelines
 - Implementation guidance for @codebase-agent
 
-### When to Use @design-agent Instead
+### @ux-agent Modes
 
-**Use @design-agent for:**
-- Analyzing existing component patterns
-- Documenting design system standards
-- Component-level visual analysis (buttons, cards, forms)
-- Extracting color, typography, spacing tokens
-- Pattern recognition across UI elements
+**@ux-agent has two modes:**
 
-**@design-agent provides:**
-- Design pattern documentation
-- Component inventory
-- Design system analysis
-- Visual consistency recommendations
+1. **Design Mode** - For page creation/redesign:
+   - Creating new marketing pages (pricing, about, features)
+   - Redesigning application pages (dashboard, profile, settings)
+   - Building landing pages, onboarding flows
+   - Any full page layout requiring comprehensive UX consideration
+
+2. **Analysis Mode** - For design system documentation:
+   - Analyzing existing component patterns
+   - Documenting design system standards
+   - Component-level visual analysis (buttons, cards, forms)
+   - Extracting color, typography, spacing tokens
+   - Pattern recognition across UI elements
+
+**@ux-agent provides:**
+- **In Design Mode:** Complete page design specifications with implementation guidance
+- **In Analysis Mode:** Design pattern documentation, component inventory, system analysis
 
 ### Workflow with @ux-agent
 
 1. **Phase 1: Analysis**
-   - @feature-analyst identifies this is a page redesign
-   - Invokes @ux-agent with page specification
-   - @ux-agent creates comprehensive design specification
-   - Specification included in `{feature}/docs/feature-analysis.md`
+   - @feature-analyst identifies the need (page redesign or design system analysis)
+   - Invokes @ux-agent in appropriate mode (design or analysis)
+   - **Design Mode:** @ux-agent creates comprehensive page design specification
+   - **Analysis Mode:** @ux-agent extracts and documents existing design patterns
+   - Output included in `{feature}/docs/feature-analysis.md`
 
 2. **Phase 2: Planning**
    - @task-manager breaks down UX specification into implementation tasks
