@@ -328,13 +328,22 @@ flowchart TD
 #### Step 1: Get Project Name
 - **Purpose:** Obtain clear project name from user
 - **Interaction:** Ask explicit question and wait for response
-- **Output:** Project name used throughout setup
+- **Processing:**
+  - Convert user input to kebab-case for directory name
+  - Examples: "My Awesome App" → `my-awesome-app`, "AI Dashboard" → `ai-dashboard`
+  - Store original name for display purposes
+- **Output:** 
+  - Display name: Used in documentation, UI, messaging
+  - Directory name: Used for file system operations (kebab-case)
 
 #### Step 2: Clone Template Repository
-- **Command:** `git clone https://github.com/jesusidev/nextstack-saas-starter {project-name}`
+- **Command:** `git clone https://github.com/jesusidev/nextstack-saas-starter {kebab-case-directory}`
 - **Purpose:** Create new project from NextStack SaaS Starter template
+- **Naming:**
+  - Directory created using kebab-case version of project name
+  - Original name preserved for display in docs and code
 - **Post-Clone:** Remove existing git history and initialize fresh repo
-- **Output:** New project directory with template code
+- **Output:** New project directory with template code at `./{kebab-case-directory}/`
 
 #### Step 3: Initialize Project Documentation
 - **File:** `docs/guidelines.md`
@@ -660,13 +669,15 @@ User: "create a new project"
 
 Orchestrator:
   1. Asks: "What should the project be called?"
-  2. Clones template with project name
-  3. Creates docs/guidelines.md with template identifier
-  4. Runs 5-question discovery session
-  5. Saves to docs/project-vision.md
-  6. Sets up project locally (installs deps, configures Clerk keys, starts dev server)
-  7. Customizes homepage
-  8. Reviews roadmap priorities
+  2. User responds: "My Awesome SaaS"
+  3. Converts to kebab-case: my-awesome-saas/
+  4. Clones template to my-awesome-saas/ directory
+  5. Creates docs/guidelines.md with template identifier
+  6. Runs 5-question discovery session
+  7. Saves to docs/project-vision.md
+  8. Sets up project locally (installs deps, configures Clerk keys, starts dev server)
+  9. Customizes homepage
+  10. Reviews roadmap priorities
   9. Begins first feature workflow
 ```
 
@@ -699,7 +710,8 @@ Orchestrator:
 ## Success Criteria
 
 ### Project Creation Complete When:
-- ✅ Template cloned to project directory
+- ✅ Project name converted to kebab-case for directory
+- ✅ Template cloned to kebab-case project directory
 - ✅ Git initialized with fresh history
 - ✅ `docs/guidelines.md` created with template identifier
 - ✅ Build instructions, testing setup, dev info documented

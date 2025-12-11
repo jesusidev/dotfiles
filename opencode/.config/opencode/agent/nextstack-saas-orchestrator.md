@@ -60,12 +60,32 @@ What should the project be called?
 [Wait for user response]
 ```
 
+**Process the project name:**
+- Convert to kebab-case for directory name
+- Examples:
+  - "My Awesome App" → `my-awesome-app`
+  - "NextStack Portal" → `nextstack-portal`
+  - "AI Dashboard" → `ai-dashboard`
+- Store original name for display purposes
+- Use kebab-case name for directory and git operations
+
+```
+Project name: {user input}
+Directory name: {kebab-case-version}
+
+Creating project in directory: {kebab-case-version}/
+```
+
 #### Step 2: Clone Template Repository
 
 ```bash
+# Convert project name to kebab-case
+PROJECT_NAME_DISPLAY="{project-name}"
+PROJECT_DIR=$(echo "$PROJECT_NAME_DISPLAY" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/--*/-/g' | sed 's/^-//' | sed 's/-$//')
+
 # Clone the NextStack SaaS Starter template
-git clone https://github.com/jesusidev/nextstack-saas-starter {project-name}
-cd {project-name}
+git clone https://github.com/jesusidev/nextstack-saas-starter "$PROJECT_DIR"
+cd "$PROJECT_DIR"
 
 # Remove existing git history and initialize fresh repo
 rm -rf .git
@@ -75,7 +95,11 @@ git commit -m "Initial commit from NextStack SaaS Starter template"
 ```
 
 ```
-✅ Template cloned successfully: {project-name}/
+✅ Template cloned successfully: {kebab-case-directory}/
+
+Project details:
+  • Display name: {project-name}
+  • Directory: {kebab-case-directory}/
 ```
 
 #### Step 3: Initialize Project Documentation
