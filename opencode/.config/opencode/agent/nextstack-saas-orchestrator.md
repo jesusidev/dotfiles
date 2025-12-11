@@ -383,6 +383,15 @@ Redesign the homepage using a two-phase approach: UX design specification follow
 
 Before creating the design specification, gather the user's vision for the visual design direction.
 
+**First, read and analyze `docs/project-vision.md`** to understand:
+- Problem being solved
+- Target audience
+- Core features
+- Unique value proposition
+- Timeline/priority
+
+Use this context to provide **tailored design direction examples** that align with the project's goals.
+
 ```
 ═══════════════════════════════════════════════════════════
 🎨 HOMEPAGE CUSTOMIZATION - Design Direction
@@ -390,6 +399,11 @@ Before creating the design specification, gather the user's vision for the visua
 
 To create a unique homepage that reflects your vision, I need to understand 
 your design preferences.
+
+Based on your project vision for {project-name}:
+• Problem: {brief summary from docs/project-vision.md}
+• Audience: {target audience from docs/project-vision.md}
+• Key differentiator: {unique value prop from docs/project-vision.md}
 
 Question: What visual style and aesthetic do you envision for {project-name}?
 
@@ -400,33 +414,33 @@ Consider:
 • Interactive elements (subtle animations, 3D effects, particles, transitions)
 • Visual metaphors or unique features that represent your brand
 
-Examples of design directions:
+Here are some design directions that could work well for {project-name}:
 
-1. Corporate Professional:
-   - Clean, structured layouts with conventional grid
-   - Minimal animations, professional typography
-   - Light theme with accent colors
-   - Standard card-based sections
+[Generate 3-4 tailored examples based on project vision]
 
-2. Tech Startup:
-   - Dark-first theme with vibrant accent colors
-   - Gradient overlays and glassmorphism effects
-   - Smooth scroll animations and micro-interactions
-   - Modern, bold typography
+For example, if the project is:
+- B2B SaaS targeting enterprises → Suggest professional, trustworthy designs
+- Developer tool → Suggest technical, code-inspired aesthetics
+- Creative platform → Suggest bold, experimental designs
+- Consumer app → Suggest friendly, approachable designs
 
-3. Creative/Unique:
-   - Asymmetric layouts breaking conventional patterns
-   - Interactive 3D elements or particle effects
-   - Custom scroll experiences (horizontal sections, parallax)
-   - Experimental typography and bold color choices
+Example format:
 
-4. Minimal/Elegant:
-   - Lots of white space, refined typography
-   - Subtle animations, focus on content
-   - Monochromatic or limited color palette
-   - Clean, simple component designs
+1. {Style Name} (Recommended for {reason based on vision}):
+   - {Theme suggestion aligned with target audience}
+   - {Layout approach that fits the product type}
+   - {Interactive elements that showcase key features}
+   - {Visual metaphors that represent the problem/solution}
 
-[Provide Examples]
+2. {Alternative Style}:
+   - {Different approach}
+   - {Why this might also work}
+
+3. {Another Alternative}:
+   - {Yet another approach}
+   - {Context for when to choose this}
+
+[Provide Examples based on project vision]
 [Wait for response]
 
 Great direction! I'll incorporate these design elements:

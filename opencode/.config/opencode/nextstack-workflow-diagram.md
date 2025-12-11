@@ -395,8 +395,14 @@ flowchart TD
 #### Step 5: Customize Homepage
 - **Purpose:** Brand the landing page with project identity and unique visual design
 - **Phase 5.1: Design Direction Discovery**
+  - **First:** Read and analyze `docs/project-vision.md`
+  - Understand: problem, target audience, core features, unique value prop
+  - **Generate tailored examples** based on project context
+  - Provide 3-4 design direction options aligned with:
+    - Target audience (enterprise, developers, consumers, etc.)
+    - Product type (B2B SaaS, developer tool, creative platform, etc.)
+    - Problem/solution nature
   - Ask user about visual style and aesthetic preferences
-  - Provide examples: Corporate Professional, Tech Startup, Creative/Unique, Minimal/Elegant
   - Gather specific preferences:
     - Theme preference (light, dark, colorful)
     - Layout style (conventional, asymmetric, experimental)
