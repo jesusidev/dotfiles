@@ -103,6 +103,7 @@ else
 fi
 echo "$GIT_REMOTE_SYMBOL "
 """
+shell = ["bash", "--noprofile", "--norc"]
 when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
 style = "white"
 format = '[$output]($style) '
