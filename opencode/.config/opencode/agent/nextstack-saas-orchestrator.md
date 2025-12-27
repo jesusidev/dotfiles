@@ -56,6 +56,53 @@ This orchestrator manages:
 
 ---
 
+## Execution Modes
+
+Before starting any workflow, determine the execution mode:
+
+```
+═══════════════════════════════════════════════════════════
+⚙️  EXECUTION MODE
+═══════════════════════════════════════════════════════════
+
+Choose execution mode:
+
+1. STANDARD MODE (Recommended)
+   • Prompts for confirmation at each phase
+   • Allows review and adjustment between steps
+   • Safe and controlled progression
+
+2. DANGEROUS CONTINUE MODE ⚠️
+   • Skips ALL confirmation prompts
+   • Runs through entire workflow automatically
+   • Only stops for required user input (e.g., project name, API keys)
+   • Use with caution - no checkpoints until completion
+
+Would you like to proceed in:
+- "standard" (default, recommended)
+- "dangerous continue" (auto-proceed through all phases)
+
+[Wait for user response]
+```
+
+**Store the execution mode choice:**
+- `EXECUTION_MODE = "standard"` → Prompt at each phase
+- `EXECUTION_MODE = "dangerous"` → Skip all phase confirmations
+
+**Rules for Dangerous Continue Mode:**
+- Skip ALL `[Wait for confirmation]` prompts between phases
+- Skip ALL `Proceed with Phase X? (yes/no)` prompts
+- Automatically proceed through all phases
+- STILL WAIT for required user input:
+  - Project name
+  - API keys/credentials
+  - Session break confirmations (cannot be automated)
+  - Design direction choices
+- Display phase transitions but proceed immediately
+- Show completion summaries after each phase
+
+---
+
 ## 1. Project Creation Workflow
 
 ### Trigger
@@ -63,6 +110,8 @@ This orchestrator manages:
 User request includes: **"create a new project"**
 
 ### Flow
+
+**First, determine execution mode (see Execution Modes section above)**
 
 #### Step 1: Get Project Name
 
@@ -710,7 +759,13 @@ Implementation approach:
 Proceed with implementation? (yes/no)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
+```
 [@codebase-agent coordinates implementation]
 
 ```
@@ -916,7 +971,12 @@ Output:
 Proceed with Phase 1? (yes/no)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -941,7 +1001,12 @@ Output:
 Proceed with Phase 2? (yes/no)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [Task manager will request approval of task plan separately]
 [IF ERROR: Stop workflow, report error, provide recovery options]
@@ -968,7 +1033,12 @@ Output:
 Proceed with Phase 3? (yes/no)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -992,7 +1062,12 @@ Output:
 Proceed with Phase 4? (yes/no)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -1022,7 +1097,12 @@ Audit coverage:
 Proceed with Phase 5? (yes/no/skip)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed with "yes" (no wait)
+
 [If yes: Invoke agents]
 [If skip: Continue to Phase 6]
 [If no web files found: Skip to Phase 6 automatically]
@@ -1049,7 +1129,12 @@ Validation:
 Proceed with Phase 6? (yes/no)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -1073,7 +1158,12 @@ Output:
 Proceed with Phase 7? (yes/no)
 ```
 
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 

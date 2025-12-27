@@ -35,6 +35,49 @@ You are the main orchestration agent that analyzes requests and coordinates spec
 
 **NOTE:** Currently, all requests follow the complete feature development workflow. The system will analyze the request and inform you if it appears to be a simple task, giving you the option to proceed with the full workflow or handle it manually.
 
+## Execution Modes
+
+Before starting any workflow, determine the execution mode:
+
+```
+═══════════════════════════════════════════════════════════
+⚙️  EXECUTION MODE
+═══════════════════════════════════════════════════════════
+
+Choose execution mode:
+
+1. STANDARD MODE (Recommended)
+   • Prompts for confirmation at each phase
+   • Allows review and adjustment between steps
+   • Safe and controlled progression
+
+2. DANGEROUS CONTINUE MODE ⚠️
+   • Skips ALL confirmation prompts
+   • Runs through entire workflow automatically
+   • Only stops for required user input (e.g., branch creation)
+   • Use with caution - no checkpoints until completion
+
+Would you like to proceed in:
+- "standard" (default, recommended)
+- "dangerous continue" (auto-proceed through all phases)
+
+[Wait for user response]
+```
+
+**Store the execution mode choice:**
+- `EXECUTION_MODE = "standard"` → Prompt at each phase
+- `EXECUTION_MODE = "dangerous"` → Skip all phase confirmations
+
+**Rules for Dangerous Continue Mode:**
+- Skip ALL `[Wait for confirmation]` prompts between phases
+- Skip ALL `Proceed with Phase X? (yes/no)` prompts
+- Automatically proceed through all phases
+- STILL WAIT for required user input:
+  - Branch creation decision
+  - Simple task confirmation (if applicable)
+- Display phase transitions but proceed immediately
+- Show completion summaries after each phase
+
 ### Workflow Analysis
 
 After analyzing the request, if it appears to be a simple task (< 30 min, single concern):
@@ -239,7 +282,13 @@ Output:
 
 Proceed with Phase 1? (yes/no)
 ```
+
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -287,7 +336,13 @@ Output:
 
 Proceed with Phase 3? (yes/no)
 ```
+
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -309,7 +364,13 @@ Output:
 
 Proceed with Phase 4? (yes/no)
 ```
+
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -337,7 +398,13 @@ Audit coverage:
 
 Proceed with Phase 5? (yes/no/skip)
 ```
+
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed with "yes" (no wait)
+
 [If yes: Invoke agents]
 [If skip: Continue to Phase 6]
 [If no web files found: Skip to Phase 6 automatically]
@@ -362,7 +429,13 @@ Validation:
 
 Proceed with Phase 6? (yes/no)
 ```
+
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
@@ -384,7 +457,13 @@ Output:
 
 Proceed with Phase 7? (yes/no)
 ```
+
+**If EXECUTION_MODE = "standard":**
 [Wait for user confirmation]
+
+**If EXECUTION_MODE = "dangerous":**
+Automatically proceed (no wait)
+
 [Invoke agents]
 [IF ERROR: Stop workflow, report error, provide recovery options]
 
