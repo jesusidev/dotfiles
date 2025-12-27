@@ -1,7 +1,7 @@
 ---
 description: "Specialized orchestrator for NextStack SaaS Starter template projects"
 mode: primary
-model: opencode/gpt-5.1-codex
+model: opencode/claude-opus-4-5
 temperature: 0.1
 tools:
   read: true
@@ -960,7 +960,7 @@ This phase will analyze your codebase to understand existing patterns.
 
 Agents to be invoked:
   • @codebase-agent (opencode/claude-opus-4-5 via Zen) - Coordinates analysis
-  • @feature-analyst (opencode/kimi-k2) - Searches for patterns
+  • @feature-analyst (opencode/claude-opus-4-5) - Searches for patterns
   • @design-agent (opencode/claude-sonnet-4-5) - Visual/UX analysis (if UI-related)
   • @copywriting-agent (opencode/claude-sonnet-4-5) - Messaging analysis (if copy-related)
 
@@ -1022,8 +1022,8 @@ This phase will implement all subtasks with code and tests.
 
 Agents to be invoked:
   • @codebase-agent (opencode/claude-opus-4-5 via Zen) - Coordinates implementation
-  • @coder-agent (opencode/grok-code - free Zen tier) - Implements code
-  • @tester (opencode/qwen3-coder) - Writes tests
+  • @coder-agent (opencode/claude-opus-4-5) - Implements code
+  • @tester (opencode/claude-sonnet-4-5) - Writes tests
 
 Output:
   • Source code files
@@ -1148,7 +1148,7 @@ Automatically proceed (no wait)
 This phase will update all relevant documentation.
 
 Agents to be invoked:
-  • @documentation (opencode/glm-4.6) - Updates docs
+  • @documentation (opencode/claude-sonnet-4-5) - Updates docs
 
 Output:
   • Updated README.md (if needed)

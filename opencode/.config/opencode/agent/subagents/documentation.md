@@ -1,7 +1,7 @@
 ---
 description: "Documentation authoring agent"
 mode: subagent
-model: opencode/glm-4.6
+model: opencode/claude-sonnet-4-5
 temperature: 0.1
 tools:
   read: true
