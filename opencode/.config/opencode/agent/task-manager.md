@@ -77,7 +77,7 @@ When given a complex feature request with pattern analysis:
 feature: {kebab-case-feature-name}
 structure: simple (flat)
 objective: {one-line description}
-pattern_reference: {feature}/docs/feature-analysis.md
+pattern_reference: docs/features/{feature}/feature-analysis.md
 
 tasks:
 - seq: {2-digit}, filename: {seq}-{task-description}.md, title: {clear title}, pattern: {reference to pattern doc}
@@ -98,7 +98,7 @@ Approval needed before file creation.
 feature: {kebab-case-feature-name}
 structure: complex (grouped)
 objective: {one-line description}
-pattern_reference: {feature}/docs/feature-analysis.md
+pattern_reference: docs/features/{feature}/feature-analysis.md
 
 task_groups:
 - group: {group-1-name}, objective: {what this group accomplishes}
@@ -130,50 +130,46 @@ Once approved:
 1. **Analyze task complexity and determine structure:**
 
    **For simple features (< 5 tasks, single concern):**
-   - Use flat structure: `{feature}/tasks/subtasks/`
+   - Use flat structure: `docs/features/{feature}/tasks/`
    
    **For complex features (5+ tasks, multiple concerns):**
-   - Group related tasks: `{feature}/tasks/subtasks/{task-group}/`
+   - Group related tasks: `docs/features/{feature}/tasks/{task-group}/`
    - Create task group indexes
    
    **For multiple features in request:**
-   - Create separate feature directories: `{feature-1}/`, `{feature-2}/`
+   - Create separate feature directories in: `docs/features/{feature-1}/`, `docs/features/{feature-2}/`
 
 2. **Create directory structure:**
 
    **Simple Feature:**
    ```
-   {feature}/
-     ├── tasks/
-     │   └── subtasks/
-     │       ├── README.md
-     │       ├── 01-{task}.md
-     │       └── 02-{task}.md
-     └── docs/
-         └── feature-analysis.md
+   docs/features/{feature}/
+     ├── feature-analysis.md
+     └── tasks/
+         ├── README.md
+         ├── 01-{task}.md
+         └── 02-{task}.md
    ```
    
    **Complex Feature:**
    ```
-   {feature}/
-     ├── tasks/
-     │   ├── README.md (main feature index)
-     │   └── subtasks/
-     │       ├── {group-1}/
-     │       │   ├── README.md (group index)
-     │       │   ├── 01-{task}.md
-     │       │   └── 02-{task}.md
-     │       └── {group-2}/
-     │           ├── README.md
-     │           ├── 03-{task}.md
-     │           └── 04-{task}.md
-     └── docs/
-         └── feature-analysis.md
+   docs/features/{feature}/
+     ├── feature-analysis.md
+     └── tasks/
+         ├── README.md (main feature index)
+         ├── {group-1}/
+         │   ├── README.md (group index)
+         │   ├── 01-{task}.md
+         │   └── 02-{task}.md
+         └── {group-2}/
+             ├── README.md
+             ├── 03-{task}.md
+             └── 04-{task}.md
    ```
 
 3. **Use these exact templates:**
 
-**Feature Index Template** (`{feature}/tasks/README.md`):
+**Feature Index Template** (`docs/features/{feature}/tasks/README.md`):
 
 ```markdown
 # {Feature Title}
@@ -205,7 +201,7 @@ Status legend: [ ] todo, [~] in-progress, [x] done
 - The feature is complete when {specific criteria}
 ```
 
-**Task Group Index Template** (`{feature}/tasks/subtasks/{group}/README.md`) - For complex features only:
+**Task Group Index Template** (`docs/features/{feature}/tasks/{group}/README.md`) - For complex features only:
 
 ```markdown
 # {Group Title}
@@ -273,7 +269,7 @@ Status legend: [ ] todo, [~] in-progress, [x] done
 ## Files to Reference
 
 - `path/to/reference/file1.ext` - {Why referencing (pattern, similar implementation)}
-- Pattern Analysis: `../{feature}/docs/feature-analysis.md` - {Specific section}
+- Pattern Analysis: `docs/features/{feature}/feature-analysis.md` - {Specific section}
 
 ## Implementation Details
 
@@ -361,7 +357,7 @@ Status legend: [ ] todo, [~] in-progress, [x] done
 
 ---
 
-**Pattern Reference:** `../../docs/feature-analysis.md#{section}`  
+**Pattern Reference:** `docs/features/{feature}/feature-analysis.md#{section}`  
 **Created:** {Date}  
 **Updated:** {Date}
 ```
@@ -530,7 +526,7 @@ If tests are skipped by user decision, this section should reflect:
 
 ---
 
-**Pattern Reference:** `../../docs/feature-analysis.md#{section}`  
+**Pattern Reference:** `docs/features/{feature}/feature-analysis.md#{section}`  
 **Created:** {Date}  
 **Updated:** {Date}
 ```
@@ -540,11 +536,11 @@ If tests are skipped by user decision, this section should reflect:
 **For simple features:**
 ```
 ## Subtasks Created
-- {feature}/tasks/README.md
-- {feature}/tasks/subtasks/{seq}-{task-description}.md
-- {feature}/tasks/subtasks/{seq}-{task-description}.md
+- docs/features/{feature}/tasks/README.md
+- docs/features/{feature}/tasks/{seq}-{task-description}.md
+- docs/features/{feature}/tasks/{seq}-{task-description}.md
 
-Pattern reference: {feature}/docs/feature-analysis.md
+Pattern reference: docs/features/{feature}/feature-analysis.md
 
 Task plan ready for implementation by @codebase-agent
 Next suggested task: {seq} — {title}
@@ -553,13 +549,13 @@ Next suggested task: {seq} — {title}
 **For complex features with groups:**
 ```
 ## Subtasks Created
-- {feature}/tasks/README.md (main index)
-- {feature}/tasks/subtasks/{group-1}/README.md
-- {feature}/tasks/subtasks/{group-1}/{seq}-{task-description}.md
-- {feature}/tasks/subtasks/{group-2}/README.md
-- {feature}/tasks/subtasks/{group-2}/{seq}-{task-description}.md
+- docs/features/{feature}/tasks/README.md (main index)
+- docs/features/{feature}/tasks/{group-1}/README.md
+- docs/features/{feature}/tasks/{group-1}/{seq}-{task-description}.md
+- docs/features/{feature}/tasks/{group-2}/README.md
+- docs/features/{feature}/tasks/{group-2}/{seq}-{task-description}.md
 
-Pattern reference: {feature}/docs/feature-analysis.md
+Pattern reference: docs/features/{feature}/feature-analysis.md
 
 Task groups: {group-1}, {group-2}
 Task plan ready for implementation by @codebase-agent
@@ -606,7 +602,7 @@ You cannot modify: .env files, .key files, .secret files, node_modules, .git
 
 1. **Invoked by:** @workflow-orchestrator (Phase 2: Planning)
 2. **Receives:** Feature request + pattern analysis from @feature-analyst
-3. **Creates:** Task plan in `{feature}/tasks/` (simple or grouped structure)
+3. **Creates:** Task plan in `docs/features/{feature}/tasks/` (simple or grouped structure)
 4. **Returns to:** @workflow-orchestrator for user approval
 5. **After approval:** @workflow-orchestrator invokes @codebase-agent for implementation
 
@@ -618,6 +614,6 @@ You cannot modify: .env files, .key files, .secret files, node_modules, .git
 - **Enable reuse:** Make tasks implementation-ready by including pattern references
 - **Test-aware:** Include test patterns and examples from pattern analysis
 
-Break down features into subtasks and create a task plan. Use the directory structure `{feature}/tasks/subtasks/` for simple features, or `{feature}/tasks/subtasks/{group}/` for complex features with logical task groupings.
+Break down features into subtasks and create a task plan. Use the directory structure `docs/features/{feature}/tasks/` for simple features, or `docs/features/{feature}/tasks/{group}/` for complex features with logical task groupings.
 
 Remember: You are part of a coordinated workflow. Use the pattern analysis provided to create informed, implementation-ready task plans that leverage existing codebase patterns.

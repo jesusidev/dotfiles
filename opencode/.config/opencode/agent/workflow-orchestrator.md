@@ -62,7 +62,7 @@ For all requests (after user confirmation if simple):
    - **Enhanced Analysis:** Feature analyst may invoke specialized subagents:
      - @design-agent - For UI/visual pattern analysis
      - @copywriting-agent - For messaging/conversion copy analysis
-   - Creates comprehensive feature analysis in `{feature}/docs/feature-analysis.md`
+   - Creates comprehensive feature analysis in `docs/features/{feature}/feature-analysis.md`
    - Returns insights about code patterns, design patterns, and messaging patterns
 
 #### Phase 2: Planning
@@ -70,11 +70,11 @@ For all requests (after user confirmation if simple):
 2. **Invoke @task-manager** with feature requirements and pattern insights
    - Task manager analyzes complexity and determines structure (simple/grouped)
    - Task manager breaks down feature into atomic subtasks
-   - Creates task directory: `{feature}/tasks/`
-   - Simple structure: `{feature}/tasks/subtasks/{seq}-{task}.md`
-   - Grouped structure: `{feature}/tasks/subtasks/{group}/{seq}-{task}.md`
-   - Creates feature index: `{feature}/tasks/README.md`
-   - Creates group indexes if grouped: `{feature}/tasks/subtasks/{group}/README.md`
+   - Creates task directory: `docs/features/{feature}/tasks/`
+   - Simple structure: `docs/features/{feature}/tasks/{seq}-{task}.md`
+   - Grouped structure: `docs/features/{feature}/tasks/{group}/{seq}-{task}.md`
+   - Creates feature index: `docs/features/{feature}/tasks/README.md`
+   - Creates group indexes if grouped: `docs/features/{feature}/tasks/{group}/README.md`
    - Waits for user approval of task plan
 
 #### Phase 3: Implementation
@@ -134,11 +134,11 @@ Request received
             │
             ├─> Phase 1: @codebase-agent (analysis)
             │       └─> Calls @feature-analyst
-            │           └─> Creates {feature}/docs/feature-analysis.md (if not exists)
+            │           └─> Creates docs/features/{feature}/feature-analysis.md (if not exists)
             │
             ├─> Phase 2: @task-manager (planning)
             │       └─> Analyzes complexity (simple vs grouped)
-            │       └─> Creates {feature}/tasks/ structure
+            │       └─> Creates docs/features/{feature}/tasks/ structure
             │           └─> Wait for approval
             │
             ├─> Phase 3: @codebase-agent (implementation)
@@ -234,7 +234,7 @@ Agents to be invoked:
   • @copywriting-agent (opencode/claude-sonnet-4-5) - Messaging analysis (if copy-related)
 
 Output:
-  • {feature}/docs/feature-analysis.md - Comprehensive pattern documentation
+  • docs/features/{feature}/feature-analysis.md - Comprehensive pattern documentation
     (code patterns, design patterns, messaging patterns)
 
 Proceed with Phase 1? (yes/no)
@@ -255,10 +255,10 @@ Agents to be invoked:
   • @task-manager (opencode/claude-haiku-4-5) - Creates task plan
 
 Output:
-  • {feature}/tasks/README.md - Feature index
-  • {feature}/tasks/subtasks/{seq}-{task}.md - Subtask files (simple)
-  • {feature}/tasks/subtasks/{group}/README.md - Group indexes (grouped)
-  • {feature}/tasks/subtasks/{group}/{seq}-{task}.md - Subtask files (grouped)
+  • docs/features/{feature}/tasks/README.md - Feature index
+  • docs/features/{feature}/tasks/{seq}-{task}.md - Subtask files (simple)
+  • docs/features/{feature}/tasks/{group}/README.md - Group indexes (grouped)
+  • docs/features/{feature}/tasks/{group}/{seq}-{task}.md - Subtask files (grouped)
 
 Proceed with Phase 2? (yes/no)
 ```
@@ -439,8 +439,8 @@ gh pr create --title "{Feature Title}" --body "$(cat <<'EOF'
 - [x] {Task 2}
 
 ## Documentation
-- Feature analysis: {feature}/docs/feature-analysis.md
-- Task breakdown: {feature}/tasks/README.md
+- Feature analysis: docs/features/{feature}/feature-analysis.md
+- Task breakdown: docs/features/{feature}/tasks/README.md
 
 ## Validation
 - ✅ Build successful

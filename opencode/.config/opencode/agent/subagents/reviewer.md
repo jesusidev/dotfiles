@@ -33,7 +33,7 @@ permissions:
 
 1. **ANALYZE** request and load relevant project context:
    - Feature analysis doc: `docs/feature-analysts/{feature}.md`
-   - Task files in `tasks/subtasks/{feature}/`
+   - Task files in `docs/features/{feature}/tasks/`
    - Changed files and implementation
 
 2. **Share review plan:**

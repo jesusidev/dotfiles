@@ -203,7 +203,7 @@ template: nextstack-saas-starter
 
 Before moving to the discovery session, personalize the codebase so it reflects {project-name} instead of the upstream template.
 
-- **Remove template-only files:** Delete artifacts that only exist for the public template (e.g., `CONTRIBUTING.md`, `.github/ISSUE_TEMPLATE*/`, template-specific docs). Confirm with the user if any file is questionable and document what was removed.
+- **Remove template-only files:** Find and Delete artifacts that only exist for the public template (e.g., `CONTRIBUTING.md`, `.github/ISSUE_TEMPLATE*/`, template-specific docs). Confirm with the user if any file is questionable and document what was removed.
 - **Replace template references:** Run a repo-wide search such as `rg -n "NextStack SaaS Starter"` and replace every instance with `{project-name}` (covering README content, docs, comments, and scripts). If the project has a custom tagline provided by the user, swap it in as well.
 - **Update README.md:**
   - Retitle the document to `# {Project Name}` and open with a one-paragraph summary that mirrors the current project vision.
@@ -399,13 +399,13 @@ Your project is now set up locally!
 Ready to proceed with homepage customization.
 ```
 
-#### Step 5: Customize Homepage (via @ux-agent + @codebase-agent)
+#### Step 5: Customize Public Pages & Plan Dashboard/Admin Pages (via @ux-agent + @codebase-agent)
 
-Redesign the homepage using a two-phase approach: UX design specification followed by coordinated implementation.
+Redesign all public-facing pages and create design plans for dashboard/admin pages using a two-phase approach: UX design specification followed by coordinated implementation.
 
-**Phase 5.1: Design Direction Discovery**
+**Phase 5.1: Design Direction Discovery & Page Inventory**
 
-Before creating the design specification, gather the user's vision for the visual design direction.
+Before creating the design specification, gather the user's vision for the visual design direction and identify all existing pages.
 
 **First, read and analyze `docs/project-vision.md`** to understand:
 - Problem being solved
@@ -414,15 +414,28 @@ Before creating the design specification, gather the user's vision for the visua
 - Unique value proposition
 - Timeline/priority
 
+**Second, inventory all existing pages in the template:**
+- Scan `src/app` directory structure for all routes
+- Identify **public pages** (marketing, landing, about, pricing, blog, legal, etc.)
+- Identify **dashboard/admin pages** (authenticated user pages, admin panels)
+- Note current implementations and structure
+
 Use this context to provide **tailored design direction examples** that align with the project's goals.
 
 ```
 ═══════════════════════════════════════════════════════════
-🎨 HOMEPAGE CUSTOMIZATION - Design Direction
+🎨 PAGE CUSTOMIZATION - Design Direction & Page Inventory
 ═══════════════════════════════════════════════════════════
 
-To create a unique homepage that reflects your vision, I need to understand 
-your design preferences.
+EXISTING PAGES FOUND:
+
+Public Pages:
+• {list all public/marketing pages found}
+• Example: Homepage (/), About (/about), Pricing (/pricing), etc.
+
+Dashboard/Admin Pages:
+• {list all authenticated pages found}
+• Example: Dashboard (/dashboard), Settings (/settings), Admin (/admin), etc.
 
 Based on your project vision for {project-name}:
 • Problem: {brief summary from docs/project-vision.md}
@@ -447,6 +460,10 @@ For example, if the project is:
 - Developer tool → Suggest technical, code-inspired aesthetics
 - Creative platform → Suggest bold, experimental designs
 - Consumer app → Suggest friendly, approachable designs
+
+Note: This design direction will be applied to:
+• ALL PUBLIC PAGES (homepage, about, pricing, blog, legal, etc.)
+• Design PLANS for dashboard/admin pages (to be implemented in future phases)
 
 Example format:
 
@@ -479,19 +496,33 @@ Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design
 
 **Inputs to provide @ux-agent:**
 
-- **Page specification:** "Homepage redesign for project: {project-name}"
-- **Purpose:** Brand the landing page with project identity and optimize for conversions
+- **Page specification:** "Complete site redesign for project: {project-name}"
+- **Scope:** 
+  - ALL PUBLIC PAGES (homepage, about, pricing, blog, legal, etc.) - Full implementation
+  - DASHBOARD/ADMIN PAGES (dashboard, settings, admin panels) - Design plans only
+- **Purpose:** Create cohesive design system across all pages, optimize for conversions and user experience
 - **Design direction:** {user's design preferences from Phase 5.1}
+- **Page inventory:** {list of all public and dashboard/admin pages found}
 - `docs/project-vision.md` (problem, differentiators, target audience, prioritized features)
 - `docs/guidelines.md` (breakpoints, accessibility, Mantine overrides, color usage rules)
-- Current homepage path (e.g., `src/app/page.tsx` or `src/app/(marketing)/page.tsx`)
+- `docs/unified-analytics-architecture.md` (analytics tracking requirements and implementation patterns)
+- All page paths from inventory (e.g., `src/app/page.tsx`, `src/app/about/page.tsx`, `src/app/dashboard/page.tsx`)
 - Current theme files: `/src/styles/theme.ts`, `/src/styles/colors.ts`, CSS modules
 
 **@ux-agent requirements:**
 
-- Analyze current homepage, navigation, and footer structure
-- Design comprehensive page layout following user's design direction
-- **Design new navigation** that matches the homepage aesthetic:
+- Analyze ALL existing public pages, dashboard/admin pages, navigation, and footer structure
+- Design comprehensive layouts for ALL PUBLIC PAGES following user's design direction:
+  - Homepage/landing page (primary focus)
+  - About, pricing, contact, blog/content pages
+  - Legal pages (privacy, terms, etc.)
+  - Any other public-facing pages found
+- Create HIGH-LEVEL DESIGN PLANS for dashboard/admin pages:
+  - Document intended user flows and page purposes
+  - Define layout structure and navigation patterns
+  - Specify key components and interactions
+  - Note: Full implementation deferred to future phases
+- **Design new navigation** that works across ALL pages:
   - Navigation structure (horizontal, sticky, transparent, solid)
   - Logo placement and styling
   - Menu items and organization
@@ -508,32 +539,44 @@ Invoke **@ux-agent** (opencode/claude-opus-4-5) to create a comprehensive design
 - Incorporate specified visual aesthetic (theme, layout style, interactive elements) throughout
 - Specify theme system updates (color tokens, typography, spacing, component overrides)
 - Ensure navigation and footer work across all breakpoints (mobile, tablet, desktop)
+- Ensure ALL PUBLIC PAGES share cohesive design language and consistent UX patterns
 - Ensure design is modern, SEO-friendly, mobile-first, and WCAG 2.1 AA compliant
-- Create detailed specification document with section-by-section plans (including navigation and footer)
-- Document all palette decisions, file changes, and accessibility requirements
+- **Review and implement analytics tracking** per `docs/unified-analytics-architecture.md`:
+  - Identify all interactive elements requiring tracking across ALL pages (CTAs, navigation, forms, etc.)
+  - Specify analytics events and tracking implementation for each element
+  - Follow unified analytics patterns and naming conventions
+- Create detailed specification document with:
+  - Section-by-section plans for ALL PUBLIC PAGES (including navigation and footer)
+  - High-level design plans for dashboard/admin pages (deferred implementation)
+  - Shared component library specifications
+- Document all palette decisions, file changes, accessibility requirements, and analytics tracking
 
 **Invocation:**
 
 ```
 ═══════════════════════════════════════════════════════════
-🎨 HOMEPAGE CUSTOMIZATION - Phase 2: UX Design Specification
+🎨 PAGE CUSTOMIZATION - Phase 2: UX Design Specification
 ═══════════════════════════════════════════════════════════
 
-Invoking @ux-agent to create homepage design specification:
+Invoking @ux-agent to create comprehensive design specification:
   • Project: {project-name}
-  • Page: Homepage / Landing Page
+  • Scope: ALL PUBLIC PAGES + Design plans for dashboard/admin
   • Design Direction: {summarize user preferences}
   • Vision: {bullet list from docs/project-vision.md}
   • Guidelines: {key items from docs/guidelines.md}
-  • Files to analyze: src/app/page.tsx, /src/styles/theme.ts, /src/styles/colors.ts
+  • Pages to analyze: {list all public and dashboard/admin pages}
+  • Files to analyze: /src/styles/theme.ts, /src/styles/colors.ts, all page files
 
 Goal:
-  • Create unique, conversion-focused homepage design
-  • Design brand new navigation matching the aesthetic
-  • Design brand new footer complementing the design
+  • Design ALL PUBLIC PAGES with cohesive design system:
+    - Homepage (conversion-focused)
+    - About, pricing, contact, blog pages
+    - Legal pages (privacy, terms)
+  • Create HIGH-LEVEL PLANS for dashboard/admin pages (defer implementation)
+  • Design unified navigation and footer across all pages
   • Implement {user's visual style} aesthetic throughout
   • Specify theme system updates for global consistency
-  • Ensure mobile-first, SEO, and accessibility compliance
+  • Ensure mobile-first, SEO, accessibility, and analytics compliance
 
 Proceed with UX design? (yes/no)
 ```
@@ -545,12 +588,17 @@ Proceed with UX design? (yes/no)
 ✅ UX Design Specification Complete
    
    Design document created with:
-   • Homepage section-by-section layout plans
-   • Navigation design specification
-   • Footer design specification
-   • Theme system specifications
-   • Component requirements (navigation, footer, page components)
+   • ALL PUBLIC PAGES - Complete section-by-section layout plans:
+     - Homepage (landing page)
+     - About, pricing, contact, blog pages
+     - Legal pages (privacy, terms, etc.)
+   • DASHBOARD/ADMIN PAGES - High-level design plans (deferred implementation)
+   • Navigation design specification (works across all pages)
+   • Footer design specification (works across all pages)
+   • Shared component library specifications
+   • Theme system specifications (global)
    • Accessibility guidelines
+   • Analytics tracking specifications
    • Implementation file list
    
    Ready for implementation phase.
@@ -563,8 +611,10 @@ Invoke **@codebase-agent** (opencode/claude-opus-4-5 via Zen) to coordinate impl
 **Inputs to provide @codebase-agent:**
 
 - Complete UX design specification from @ux-agent
-- Directive: "Implement the homepage redesign following the UX specification"
+- `docs/unified-analytics-architecture.md` (analytics implementation reference)
+- Directive: "Implement ALL PUBLIC PAGE redesigns following the UX specification, including all analytics tracking as specified. Note: Dashboard/admin page implementation is deferred - only review design plans for consistency."
 - Implementation mode (not analysis mode)
+- Implementation scope: PUBLIC PAGES ONLY (homepage, about, pricing, blog, legal, etc.)
 
 **@codebase-agent workflow:**
 
@@ -574,25 +624,33 @@ Invoke **@codebase-agent** (opencode/claude-opus-4-5 via Zen) to coordinate impl
 - Coordinate @tester for testing
 - Validate type checks, linting, formatting
 - Ensure all design requirements met
+- **Verify analytics tracking implementation:**
+  - Confirm all interactive elements have proper tracking per unified analytics architecture
+  - Validate event names follow naming conventions
+  - Test analytics events fire correctly
 
 **Invocation:**
 
 ```
 ═══════════════════════════════════════════════════════════
-🎨 HOMEPAGE CUSTOMIZATION - Phase 3: Implementation
+🎨 PAGE CUSTOMIZATION - Phase 3: Implementation
 ═══════════════════════════════════════════════════════════
 
-Invoking @codebase-agent to implement homepage design:
+Invoking @codebase-agent to implement public page designs:
   • Input: UX Design Specification
+  • Scope: ALL PUBLIC PAGES (homepage, about, pricing, blog, legal, etc.)
+  • Note: Dashboard/admin implementation DEFERRED to future phases
   • Files to modify: {list from UX spec}
   • Components: {list from UX spec}
   • Theme updates: {list from UX spec}
 
 Implementation approach:
   • @codebase-agent coordinates the work
-  • @coder-agent implements code changes
+  • @coder-agent implements code changes for ALL public pages
+  • Shared components (nav, footer) implemented first
+  • Individual pages implemented with consistent design system
   • @tester writes and runs tests
-  • Validation: type check, lint, format, tests
+  • Validation: type check, lint, format, tests, analytics tracking
 
 Proceed with implementation? (yes/no)
 ```
@@ -797,7 +855,7 @@ Agents to be invoked:
   • @copywriting-agent (opencode/claude-sonnet-4-5) - Messaging analysis (if copy-related)
 
 Output:
-  • {feature}/docs/feature-analysis.md - Comprehensive pattern documentation
+  • docs/features/{feature}/feature-analysis.md - Comprehensive pattern documentation
     (code patterns, design patterns, messaging patterns)
 
 Proceed with Phase 1? (yes/no)
@@ -820,10 +878,10 @@ Agents to be invoked:
   • @task-manager (opencode/claude-haiku-4-5) - Creates task plan
 
 Output:
-  • {feature}/tasks/README.md - Feature index
-  • {feature}/tasks/subtasks/{seq}-{task}.md - Subtask files (simple)
-  • {feature}/tasks/subtasks/{group}/README.md - Group indexes (grouped)
-  • {feature}/tasks/subtasks/{group}/{seq}-{task}.md - Subtask files (grouped)
+  • docs/features/{feature}/tasks/README.md - Feature index
+  • docs/features/{feature}/tasks/{seq}-{task}.md - Subtask files (simple)
+  • docs/features/{feature}/tasks/{group}/README.md - Group indexes (grouped)
+  • docs/features/{feature}/tasks/{group}/{seq}-{task}.md - Subtask files (grouped)
 
 Proceed with Phase 2? (yes/no)
 ```
@@ -1017,8 +1075,8 @@ gh pr create --title "{Feature Title}" --body "$(cat <<'EOF'
 - [x] {Task 2}
 
 ## Documentation
-- Feature analysis: {feature}/docs/feature-analysis.md
-- Task breakdown: {feature}/tasks/README.md
+- Feature analysis: docs/features/{feature}/feature-analysis.md
+- Task breakdown: docs/features/{feature}/tasks/README.md
 
 ## Validation
 - ✅ Build successful
@@ -1241,7 +1299,7 @@ The **@ux-agent** can be invoked during Phase 1 (Analysis) of any feature develo
    - Invokes @ux-agent in appropriate mode (design or analysis)
    - **Design Mode:** @ux-agent creates comprehensive page design specification
    - **Analysis Mode:** @ux-agent extracts and documents existing design patterns
-   - Output included in `{feature}/docs/feature-analysis.md`
+   - Output included in `docs/features/{feature}/feature-analysis.md`
 
 2. **Phase 2: Planning**
    - @task-manager breaks down UX specification into implementation tasks
