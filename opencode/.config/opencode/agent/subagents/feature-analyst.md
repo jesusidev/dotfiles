@@ -1,7 +1,7 @@
 ---
 description: "Analyzes codebase patterns and conventions for feature requests across any language or framework"
 mode: subagent
-model: opencode/claude-opus-4-5
+model: opencode/claude-sonnet-4-5
 temperature: 0.15
 tools:
   read: true

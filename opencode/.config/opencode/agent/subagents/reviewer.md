@@ -1,7 +1,7 @@
 ---
 description: "Code review, security, and quality assurance agent"
 mode: subagent
-model: opencode/claude-opus-4-5
+model: opencode/claude-sonnet-4-5
 temperature: 0.05
 tools:
   read: true

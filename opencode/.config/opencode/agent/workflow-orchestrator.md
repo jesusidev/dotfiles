@@ -271,8 +271,8 @@ Would you like to proceed with the complete workflow? (yes/no)
 This phase will analyze your codebase to understand existing patterns.
 
 Agents to be invoked:
-  • @codebase-agent (opencode/claude-opus-4-5 via Zen) - Coordinates analysis
-  • @feature-analyst (opencode/claude-opus-4-5) - Searches for patterns
+  • @codebase-agent (opencode/claude-sonnet-4-5 via Zen) - Coordinates analysis
+  • @feature-analyst (opencode/claude-sonnet-4-5) - Searches for patterns
   • @design-agent (opencode/claude-sonnet-4-5) - Visual/UX analysis (if UI-related)
   • @copywriting-agent (opencode/claude-sonnet-4-5) - Messaging analysis (if copy-related)
 
@@ -325,8 +325,8 @@ Proceed with Phase 2? (yes/no)
 This phase will implement all subtasks with code and tests.
 
 Agents to be invoked:
-  • @codebase-agent (opencode/claude-opus-4-5 via Zen) - Coordinates implementation
-  • @coder-agent (opencode/claude-opus-4-5) - Implements code
+  • @codebase-agent (opencode/claude-sonnet-4-5 via Zen) - Coordinates implementation
+  • @coder-agent (opencode/claude-sonnet-4-5) - Implements code
   • @tester (opencode/claude-sonnet-4-5) - Writes tests
 
 Output:
@@ -355,7 +355,7 @@ Automatically proceed (no wait)
 This phase will review code for quality, security, and acceptance criteria.
 
 Agents to be invoked:
-  • @reviewer (opencode/claude-opus-4-5) - Reviews all changes
+  • @reviewer (opencode/claude-sonnet-4-5) - Reviews all changes
 
 Output:
   • Code review feedback
