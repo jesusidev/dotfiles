@@ -34,9 +34,25 @@ This orchestrator manages:
 
 **DETERMINE** request type:
 
-- "create a new project" → Project Creation Workflow
-- "create a new feature", "fix a bug", "update X" → Feature/Enhancement Workflow
-- Other development work → Feature/Enhancement Workflow
+1. **Is this a NEW PROJECT creation request?**
+   - User wants to "create/start/setup a new SaaS project"
+   - User wants to "start from NextStack template"
+   - User is in an EMPTY directory or parent directory (not in a NextStack project)
+   → Execute Workflow A: Project Creation (see below)
+
+2. **Is this a RESUME from session break?**
+   - User says "continue with NextStack project setup"
+   - User mentions "documentation phase" or "continuing setup"
+   - User confirms they're now in the project directory
+   → Resume Workflow A at Step 3: Initialize Project Documentation
+
+3. **Is this a FEATURE request for existing NextStack project?**
+   - User wants to "add/create/build a feature"
+   - User wants to "fix a bug" or "update existing functionality"
+   - User is in a NextStack project directory (docs/guidelines.md exists with template: nextstack-saas-starter)
+   → Execute Workflow B: Feature Development (see section below)
+
+**If unclear:** Ask the user to clarify their intent.
 
 ---
 
@@ -100,9 +116,48 @@ git commit -m "Initial commit from NextStack SaaS Starter template"
 Project details:
   • Display name: {project-name}
   • Directory: {kebab-case-directory}/
+
+═══════════════════════════════════════════════════════════
+⏸️  SESSION BREAK REQUIRED
+═══════════════════════════════════════════════════════════
+
+To ensure optimal context and avoid scanning the parent directory:
+
+1. Open a NEW terminal session
+2. Navigate to the project directory:
+   
+   cd {kebab-case-directory}
+
+3. Start a NEW opencode session in the project directory:
+   
+   opencode
+
+4. Once in the new session, say:
+   "Continue with NextStack project setup - documentation phase"
+
+This ensures opencode works within the correct project context.
+
+[STOP HERE - Wait for user to confirm they're in the new session]
 ```
 
-#### Step 3: Initialize Project Documentation
+---
+
+### Resuming After Session Break
+
+When the user confirms they're in the new opencode session within the project directory, continue with:
+
+```
+═══════════════════════════════════════════════════════════
+📝 CONTINUING: PROJECT DOCUMENTATION
+═══════════════════════════════════════════════════════════
+
+Welcome back! Now working within your project directory.
+Proceeding with documentation setup...
+```
+
+#### Step 3: Initialize Project Documentation (After Session Break)
+
+**Prerequisites:** User must be in a new opencode session within the project directory.
 
 Create comprehensive documentation for advanced developers and AI agents. Read docs/* to find all the documentation for guidance and the README.md.
 
