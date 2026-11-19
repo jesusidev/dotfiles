@@ -97,9 +97,44 @@ if [ -f "$HOME/.ssh/id_ed25519" ]; then
 else
   email="${email:-$(git config --global user.email 2>/dev/null || echo "")}"
   run ssh-keygen -t ed25519 -C "$email" -f "$HOME/.ssh/id_ed25519"
-  info "add it to GitHub (auth + signing):"
-  info "  gh auth login && gh ssh-key add ~/.ssh/id_ed25519.pub --type authentication"
-  info "  gh ssh-key add ~/.ssh/id_ed25519.pub --type signing"
+fi
+
+# GitHub: upload the SSH key only if it isn't already on the account.
+step "GitHub SSH key"
+PUBKEY="$HOME/.ssh/id_ed25519.pub"
+SIGNING_SCOPE="admin:ssh_signing_key"
+if ! command -v gh >/dev/null; then
+  info "gh not installed yet; skipping (re-run after brew bundle)"
+elif [ ! -f "$PUBKEY" ]; then
+  info "no $PUBKEY yet; skipping"
+else
+  if ! gh auth status >/dev/null 2>&1; then
+    info "not logged in to GitHub"
+    run gh auth login -h github.com -p ssh -s "admin:public_key,$SIGNING_SCOPE"
+  fi
+  if gh auth status >/dev/null 2>&1; then
+    key_body="$(awk '{print $2}' "$PUBKEY")"
+    key_title="$(scutil --get ComputerName 2>/dev/null || hostname -s)"
+
+    # Authentication key (git push/pull over SSH)
+    if gh api user/keys --paginate --jq '.[].key' 2>/dev/null | grep -qF "$key_body"; then
+      info "authentication key already on GitHub"
+    else
+      run gh ssh-key add "$PUBKEY" --type authentication --title "$key_title"
+    fi
+
+    # Signing key (the "Verified" badge on commits); reading it needs an extra scope
+    if signing_keys="$(gh api user/ssh_signing_keys --paginate --jq '.[].key' 2>/dev/null)"; then
+      if grep -qF "$key_body" <<<"$signing_keys"; then
+        info "signing key already on GitHub"
+      else
+        run gh ssh-key add "$PUBKEY" --type signing --title "$key_title"
+      fi
+    else
+      info "can't check signing keys: the gh login lacks the $SIGNING_SCOPE scope."
+      info "run once: gh auth refresh -h github.com -s $SIGNING_SCOPE   then re-run ./install.sh"
+    fi
+  fi
 fi
 
 # 6. Link configs into $HOME with stow -----------------------------------------
