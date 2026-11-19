@@ -17,7 +17,8 @@ brew "fzf"          # history alias, docker pickers, tmux session picker
 brew "tmux"
 brew "zoxide"                        # t-smart-tmux-session-manager
 tap "cormacrelf/tap"
-brew "cormacrelf/tap/dark-notify"    # tmux-dark-notify (follow macOS light/dark)
+# third-party tap: Homebrew requires an explicit trust; this trusts only this formula
+brew "cormacrelf/tap/dark-notify", trusted: true   # tmux-dark-notify (follow macOS light/dark)
 
 # Neovim (LazyVim) and what its plugins call out to
 brew "neovim"
