@@ -1,12 +1,11 @@
 # AWS helpers, loaded by ~/.zshrc. This repo is public, so anything
 # account-specific lives in ~/.zshrc.local instead:
-#   export ECR_REGISTRY=<account-id>.dkr.ecr.<region>.amazonaws.com   # awslogin, updateAppsmithVersion
+#   export ECR_REGISTRY=<account-id>.dkr.ecr.<region>.amazonaws.com   # awslogin (Docker login to ECR)
 #   export RDS_DB_USER=<iam-db-user>                                   # dbAuth (defaults to $USER)
 #
 #   awslogin [profile]             SSO login (skipped if still valid), sets AWS_PROFILE, logs Docker in to ECR
 #   rds [profile]                  pick an RDS instance or cluster endpoint; prints "<profile> <endpoint>"
 #   dbAuth <mysql|postgres> [profile]   IAM auth token for that endpoint, copied to the clipboard
-#   updateAppsmithVersion [version]     build, tag and push the Appsmith image to ECR (run in its repo)
 
 export AWS_REGION=${AWS_REGION:-us-east-1}
 
@@ -94,22 +93,4 @@ dbAuth() {
     --region "$AWS_REGION" --username "$user" --profile "$profile") || return 1
   print -rn -- "${token//[[:space:]]/}" | pbcopy
   echo "Token for $user@$host:$port ($profile) copied to the clipboard. It expires in 15 minutes."
-}
-
-updateAppsmithVersion() {
-  [[ -z $ECR_REGISTRY ]] && { echo "Set ECR_REGISTRY in ~/.zshrc.local first." >&2; return 1; }
-  _aws_need docker || return 1
-  local version=$1 image
-  [[ -z $version ]] && read "version?Appsmith version to deploy: "
-  [[ -z $version ]] && { echo "Version cannot be empty." >&2; return 1; }
-
-  image="$ECR_REGISTRY/hc/appsmith:$version"
-  if docker build -t "hc/appsmith:$version" . \
-      && docker tag "hc/appsmith:$version" "$image" \
-      && docker push "$image"; then
-    echo "Pushed $image"
-  else
-    echo "Build or push failed. If the push was denied, run awslogin first." >&2
-    return 1
-  fi
 }

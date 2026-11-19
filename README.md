@@ -84,8 +84,6 @@ Functions in `zshrc/.config/zsh/aws.zsh`, loaded by `.zshrc`. Every `*.zsh` file
 | `awslogin [profile]` | SSO login (skipped while still valid), sets `AWS_PROFILE` for the shell, logs Docker in to ECR |
 | `rds [profile]` | pick an RDS instance or cluster endpoint with fzf |
 | `dbAuth <mysql\|postgres> [profile]` | IAM database token for the chosen endpoint, copied to the clipboard (valid 15 minutes) |
-| `updateAppsmithVersion [version]` | build, tag and push the Appsmith image to ECR; run it in the Appsmith repo |
-
 Leave out the profile and fzf asks for one. Account-specific values go in `~/.zshrc.local`:
 
 ```shell
