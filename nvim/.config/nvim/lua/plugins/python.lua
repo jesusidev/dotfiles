@@ -15,7 +15,8 @@ return {
             },
           },
         },
-        ruff_lsp = {
+        -- ruff's built-in server (ruff-lsp is deprecated)
+        ruff = {
           keys = {
             {
               "<leader>co",
@@ -39,11 +40,9 @@ return {
     "mason-org/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
+      -- pyright and ruff are installed through the LSP servers above
       vim.list_extend(opts.ensure_installed, {
-        "pyright",
         "black",
-        "ruff",
-        "ruff-lsp",
         "debugpy",
       })
     end,

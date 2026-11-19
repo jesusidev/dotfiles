@@ -4,10 +4,10 @@ return {
     cmd = "Mason",
     build = ":MasonUpdate",
     opts = {
+      -- Don't list anything another spec already installs: LazyVim installs each
+      -- entry in turn, and a duplicate fails with "Package is already installing".
+      -- gopls comes from the Go extra's LSP servers, delve from its DAP spec.
       ensure_installed = {
-        -- Go
-        "gopls",
-        "delve",
         -- Java tools (nvim-jdtls starts the server, not lspconfig)
         "jdtls",
         "java-test",
