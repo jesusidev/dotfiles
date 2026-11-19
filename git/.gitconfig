@@ -4,6 +4,11 @@
 	path = ~/.gitconfig.local
 [init]
 	defaultBranch = main
+[core]
+	# Faster `git status` in big repos (and the Starship prompt, which runs it):
+	# a per-repo file watcher plus a cache of untracked files.
+	fsmonitor = true
+	untrackedCache = true
 [gpg]
 	format = ssh
 [commit]

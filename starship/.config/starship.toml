@@ -1,86 +1,26 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+# Line 1: where you are and git, then whatever else applies ($all = every other
+# module, each shown only when relevant: languages, aws, kubernetes, duration).
+# Line 2: the prompt character.
 format = """
 $username\
 $hostname\
-$localip\
-$shlvl\
-$singularity\
-$nodejs\
 $directory\
-$vcsh\
 ${custom.git_server}\
 $git_branch\
 $git_commit\
 $git_state\
-$git_metrics\
 $git_status\
-$hg_branch\
-$docker_context\
-$package\
-$c\
-$cmake\
-$cobol\
-$daml\
-$dart\
-$deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$golang\
-$guix_shell\
-$haskell\
-$haxe\
-$helm\
-$java\
-$julia\
-$kotlin\
-$lua\
-$nim\
-$ocaml\
-$opa\
-$perl\
-$php\
-$pulumi\
-$purescript\
-$python\
-$raku\
-$rlang\
-$red\
-$ruby\
-$rust\
-$scala\
-$swift\
-$terraform\
-$vlang\
-$vagrant\
-$zig\
-$buf\
-$nix_shell\
-$conda\
-$meson\
-$spack\
-$kubernetes\
-$aws\
-$gcloud\
-$openstack\
-$azure\
-$env_var\
-$crystal\
-$custom\
-$sudo\
-$cmd_duration\
+$all\
 $line_break\
 $jobs\
 $battery\
-$time\
-$status\
-$os\
-$container\
-$shell\
 $character"""
+
+# Fail fast instead of hanging the prompt in a huge repo or on a slow tool
+command_timeout = 800
 
 ################################################################################
 ## Custom Commands
@@ -104,7 +44,10 @@ fi
 echo "$GIT_REMOTE_SYMBOL "
 """
 shell = ["bash", "--noprofile", "--norc"]
-when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
+# require_repo lets Starship check for a repo itself, instead of starting
+# another bash + git (`when = git rev-parse ...`) on every prompt.
+require_repo = true
+when = true
 style = "white"
 format = '[$output]($style) '
 
@@ -161,7 +104,7 @@ threshold = 30
 style = "bold red"
 
 [cmd_duration]
-min_time = 10_000  # Show command duration over 10,000 milliseconds (=10 sec)
+min_time = 2_000  # show how long a command took when it ran over 2 seconds
 format = '\[[⏱ $duration]($style)\]'
 style = 'yellow'
 
@@ -198,25 +141,28 @@ format = "[$path]($style)[$lock_symbol]($lock_style) "
 ################################################################################
 [git_branch]
 format = '\[[$symbol$branch]($style)\]'
-symbol = '🌱 '
+# symbol: Starship's default Nerd Font branch icon
 style = "bold green"
 
 [git_state]
 format = '\[[\($state( $progress_current of $progress_total)\)]($style)\]'
 
+# One-character symbols, colored by meaning (single-width, so the prompt
+# doesn't jump around the way double-width emoji did):
+#   + staged  ! modified  ? untracked  ✘ deleted  » renamed  $ stashed
+#   = conflicts  ⇡ ahead  ⇣ behind
 [git_status]
-conflicted = "⚔️ "
-ahead = "💨${count} "
-behind = "🐢${count} "
-diverged = "🔱 💨${ahead_count} 🐢${behind_count} "
-untracked = "🛤️ ${count} "
-stashed = "📦 "
-modified = "📝${count} "
-staged = "🗃️ ${count} "
-renamed = "📛${count} "
-deleted = "🗑️ ${count} "
-style = "bright-white"
-format = '\[ $all_status$ahead_behind\]'
+conflicted = '[=$count](bold red)'
+ahead = '[⇡$count](green)'
+behind = '[⇣$count](yellow)'
+diverged = '[⇡$ahead_count⇣$behind_count](bold yellow)'
+untracked = '[?$count](cyan)'
+stashed = '[\$$count](purple)'
+modified = '[!$count](yellow)'
+staged = '[+$count](green)'
+renamed = '[»$count](blue)'
+deleted = '[✘$count](red)'
+format = '(\[$all_status$ahead_behind\])'
 
 [git_commit]
 commit_hash_length = 8
@@ -227,11 +173,12 @@ disabled = false
 ################################################################################
 ## Languages & Tools
 ################################################################################
+# Shows the profile awslogin exported (AWS_PROFILE); hidden when none is set.
+# The symbol is literal text so the whole group disappears without a profile
+# (AWS_REGION alone, which aws.zsh always exports, would otherwise show it).
 [aws]
-format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
-symbol = '🖥️ '
-style = "yellow"
-disabled = true
+format = '(\[[☁️ $profile]($style)\])'
+style = "bold yellow"
 
 [bun]
 format = '\[[$symbol($version)]($style)\]'
@@ -313,6 +260,17 @@ format = '\[[$symbol$context( \($namespace\))]($style)\]'
 style = "cyan bold"
 disabled = false
 
+# Local Rancher cluster: short and quiet
+[[kubernetes.contexts]]
+context_pattern = "rancher-desktop"
+context_alias = "local"
+style = "dimmed cyan"
+
+# Anything with "prod" in its name: loud, so you notice before running kubectl
+[[kubernetes.contexts]]
+context_pattern = ".*prod.*"
+style = "bold red"
+
 [lua]
 format = '\[[$symbol($version)]($style)\]'
 
@@ -326,7 +284,7 @@ format = '\[[$symbol($version)]($style)\]'
 format = '\[[$symbol$state( \($name\))]($style)\]'
 
 [nodejs]
-format = '|$symbol($version)|(bold red)'
+format = '\[[$symbol($version)]($style)\]'
 
 [ocaml]
 format = '\[[$symbol($version)(\($switch_indicator$switch_name\))]($style)\]'
