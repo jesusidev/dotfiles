@@ -1,5 +1,5 @@
 # Only what the kept configs (zsh, nvim, ghostty, git) actually need.
-# Install with: brew bundle --file=~/.dotfiles/Brewfile
+# Install with: brew bundle --file=~/repos/dotfiles/Brewfile
 
 # Linking configs into $HOME
 brew "stow"

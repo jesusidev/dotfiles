@@ -5,8 +5,8 @@ Provisions a new Mac: zsh (with Zap plugins and Starship), Neovim (LazyVim), Gho
 ## New Mac
 
 ```shell
-git clone https://github.com/jesusidev/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
+git clone https://github.com/jesusidev/dotfiles.git ~/repos/dotfiles
+cd ~/repos/dotfiles
 ./install.sh --dry-run   # preview
 ./install.sh
 ```
@@ -39,5 +39,5 @@ Machine-specific shell settings or secrets go in `~/.zshrc.local` (sourced at th
 `extras/` holds configs that are no longer installed by default (tmux, yabai, skhd, iTerm, OpenCode, Claude). To link one by hand:
 
 ```shell
-stow --dir ~/.dotfiles/extras --target ~ tmux
+stow --dir ~/repos/dotfiles/extras --target ~ tmux
 ```
