@@ -1,6 +1,4 @@
-config/.config/github-copilot
-zshrc/.zshrc.old
 .DS_Store
-tmux/.config/tmux/plugins
-zshrc/private.zsh
 .idea
+zshrc/private.zsh
+extras/tmux/.config/tmux/plugins

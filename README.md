@@ -1,50 +1,43 @@
 # Dotfiles
 
-Dotfiles for macos & New Mac Setup
+Provisions a new Mac: zsh (with Zap plugins and Starship), Neovim (LazyVim), Ghostty, Git and macOS system settings.
 
-## Stow Packages
-
-Available configurations:
-- `nvim` - Neovim configuration
-- `tmux` - Tmux configuration
-- `starship` - Starship prompt
-- `skhd` - Simple hotkey daemon
-- `yabai` - Yabai window manager
-- `ghostty` - Ghostty terminal
-- `opencode` - OpenCode agent system
-- `claude` - Claude Code configuration (migrated from OpenCode)
-- `zshrc` - Zsh configuration
-
-## Usage for syncing .config
-
-Moving from Lunar VIM to Lazy VIM
+## New Mac
 
 ```shell
-rm -rf ~/.config/lvim
-rm -rf ~/.local/share/lvim
-rm -rf ~/.cache/lvim
-rm -rf ~/.local/state/lvim
+git clone https://github.com/jesusidev/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+./install.sh --dry-run   # preview
+./install.sh
 ```
 
+`install.sh` is safe to re-run. In order, it:
+
+1. Installs the Xcode command line tools and waits for them to finish.
+2. Installs Homebrew and the packages in `Brewfile`.
+3. Installs Zap (zsh plugin manager).
+4. Writes your Git name, email and signing key to `~/.gitconfig.local` (not committed), taking them from an existing `~/.gitconfig` or asking. Creates `~/.ssh/id_ed25519` only if it is missing.
+5. Links the configs into `$HOME` with stow. Any real file it would replace is moved to `~/.dotfiles-backup/<time>/` first.
+6. Applies macOS settings (`macos.sh`; skip with `--no-macos`).
+
+After it finishes, open Ghostty, start a new shell (Zap installs plugins on first launch), then run `nvim` once so LazyVim installs its plugins.
+
+## What is linked
+
+| Folder     | Ends up at                   |
+|------------|------------------------------|
+| `zshrc`    | `~/.zshrc`                   |
+| `git`      | `~/.gitconfig`               |
+| `nvim`     | `~/.config/nvim`             |
+| `ghostty`  | `~/.config/ghostty`          |
+| `starship` | `~/.config/starship.toml`    |
+
+Machine-specific shell settings or secrets go in `~/.zshrc.local` (sourced at the end of `.zshrc`, never committed).
+
+## Extras
+
+`extras/` holds configs that are no longer installed by default (tmux, yabai, skhd, iTerm, OpenCode, Claude). To link one by hand:
+
 ```shell
-$ git clone git@github.com:gdevtech/dotfiles.git ~/.dotfiles
-$ cd ~/.dotfiles
-$ ./setupConfig.sh
-$ update
-$ tmux
-$ update-tmux
-```
-
-### Installing TMUX plugins
-
-1. Press <kbd>ctrl a</kbd> + <kbd>I</kbd> (capital i, as in **I**nstall) to fetch the plugin.
-
-### New Mac Setup
-
-```shell
-$ cd ~/.dotfiles
-$ cd scripts
-$ ./appsInstallation.sh
-$ cd ~/.dotfiles
-$ ./setupConfig.sh
+stow --dir ~/.dotfiles/extras --target ~ tmux
 ```
