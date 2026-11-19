@@ -60,6 +60,19 @@ else
   info "brew not available yet; would run: brew bundle --file=$DOTFILES/Brewfile"
 fi
 
+# Node via Volta: a default for outside any repo; repos with a "volta" pin in
+# package.json get their own version automatically. SPARC needs Node >= 26.
+step "Node (Volta)"
+VOLTA_DEFAULT_NODE=26
+export VOLTA_HOME="$HOME/.volta" PATH="$HOME/.volta/bin:$PATH"
+if ! command -v volta >/dev/null; then
+  info "volta not installed yet; re-run after brew bundle"
+elif (cd "$HOME" && volta which node >/dev/null 2>&1); then
+  info "default node: $(cd "$HOME" && node -v)"
+else
+  run volta install "node@$VOLTA_DEFAULT_NODE"
+fi
+
 # 4. Zap (zsh plugin manager) --------------------------------------------------
 # Cloned directly instead of the official installer, which rewrites ~/.zshrc.
 step "Zap zsh plugin manager"

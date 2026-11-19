@@ -29,7 +29,8 @@ brew "tree-sitter"
 brew "ripgrep"
 brew "fd"
 brew "lazygit"
-brew "node"         # Mason LSPs, Copilot/Supermaven
+brew "volta"        # Node version manager: repos' "volta" pins win, else the default
+                    # (install.sh sets it). Node for Mason LSPs and Copilot comes from here.
 brew "go"           # Mason builds gopls, delve, gofumpt, goimports with it
 brew "python"       # Mason needs Python >= 3.10 for black, debugpy (macOS ships 3.9)
 cask "temurin"      # JDK for jdtls (Java LSP) in nvim/lua/plugins/java.lua

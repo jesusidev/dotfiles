@@ -1,6 +1,13 @@
+typeset -U path PATH   # drop duplicate PATH entries
+
 # Homebrew (Apple Silicon) — must come first so everything below is on PATH
 [ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$HOME/.local/bin:$PATH"
+
+# Volta must stay ahead of Homebrew so its node/npm shims win and repo pins apply.
+# (.zshenv sets this too, but brew shellenv above moves /opt/homebrew/bin first.)
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 
 # Zap plugin manager https://www.zapzsh.org/
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"

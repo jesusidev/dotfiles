@@ -37,7 +37,7 @@ The files live in this repo; the paths below are symlinks to them, so editing ei
 
 | Folder     | Linked at                  |
 |------------|----------------------------|
-| `zshrc`    | `~/.zshrc` and `~/.config/zsh` (extra function files) |
+| `zshrc`    | `~/.zshrc`, `~/.zshenv` (Volta PATH) and `~/.config/zsh` (extra function files) |
 | `git`      | `~/.gitconfig`             |
 | `nvim`     | `~/.config/nvim`           |
 | `ghostty`  | `~/.config/ghostty`        |
@@ -54,13 +54,24 @@ Not in git, per machine:
 Homebrew is the one way apps are managed here. To add one, add a line to `Brewfile` and run `brew bundle --file ~/repos/dotfiles/Brewfile`; `brew upgrade` updates everything. Find an app's name with `brew search <name>`.
 
 - **Shell:** stow, git, gh, starship, eza, fzf
+- **Node:** volta (see below)
 - **AWS:** awscli
 - **tmux:** tmux, zoxide, dark-notify
-- **Neovim:** neovim, tree-sitter, ripgrep, fd, lazygit, node, go, python, Temurin (JDK). Mason uses node, go, python and Java to build the language servers.
+- **Neovim:** neovim, tree-sitter, ripgrep, fd, lazygit, go, python, Temurin (JDK). Mason uses Node (from Volta), go, python and Java to build the language servers.
 - **Terminal and fonts:** Ghostty, JetBrains Mono, Symbols Nerd Font
 - **Apps:** Raycast, Presentify, CleanShot, JetBrains Toolbox, OBS, Paper, Postman, Rancher Desktop, Routine, Sublime Text
 
 `dark-notify` comes from a third-party tap, which Homebrew only installs once trusted; the Brewfile marks just that one formula `trusted: true`.
+
+### Node with Volta
+
+Node comes only from Volta, not Homebrew. In a repo whose `package.json` has a `"volta"` pin, `node` and `npm` are that version automatically; everywhere else they are Volta's default, which `install.sh` sets to Node 26 (`VOLTA_DEFAULT_NODE`). Volta's `~/.volta/bin` is put ahead of Homebrew in both `.zshenv` (every zsh, including scripts) and `.zshrc` (after `brew shellenv`, which would otherwise put Homebrew first).
+
+```shell
+volta install node@26   # change the default
+volta pin node@24       # pin the current repo (writes package.json)
+volta list              # what is installed
+```
 
 ## zsh
 
