@@ -102,7 +102,13 @@ export ECR_REGISTRY=<account-id>.dkr.ecr.us-east-1.amazonaws.com
 export RDS_DB_USER=<iam-database-user>   # defaults to your macOS username
 ```
 
-Profiles come from `~/.aws/config`; on a new Mac copy it over or run `aws configure sso`.
+Profiles come from `~/.aws/config`. On a new Mac, copy it over or create one profile per account and role:
+
+```shell
+aws configure sso --profile <Name>   # e.g. AgenticDev; reuse the same SSO session name each time
+```
+
+Always pass `--profile`. `awslogin` exports `AWS_PROFILE`, and while it is set `aws configure sso` skips the name prompt and overwrites that profile. Without `--profile`, run `unset AWS_PROFILE` first. Check with `aws configure list-profiles`.
 
 ## tmux
 
