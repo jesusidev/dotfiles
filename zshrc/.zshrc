@@ -17,6 +17,7 @@ export VISUAL="$EDITOR"
 alias home='~/'
 alias update='source ~/.zshrc';
 alias update-nvim='source ~/.config/nvim';
+alias update-tmux='tmux source ~/.config/tmux/tmux.conf';
 alias l='eza --icons --group-directories-first -a'
 alias ll='eza -l --icons --no-user --group-directories-first  --time-style long-iso'
 alias la='eza -la --icons --no-user --group-directories-first  --time-style long-iso'
@@ -108,6 +109,9 @@ bindkey '^e' edit-command-line
 
 ## Starship prompt https://starship.rs/
 command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# tmux session picker (t-smart-tmux-session-manager, installed by TPM)
+export PATH="$HOME/.config/tmux/plugins/t-smart-tmux-session-manager/bin:$PATH"
 
 # Rancher Desktop CLIs (docker, kubectl, nerdctl). Rancher's own "Automatic" PATH
 # setting would write into this file, so set it to Manual in Rancher > Preferences.

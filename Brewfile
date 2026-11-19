@@ -1,4 +1,4 @@
-# CLI tools the kept configs need (zsh, nvim, ghostty, git), plus everyday apps.
+# CLI tools the kept configs need (zsh, nvim, ghostty, git, tmux), plus everyday apps.
 # Install with: brew bundle --file=~/repos/dotfiles/Brewfile
 
 # Linking configs into $HOME
@@ -11,7 +11,13 @@ brew "gh"
 # Shell (zsh + zap plugins + prompt)
 brew "starship"     # prompt, configured in starship/
 brew "eza"          # used by the zap-zsh/exa plugin and the l/ll/la/tree aliases
-brew "fzf"          # history alias, docker pickers
+brew "fzf"          # history alias, docker pickers, tmux session picker
+
+# tmux and what its plugins need
+brew "tmux"
+brew "zoxide"                        # t-smart-tmux-session-manager
+tap "cormacrelf/tap"
+brew "cormacrelf/tap/dark-notify"    # tmux-dark-notify (follow macOS light/dark)
 
 # Neovim (LazyVim) and what its plugins call out to
 brew "neovim"

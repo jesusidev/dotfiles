@@ -31,13 +31,16 @@ After it finishes, open Ghostty, start a new shell (Zap installs plugins on firs
 | `nvim`     | `~/.config/nvim`             |
 | `ghostty`  | `~/.config/ghostty`          |
 | `starship` | `~/.config/starship.toml`    |
+| `tmux`     | `~/.config/tmux`             |
+
+tmux plugins (TPM) are installed into `~/.config/tmux/plugins` by `install.sh` and are gitignored. Prefix is `Ctrl-a`; `Ctrl-a` then `Shift-i` installs any newly added plugin.
 
 Machine-specific shell settings or secrets go in `~/.zshrc.local` (sourced at the end of `.zshrc`, never committed).
 
 ## Extras
 
-`extras/` holds configs that are no longer installed by default (tmux, yabai, skhd, iTerm, OpenCode, Claude). To link one by hand:
+`extras/` holds configs that are no longer installed by default (yabai, skhd, iTerm, OpenCode, Claude). To link one by hand:
 
 ```shell
-stow --dir ~/repos/dotfiles/extras --target ~ tmux
+stow --dir ~/repos/dotfiles/extras --target ~ yabai
 ```

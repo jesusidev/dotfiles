@@ -7,7 +7,7 @@
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(zshrc git nvim ghostty starship)   # folders in this repo linked into $HOME
+PACKAGES=(zshrc git nvim ghostty starship tmux)   # folders in this repo linked into $HOME
 BACKUP_DIR="$HOME/.dotfiles-backup/$(date +%Y%m%d_%H%M%S)"
 DRY_RUN=0
 RUN_MACOS=1
@@ -165,6 +165,20 @@ fi
 # Old .zshrc sourced ~/private.zsh; the new one sources ~/.zshrc.local.
 if [ -f "$HOME/private.zsh" ] && [ ! -e "$HOME/.zshrc.local" ]; then
   run mv "$HOME/private.zsh" "$HOME/.zshrc.local"
+fi
+
+# tmux plugins: TPM lives inside the linked ~/.config/tmux (gitignored)
+step "tmux plugins"
+TPM_DIR="$HOME/.config/tmux/plugins/tpm"
+if [ -d "$TPM_DIR" ]; then
+  info "TPM already installed"
+else
+  run git clone --depth 1 https://github.com/tmux-plugins/tpm "$TPM_DIR"
+fi
+if command -v tmux >/dev/null && { [ -d "$TPM_DIR" ] || (( DRY_RUN )); }; then
+  run "$TPM_DIR/bin/install_plugins" || info "plugin install failed; inside tmux press Ctrl-a then Shift-i"
+else
+  info "tmux not installed yet; re-run after brew bundle"
 fi
 
 # 7. macOS settings ------------------------------------------------------------
