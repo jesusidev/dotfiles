@@ -1,4 +1,4 @@
-# Only what the kept configs (zsh, nvim, ghostty, git) actually need.
+# CLI tools the kept configs need (zsh, nvim, ghostty, git), plus everyday apps.
 # Install with: brew bundle --file=~/repos/dotfiles/Brewfile
 
 # Linking configs into $HOME
@@ -25,3 +25,15 @@ brew "node"         # Mason LSPs, Copilot/Supermaven
 cask "ghostty"
 cask "font-jetbrains-mono"
 cask "font-symbols-only-nerd-font"
+
+# Apps. Ones already installed by hand are adopted by Homebrew, not reinstalled.
+cask "raycast"            # launcher
+cask "presentify"         # screen annotation
+cask "cleanshot"          # screenshots (CleanShot X)
+cask "jetbrains-toolbox"
+cask "obs"
+cask "paper-design"       # Paper (paper.design); the "paper" cask is a different wallpaper app
+cask "postman"
+cask "rancher"            # Rancher Desktop; set its PATH option to Manual, .zshrc adds ~/.rd/bin
+cask "routine"            # calendar (routine.co)
+cask "sublime-text"

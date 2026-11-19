@@ -109,6 +109,10 @@ bindkey '^e' edit-command-line
 ## Starship prompt https://starship.rs/
 command -v starship >/dev/null && eval "$(starship init zsh)"
 
+# Rancher Desktop CLIs (docker, kubectl, nerdctl). Rancher's own "Automatic" PATH
+# setting would write into this file, so set it to Manual in Rancher > Preferences.
+[ -d "$HOME/.rd/bin" ] && export PATH="$HOME/.rd/bin:$PATH"
+
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
