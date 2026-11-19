@@ -37,7 +37,7 @@ The files live in this repo; the paths below are symlinks to them, so editing ei
 
 | Folder     | Linked at                  |
 |------------|----------------------------|
-| `zshrc`    | `~/.zshrc`                 |
+| `zshrc`    | `~/.zshrc` and `~/.config/zsh` (extra function files) |
 | `git`      | `~/.gitconfig`             |
 | `nvim`     | `~/.config/nvim`           |
 | `ghostty`  | `~/.config/ghostty`        |
@@ -46,7 +46,7 @@ The files live in this repo; the paths below are symlinks to them, so editing ei
 
 Not in git, per machine:
 
-- `~/.zshrc.local`: machine-specific shell settings or secrets, sourced at the end of `.zshrc`.
+- `~/.zshrc.local`: machine-specific shell settings or secrets, sourced at the end of `.zshrc`. Keep it private with `chmod 600 ~/.zshrc.local`. This repo is public, so account IDs, usernames and tokens belong here, not in the repo.
 - `~/.gitconfig.local`: Git name, email and signing key, included by `.gitconfig`.
 
 ## Apps and tools (Brewfile)
@@ -54,6 +54,7 @@ Not in git, per machine:
 Homebrew is the one way apps are managed here. To add one, add a line to `Brewfile` and run `brew bundle --file ~/repos/dotfiles/Brewfile`; `brew upgrade` updates everything. Find an app's name with `brew search <name>`.
 
 - **Shell:** stow, git, gh, starship, eza, fzf
+- **AWS:** awscli
 - **tmux:** tmux, zoxide, dark-notify
 - **Neovim:** neovim, tree-sitter, ripgrep, fd, lazygit, node, go, python, Temurin (JDK). Mason uses node, go, python and Java to build the language servers.
 - **Terminal and fonts:** Ghostty, JetBrains Mono, Symbols Nerd Font
@@ -73,6 +74,26 @@ Aliases live in `zshrc/.zshrc`. A few common ones:
 | `lg` | lazygit |
 | `update` | reload `.zshrc` |
 | `update-tmux` | reload the tmux config |
+
+## AWS
+
+Functions in `zshrc/.config/zsh/aws.zsh`, loaded by `.zshrc`. Every `*.zsh` file in that folder is loaded, so new groups of functions can go there as their own file.
+
+| Command | Does |
+|---|---|
+| `awslogin [profile]` | SSO login (skipped while still valid), sets `AWS_PROFILE` for the shell, logs Docker in to ECR |
+| `rds [profile]` | pick an RDS instance or cluster endpoint with fzf |
+| `dbAuth <mysql\|postgres> [profile]` | IAM database token for the chosen endpoint, copied to the clipboard (valid 15 minutes) |
+| `updateAppsmithVersion [version]` | build, tag and push the Appsmith image to ECR; run it in the Appsmith repo |
+
+Leave out the profile and fzf asks for one. Account-specific values go in `~/.zshrc.local`:
+
+```shell
+export ECR_REGISTRY=<account-id>.dkr.ecr.us-east-1.amazonaws.com
+export RDS_DB_USER=<iam-database-user>   # defaults to your macOS username
+```
+
+Profiles come from `~/.aws/config`; on a new Mac copy it over or run `aws configure sso`.
 
 ## tmux
 

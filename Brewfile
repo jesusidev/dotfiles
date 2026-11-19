@@ -13,6 +13,9 @@ brew "starship"     # prompt, configured in starship/
 brew "eza"          # used by the zap-zsh/exa plugin and the l/ll/la/tree aliases
 brew "fzf"          # history alias, docker pickers, tmux session picker
 
+# AWS (functions in zshrc/.config/zsh/aws.zsh)
+brew "awscli"
+
 # tmux and what its plugins need
 brew "tmux"
 brew "zoxide"                        # t-smart-tmux-session-manager

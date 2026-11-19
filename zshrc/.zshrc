@@ -134,5 +134,8 @@ function y() {
 	rm -f -- "$tmp"
 }
 
+# Extra function files from this repo (zshrc/.config/zsh/*.zsh), e.g. aws.zsh
+for f in "$HOME"/.config/zsh/*.zsh(N); do source "$f"; done; unset f
+
 # Machine-specific or secret settings (not in git): ~/.zshrc.local
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
